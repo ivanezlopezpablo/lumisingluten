@@ -6,8 +6,8 @@
     <title>🌸Lumi Sin Gluten - App Oficial</title>
 
     <!-- ÍCONOS Y CONFIGURACIÓN DE APP INSTALABLE -->
-    <link rel="icon" href="https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w192">
-    <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w180">
+    <link rel="icon" href="https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png">
+    <link rel="apple-touch-icon" href="https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png">
     <meta name="theme-color" content="#10b981">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -45,7 +45,10 @@
         html, body { width: 100%; height: 100%; background-color: #ffffff; color: #333333; overflow-x: hidden; }
         body { display: flex; justify-content: center; align-items: flex-start; }
 
-        .app-container { width: 100vw; min-height: 100vh; background: #ffffff; position: relative; padding-bottom: 90px; }
+        /* Espacio inferior: deja lugar libre para la barra de navegación (65px)
+           + la barra flotante de Mi Carrito (~50px) + un respiro extra, así el
+           final de cada sección (reseñas, cursos, ubicación) se ve completo. */
+        .app-container { width: 100vw; min-height: 100vh; background: #ffffff; position: relative; padding-bottom: 185px; }
 
         /* ÍCONOS SVG */
         .icn { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; vertical-align: middle; }
@@ -276,6 +279,7 @@
             <div style="margin-top: 30px; padding-top: 20px; border-top: 2px dashed #e2e8f0;">
                 <div class="section-title">Lo que dicen nuestros clientes</div>
                 <div class="elfsight-app-d6b31c62-d125-4138-997a-dac92616ff65" data-elfsight-app-lazy></div>
+                <div style="height: 40px;"></div>
             </div>
         </div>
 
@@ -498,10 +502,6 @@
                 <option value="Envío por Uber">Envío por Uber (Costo a simular después)</option>
             </select>
 
-            <div id="cuit-field-wrapper" style="display: none;">
-                <input type="text" id="user-cuit" class="form-control" placeholder="CUIT / CUIL * (Obligatorio para envíos)">
-            </div>
-
             <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; margin-bottom: 4px;">
                 <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 6px; color: var(--text-dark);">
                     Día y Hora exacta aproximada:
@@ -529,6 +529,7 @@
             </div>
 
             <div id="whatsapp-order-btn-wrapper"></div>
+            <div style="height: 14px;"></div>
         </div>
     </div>
 </div>
@@ -538,6 +539,7 @@
     <div style="display: flex; align-items: center; gap: 12px; max-width: 650px; margin: 0 auto;">
         <img src="https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w120" alt="🌸Lumi" style="width: 42px; height: 42px; object-fit: contain; background: #ffffff; border-radius: 10px; padding: 4px; flex-shrink: 0;" onerror="this.style.display='none';">
         <div style="flex: 1; font-size: 0.8rem; line-height: 1.35;" id="install-banner-text"></div>
+        <a id="install-safari-btn" href="#" style="display: none; background: #0284c7; color: white; text-decoration: none; padding: 9px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 800; white-space: nowrap; flex-shrink: 0;">Abrir en Safari</a>
         <button id="install-banner-btn" onclick="triggerInstall()" style="display: none; background: var(--lumi-green); color: white; border: none; padding: 9px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 800; cursor: pointer; white-space: nowrap; flex-shrink: 0;">Instalar App</button>
         <button onclick="dismissInstallBanner()" style="background: none; border: none; color: #94a3b8; font-size: 1.1rem; cursor: pointer; flex-shrink: 0;">✕</button>
     </div>
@@ -552,7 +554,7 @@
        Escribí "Activado" para que aparezca al abrir la app,
        o "Desactivado" para ocultarlo por completo.
        ============================================================ */
-    const PROMO_INICIO = "Activado";
+    const PROMO_INICIO = "Desactivado";
 
     /* ============================================================
        CONEXIÓN CON GOOGLE SHEETS (PLANILLA PUBLICADA)
@@ -978,8 +980,8 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
                 background_color: '#ffffff',
                 theme_color: '#10b981',
                 icons: [
-                    { src: 'https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w192', sizes: '192x192', type: 'image/png' },
-                    { src: 'https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w512', sizes: '512x512', type: 'image/png' }
+                    { src: 'https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png', sizes: '192x192', type: 'image/png' },
+                    { src: 'https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png', sizes: '512x512', type: 'image/png' }
                 ]
             };
             const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
@@ -989,8 +991,20 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
             document.head.appendChild(link);
         } catch (e) { /* sin manifest, los meta tags del head siguen cubriendo lo básico */ }
 
+        /* El banner aparece SIEMPRE hasta que se detecte la app instalada:
+           - Si está abierta como app instalada (standalone) => nunca aparece.
+           - En Android, el evento 'appinstalled' marca la instalación y el
+             banner no vuelve a mostrarse en ese dispositivo.
+           - La ✕ lo oculta solo por esa visita; al volver a entrar, reaparece. */
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-        if (isStandalone || localStorage.getItem('lumi_install_dismissed')) return;
+        if (isStandalone) { localStorage.setItem('lumi_app_installed', '1'); return; }
+        if (localStorage.getItem('lumi_app_installed')) return;
+        if (sessionStorage.getItem('lumi_install_hidden')) return;
+
+        window.addEventListener('appinstalled', () => {
+            localStorage.setItem('lumi_app_installed', '1');
+            document.getElementById('install-banner').style.display = 'none';
+        });
 
         const ua = navigator.userAgent;
         const isIOS = /iPhone|iPad|iPod/.test(ua);
@@ -1000,41 +1014,47 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredInstallPrompt = e;
-            showInstallBanner('Instalá la app de <b>🌸Lumi</b> en tu celular: pedidos más rápidos y acceso con un toque.', true);
+            showInstallBanner('Instalá la app de <b>🌸Lumi</b> en tu celular: pedidos más rápidos y acceso con un toque.', { install: true });
         });
 
         if (isIOS) {
-            const texto = isSafariIOS
-                ? 'Instalá <b>🌸Lumi</b> en tu iPhone: tocá el botón <b>Compartir</b> (el cuadrado con flecha) y elegí <b>"Agregar a pantalla de inicio"</b>.'
-                : 'Para instalar <b>🌸Lumi</b> en tu iPhone: abrí este sitio en <b>Safari</b>, tocá <b>Compartir</b> y elegí <b>"Agregar a pantalla de inicio"</b>.';
-            setTimeout(() => showInstallBanner(texto, false), 3500);
+            if (isSafariIOS) {
+                setTimeout(() => showInstallBanner('Instalá <b>🌸Lumi</b> en tu iPhone: tocá el botón <b>Compartir</b> (el cuadrado con flecha) y elegí <b>"Agregar a pantalla de inicio"</b>.', {}), 3500);
+            } else {
+                // Otro navegador en iPhone: botón que intenta abrir Safari en esta misma página
+                const safariBtn = document.getElementById('install-safari-btn');
+                safariBtn.href = 'x-safari-' + location.href;
+                setTimeout(() => showInstallBanner('Para instalar <b>🌸Lumi</b> necesitás <b>Safari</b>. Tocá el botón para abrirlo, y allí: <b>Compartir</b> > <b>"Agregar a pantalla de inicio"</b>.', { safari: true }), 3500);
+            }
         } else if (isAndroid) {
             // Si a los 6 seg Chrome no ofreció instalación nativa, guiar el camino manual
             setTimeout(() => {
                 if (!deferredInstallPrompt && document.getElementById('install-banner').style.display === 'none') {
-                    showInstallBanner('Instalá <b>🌸Lumi</b> en tu celular: abrí el menú <b>⋮</b> del navegador y elegí <b>"Agregar a pantalla principal"</b>.', false);
+                    showInstallBanner('Instalá <b>🌸Lumi</b> en tu celular: abrí el menú <b>⋮</b> del navegador y elegí <b>"Agregar a pantalla principal"</b>.', {});
                 }
             }, 6000);
         }
     }
 
-    function showInstallBanner(html, withButton) {
+    function showInstallBanner(html, opts) {
+        opts = opts || {};
         const banner = document.getElementById('install-banner');
         document.getElementById('install-banner-text').innerHTML = html;
-        document.getElementById('install-banner-btn').style.display = withButton ? 'inline-flex' : 'none';
+        document.getElementById('install-banner-btn').style.display = opts.install ? 'inline-flex' : 'none';
+        document.getElementById('install-safari-btn').style.display = opts.safari ? 'inline-flex' : 'none';
         banner.style.display = 'block';
     }
 
     function triggerInstall() {
         if (deferredInstallPrompt) {
             deferredInstallPrompt.prompt();
-            deferredInstallPrompt.userChoice.finally(() => { deferredInstallPrompt = null; dismissInstallBanner(); });
+            deferredInstallPrompt.userChoice.finally(() => { deferredInstallPrompt = null; document.getElementById('install-banner').style.display = 'none'; });
         }
     }
 
     function dismissInstallBanner() {
         document.getElementById('install-banner').style.display = 'none';
-        localStorage.setItem('lumi_install_dismissed', '1');
+        sessionStorage.setItem('lumi_install_hidden', '1'); // solo por esta visita; reaparece la próxima vez
     }
 
     /* Barra de carga 0% a 100%: la barra se llena y el logo Sin Gluten
@@ -1170,16 +1190,13 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
         const deliveryType = document.getElementById('delivery-type').value;
         const paymentSelect = document.getElementById('payment-type');
         const addressWrapper = document.getElementById('address-fields-wrapper');
-        const cuitWrapper = document.getElementById('cuit-field-wrapper');
 
         if (deliveryType === 'Envío por Uber') {
             addressWrapper.style.display = 'flex';
-            cuitWrapper.style.display = 'block';
             document.getElementById('uber-info-modal').classList.add('active');
             if (paymentSelect.value === 'Efectivo') paymentSelect.value = 'Transferencia';
         } else {
             addressWrapper.style.display = 'none';
-            cuitWrapper.style.display = 'none';
             document.getElementById('local-address-modal').classList.add('active');
         }
         renderCartSummary();
@@ -1606,7 +1623,6 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
     function fillCheckoutFromLastOrder() {
         if (lastCheckout.name) document.getElementById('user-name').value = lastCheckout.name;
         if (lastCheckout.phone) document.getElementById('user-phone').value = lastCheckout.phone;
-        if (lastCheckout.cuit) document.getElementById('user-cuit').value = lastCheckout.cuit;
         if (lastCheckout.address) document.getElementById('user-address-input').value = lastCheckout.address;
     }
 
@@ -1692,7 +1708,6 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
 
         const name = document.getElementById('user-name').value.trim();
         const phone = document.getElementById('user-phone').value.trim();
-        const cuit = document.getElementById('user-cuit').value.trim();
         const deliveryType = document.getElementById('delivery-type').value;
         const paymentType = document.getElementById('payment-type').value;
         const addressInput = document.getElementById('user-address-input');
@@ -1704,7 +1719,6 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
         const notes = notesField ? notesField.value.trim() : "";
 
         if (!name || !phone) { alert("Completa Nombre y Teléfono obligatorios."); return; }
-        if (deliveryType === 'Envío por Uber' && !cuit) { alert("Para envíos por Uber, el CUIT / CUIL es obligatorio."); return; }
         if (deliveryType === 'Envío por Uber' && !address) { alert("Ingresá la dirección de entrega para el envío por Uber."); return; }
 
         let subtotal = 0, totalOriginalBase = 0, itemsDetails = [];
@@ -1729,7 +1743,7 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
         let finalPrice = subtotal;
         let totalAhorroGeneral = totalOriginalBase - subtotal;
 
-        lastCheckout = { name, phone, cuit, address };
+        lastCheckout = { name, phone, address };
         localStorage.setItem('lumi_last_checkout', JSON.stringify(lastCheckout));
 
         let dayName = "", formattedDateStr = "";
@@ -1745,7 +1759,6 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
 
         let message = `*NUEVO PEDIDO REGISTRADO - 🌸Lumi*\n=============================\n\n`;
         message += `👤 *CLIENTE:* ${name}\n📞 *TELÉFONO:* ${phone}\n`;
-        if (deliveryType === 'Envío por Uber' && cuit) message += `🧾 *CUIT/CUIL:* ${cuit}\n`;
         message += `🛵 *MODALIDAD:* ${deliveryType}\n🕒 *${actionText.toUpperCase()}:* ${formattedDateStr} a las ${pickupTimeExact} hs aprox.\n💳 *MEDIO DE PAGO:* ${paymentType}\n`;
 
         if (deliveryType === 'Envío por Uber') {
