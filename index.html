@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lumi Sin Gluten - App Oficial</title>
 
+    <!-- ÍCONOS Y CONFIGURACIÓN DE APP INSTALABLE -->
+    <link rel="icon" href="https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w192">
+    <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w180">
+    <meta name="theme-color" content="#10b981">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Lumi">
+    <meta name="application-name" content="Lumi">
+    <meta name="description" content="Lumi Sin Gluten - Alimentos artesanales 100% libres de gluten en Neuquén. Pedí online y recibilo en tu casa.">
+
     <!-- Widget de Reseñas Elfsight -->
     <script src="https://elfsightcdn.com/platform.js" async></script>
 
@@ -52,8 +63,7 @@
         .loader-brand { max-width: 210px; max-height: 90px; object-fit: contain; margin-bottom: 14px; }
         .loader-title { color: var(--text-dark); font-size: 1rem; font-weight: 700; margin-bottom: 34px; }
         .loader-progress-zone { position: relative; width: 240px; }
-        .loader-runner { position: absolute; left: 0%; top: -40px; width: 34px; height: 34px; transform: translateX(-50%); animation: spinLogo 2.5s linear infinite; transition: left 0.05s linear; }
-        @keyframes spinLogo { from { transform: translateX(-50%) rotate(0deg); } to { transform: translateX(-50%) rotate(360deg); } }
+        .loader-runner { position: absolute; left: 0%; top: 50%; width: 34px; height: 34px; transform: translate(-50%, -50%); transition: left 0.05s linear; z-index: 2; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
         .timeline-bar-container { width: 240px; height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
         .timeline-bar-progress { height: 100%; width: 0%; background: linear-gradient(90deg, #10b981, #34d399); border-radius: 10px; }
         .loader-pct { margin-top: 10px; font-size: 0.95rem; font-weight: 900; color: var(--lumi-green-dark); }
@@ -79,7 +89,7 @@
         .hero-slide { width: 33.333%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 4px 8px; }
         .hero-slide-text h2 { font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; }
         .hero-slide-text p { font-size: 0.85rem; opacity: 0.9; }
-        .hero-slide-img { width: 110px; height: 110px; object-fit: cover; border-radius: 16px; box-shadow: 0 6px 16px rgba(0,0,0,0.2); flex-shrink: 0; }
+        .hero-slide-img { width: 120px; height: 120px; object-fit: contain; background: transparent; border-radius: 0; box-shadow: none; flex-shrink: 0; }
         .hero-dots-container { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; background: rgba(0, 0, 0, 0.15); padding: 4px 8px; border-radius: 12px; }
         .hero-dot { width: 8px; height: 8px; background: rgba(255, 255, 255, 0.5); border-radius: 50%; cursor: pointer; transition: all 0.3s; }
         .hero-dot.active { background: #ffffff; width: 20px; border-radius: 10px; }
@@ -188,6 +198,10 @@
         .video-facade:hover .video-play-btn { transform: translate(-50%, -50%) scale(1.08); }
         .video-play-btn svg { width: 26px; height: 26px; fill: #ffffff; stroke: none; margin-left: 4px; }
         .video-facade-label { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.75); color: white; font-size: 0.72rem; font-weight: 700; padding: 4px 12px; border-radius: 14px; white-space: nowrap; }
+        #yt-player-slot, #video-zone iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        #video-fs-overlay { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); background: var(--lumi-green); color: white; border: none; font-size: 0.78rem; font-weight: 800; padding: 8px 16px; border-radius: 20px; cursor: pointer; z-index: 8; box-shadow: 0 4px 14px rgba(0,0,0,0.35); white-space: nowrap; }
+        #video-zone:fullscreen { background: #000; }
+        #video-zone:fullscreen iframe, #video-zone:fullscreen #yt-player-slot { width: 100vw; height: 100vh; }
         .cart-item-detail { font-size: 0.75rem; color: var(--text-muted); line-height: 1.2; }
         .cart-discount-text { font-size: 0.72rem; color: #059669; font-weight: 700; margin-top: 2px; }
 
@@ -200,7 +214,7 @@
 
 <!-- LOADER -->
 <div class="loader-overlay" id="loader">
-    <img src="https://drive.google.com/thumbnail?id=11K_bZZFZLuo31uZV_rPduXfdZfdzKSrW&sz=w600" class="loader-brand" alt="Lumi" onerror="this.style.display='none';document.getElementById('loader-brand-text').style.display='block';">
+    <img src="https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w600" class="loader-brand" alt="Lumi" onerror="this.style.display='none';document.getElementById('loader-brand-text').style.display='block';">
     <div id="loader-brand-text" style="display:none; font-size: 1.6rem; font-weight: 900; color: var(--text-dark); margin-bottom: 8px;">🌸 Lumi</div>
     <div class="loader-title">Cargando tu tienda Libre de Gluten...</div>
     <div class="loader-progress-zone">
@@ -228,24 +242,24 @@
                 <div class="hero-slides-wrapper" id="hero-track">
                     <div class="hero-slide">
                         <div class="hero-slide-text">
-                            <img src="https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w500" alt="Lumi" style="max-height: 46px; max-width: 170px; object-fit: contain; display: block; margin-bottom: 8px;" onerror="this.outerHTML='<h2>Lumi Sin Gluten</h2>';">
+                            <img src="https://drive.google.com/thumbnail?id=11K_bZZFZLuo31uZV_rPduXfdZfdzKSrW&sz=w500" alt="Lumi" style="max-height: 46px; max-width: 170px; object-fit: contain; display: block; margin-bottom: 8px;" onerror="this.outerHTML='<h2>Lumi Sin Gluten</h2>';">
                             <p>100% Libre de Gluten artesanal. ¡Pedí y recibilo en tu casa!</p>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80" class="hero-slide-img" alt="Milanesas">
+                        <img src="https://drive.google.com/thumbnail?id=1lkRhDRAXV6ySIn8lfsp6GU0FYyY7N1Mb&sz=w400" class="hero-slide-img" alt="Lumi Sin Gluten">
                     </div>
                     <div class="hero-slide">
                         <div class="hero-slide-text">
                             <h2>Descuentos por Kilo</h2>
                             <p>Aprovechá precios especiales acumulando kilos de Nalga y Pechuga.</p>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" class="hero-slide-img" alt="Hamburguesas">
+                        <img src="https://drive.google.com/thumbnail?id=1Rki9C23CuIlnLecgbRbfP6qTf9McG2Kv&sz=w400" class="hero-slide-img" alt="Descuentos por Kilo">
                     </div>
                     <div class="hero-slide">
                         <div class="hero-slide-text">
                             <h2>Envíos por Uber</h2>
                             <p>Despachamos directamente a tu domicilio de forma rápida y segura.</p>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=400&q=80" class="hero-slide-img" alt="Nuggets">
+                        <img src="https://drive.google.com/thumbnail?id=1uzCuai4cGDVnWKGgipescJAsXKd8jocS&sz=w400" class="hero-slide-img" alt="Envíos por Uber">
                     </div>
                 </div>
 
@@ -292,7 +306,7 @@
             <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.04);">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3102.5841445781615!2d-68.0700000!3d-38.9500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x960a31f133f67175%3A0x6338b3687355d911!2sEl%20Plumerillo%20%26%20Aconquija%2C%20Neuqu%C3%A9n!5e0!3m2!1ses!2sar!4v1700000000000" style="width:100%; height:260px; border:0;" allowfullscreen="" loading="lazy"></iframe>
                 <div style="padding: 16px;">
-                    <img src="https://drive.google.com/thumbnail?id=11K_bZZFZLuo31uZV_rPduXfdZfdzKSrW&sz=w500" alt="Lumi" style="max-height: 44px; max-width: 160px; object-fit: contain; display: block; margin-bottom: 8px;" onerror="this.style.display='none';">
+                    <img src="https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w500" alt="Lumi" style="max-height: 44px; max-width: 160px; object-fit: contain; display: block; margin-bottom: 8px;" onerror="this.style.display='none';">
                     <h3 style="font-size: 1.05rem; color: var(--text-dark); margin-bottom: 6px;">Lumi Sin Gluten</h3>
                     <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px;">
                         <strong>Dirección:</strong> El Plumerillo y Aconquija, Ciudad de Neuquén.
@@ -463,9 +477,10 @@
 <div class="modal-overlay" id="cart-modal">
     <div class="modal-card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <h2 style="display: flex; align-items: center; gap: 8px;">
+            <h2 style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <svg class="icn" viewBox="0 0 24 24" style="stroke: var(--lumi-green-dark);"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                Tu Pedido en Lumi Sin Gluten
+                <span>Tu Pedido en</span>
+                <img src="https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w400" alt="Lumi" style="max-height: 30px; max-width: 110px; object-fit: contain; vertical-align: middle;" onerror="this.outerHTML='<span>Lumi</span>';">
             </h2>
             <button class="btn-close" onclick="toggleCartModal(false)">✕</button>
         </div>
@@ -518,6 +533,16 @@
     </div>
 </div>
 
+<!-- BANNER DE INSTALACIÓN DE LA APP -->
+<div id="install-banner" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; background: #0f172a; color: white; padding: 12px 16px; z-index: 5000; box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+    <div style="display: flex; align-items: center; gap: 12px; max-width: 650px; margin: 0 auto;">
+        <img src="https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w120" alt="Lumi" style="width: 42px; height: 42px; object-fit: contain; background: #ffffff; border-radius: 10px; padding: 4px; flex-shrink: 0;" onerror="this.style.display='none';">
+        <div style="flex: 1; font-size: 0.8rem; line-height: 1.35;" id="install-banner-text"></div>
+        <button id="install-banner-btn" onclick="triggerInstall()" style="display: none; background: var(--lumi-green); color: white; border: none; padding: 9px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 800; cursor: pointer; white-space: nowrap; flex-shrink: 0;">Instalar App</button>
+        <button onclick="dismissInstallBanner()" style="background: none; border: none; color: #94a3b8; font-size: 1.1rem; cursor: pointer; flex-shrink: 0;">✕</button>
+    </div>
+</div>
+
 <script>
     const PHONE_DESTINO = "5492996742365";
 
@@ -549,8 +574,8 @@
     const GID_CURSOS = "BASE";                   // "BASE" = usa el enlace publicado tal cual (Cursos)
 
     /* DATOS DE RESPALDO (copia de la planilla actual) */
-    const FALLBACK_PRODUCTOS_CSV = `Producto,Etiqueta que se muestra en App,Precio Individual,Ingredientes,¿Cómo viene?,Presentación,,Imagen de Portada al Cargar,Img1,Img2,Img3,Img4,Peso por Unidad,Cantidad por Kilo,Ver Video
-Nuggets,,"$17.500,00","✨ Nuggets de Pechuga: El Snack Favorito, Ahora Saludable ✨
+    const FALLBACK_PRODUCTOS_CSV = `Orden de Mostrarse en App,Producto,Etiqueta que se muestra en App,Precio Individual,Formas de Cocción,Ingredientes,¿Cómo viene?,Presentación,,Imagen de Portada al Cargar,Img1,Img2,Img3,Img4,Peso por Unidad,Cantidad por Kilo,Ver Video
+1,Nuggets,,"$17.500,00",,"✨ Nuggets de Pechuga: El Snack Favorito, Ahora Saludable ✨
 
 ¡Imposible comer solo uno! 🐥
 
@@ -566,7 +591,7 @@ Energía Natural: La combinación de proteína pura y el toque de polenta es ide
 Sabor con Propósito: Sin conservantes ni saborizantes artificiales, solo especias naturales.
 
 👉 Ideales para una cena rápida, un picoteo divertido o para llevar en la vianda. Porque comer sano también puede (y debe) ser muy tentador. 🥗🎉",❄ Congelados,"Bandeja de Tergopol, correctamente divididos con Folex para su fácil retiro y cocción",,https://drive.google.com/file/d/1i-MxOzaGBUn_6dv8ZmWXba9w1qd-qtUt/view?usp=drive_link,,,,,40 a 50 gramos por Unidad,24 a 28 Unidades Aprox por Kg,
-Arrollado,,"$23.000,00","✨ **Arrollado de Pechuga de Pollo con Panceta Ahumada: Sabor Artesanal para Compartir** ✨
+2,Arrollado,,"$23.000,00",,"✨ **Arrollado de Pechuga de Pollo con Panceta Ahumada: Sabor Artesanal para Compartir** ✨
 
 ¡Una opción irresistible para cualquier ocasión! 🍗🥓
 
@@ -590,7 +615,7 @@ Además, viene **congelado y listo para cocinar** de la forma que más te guste:
 
 👉 Un clásico reinventado, con ingredientes de calidad y el auténtico sabor casero que distingue a **Lumi Libre de Gluten**. Porque comer rico, seguro y sin gluten también puede ser una experiencia para compartir. 💛
 ",❄ Congelados,"Envuelto en Film plástico, con hilo de chorizo. ",,https://drive.google.com/file/d/189QhUk1AJeTMwecxb3Ai8jW1dVcxtj1J/view?usp=drive_link,,,,,"Desde 1.1kg a 1.5kg de peso aproximado (Hacer la compra, luego se define el valor final del mismo)",1 Unidad,
-Milanesas de Pollo,,"$17.500,00","✨ Milanesas de Pechuga: Calidad Superior Libre de Gluten ✨
+3,Milanesas de Pollo,,"$17.500,00",,"✨ Milanesas de Pechuga: Calidad Superior Libre de Gluten ✨
 
 Las favoritas de la familia 💚.
 
@@ -606,7 +631,7 @@ Sabor que Encanta: La opción preferida de los más chicos, permitiéndoles disf
 Seguridad Garantizada: Una alternativa 100% libre de gluten diseñada para que puedas compartir una cena sana y confiable en familia 👨‍👩‍👧‍👦.
 
 👉 Crocantes por fuera, jugosas por dentro. La elección inteligente para quienes eligen lo natural y seguro. 🍗✨",❄ Congelados,"Bandeja de Tergopol, correctamente divididos con Folex para su fácil retiro y cocción",,https://drive.google.com/file/d/18W6bWbqBEU_GFzjKdtwLfDQPbYaZqDyG/view?usp=drive_link,https://drive.google.com/file/d/1F9QDSfSnhMfrzb0yCk5-eLQlfgC1UdkM/view?usp=drive_link,https://drive.google.com/file/d/1FhETp-KAV-uwQ9UImXYZYNuNOT6EwoyR/view?usp=drive_link,https://drive.google.com/file/d/1fARW8AJoBplo-LyWGawtXjRcijMjY_Pd/view?usp=drive_link,https://drive.google.com/file/d/1BJabIEDFQATTDH6HftNrQxBw_qbDN8fk/view?usp=drive_link,70 a 120g por Unidad,8 a 12 Unidades Aprox por Kg,https://youtu.be/ceE__8Oh4jg
-Milanesas de Carne,,"$35.500,00","🥩✨ Milanesas de Carne: El Sabor de Siempre, Libre de Gluten
+4,Milanesas de Carne,,"$35.500,00",,"🥩✨ Milanesas de Carne: El Sabor de Siempre, Libre de Gluten
 El clásico de la mesa argentina, ahora más saludable. 💚
 
 Elaboradas exclusivamente con Nalga de selección, un corte naturalmente magro y tierno, nuestras milanesas se destacan por su frescura. Las maceramos con perejil fresco, ajo natural y apenas una pizca de sal, respetando ese sabor casero que tanto nos gusta, sin aditivos innecesarios.
@@ -621,7 +646,7 @@ Seguridad y Confianza: Una alternativa 100% libre de gluten, pensada para que to
 Versatilidad Total: La solución perfecta para las viandas de los chicos o una cena rápida, rica y sana en familia 👨‍👩‍👧‍👦.
 
 👉 Textura increíble, sabor auténtico. Porque comer Libre de Gluten también es un placer para los sentidos. 🍽️✨",❄ Congelados,"Bandeja de Tergopol, correctamente divididos con Folex para su fácil retiro y cocción",,https://drive.google.com/file/d/1Ix_DJnzRBJy8rIgICVqKiMmOFgSlE8Gc/view?usp=drive_link,https://drive.google.com/file/d/1riMydPjpMiAWDy_p1Xu0ebsf_O5lUf5s/view?usp=drive_link,,,,70 a 120g por Unidad,8 a 12 Unidades Aprox por Kg,https://youtu.be/ceE__8Oh4jg
-Hamburguesas,,"$17.500,00","🍔🐔 Hamburguesas de Pechuga: 100% Pollo, 100% Libre de Gluten
+5,Hamburguesas,,"$17.500,00",,"🍔🐔 Hamburguesas de Pechuga: 100% Pollo, 100% Libre de Gluten
 Sabor real y practicidad para tu día a día. 💚
 
 Nuestras hamburguesas están elaboradas exclusivamente con pechuga de pollo seleccionada, garantizando un producto magro, tierno y libre de excesos. Las condimentamos de forma natural con perejil fresco, ajo en su punto justo y una pizca mínima de sal, logrando ese equilibrio casero que resalta la calidad de la materia prima.
@@ -636,7 +661,7 @@ La Favorita de los Chicos: Su textura suave y sabor equilibrado las convierten e
 Listas en Minutos: Gracias a su formato, son perfectas para resolver una comida en poco tiempo, ya sea al horno o a la plancha, siempre manteniendo su jugosidad.
 
 👉 Lo mejor del pollo en formato hamburguesa. Una elección práctica, sana y deliciosa para compartir en familia. 🏃‍♂️💪",❄ Congelados,Cada Medallon se encuentra cubierto de ambos lados con Folex para su fácil retiro y utilización. Presentación en Bandeja de Tergopol. ,,https://drive.google.com/file/d/18gfVrOeTT4sAb2G0dbTtmGKusPvklAal/view?usp=drive_link,,,,,120g por Unidad,8 Unidades por Kg,https://youtube.com/shorts/0IyejvyOxF0
-Panes,,"$15.000,00","🌾💜 Panes de Lentejas Sin Gluten
+6,Panes,,"$15.000,00",,"🌾💜 Panes de Lentejas Sin Gluten
 
 El aliado natural para la digestión y el bienestar femenino.
 
@@ -665,7 +690,7 @@ Porque no son solo un pan, son una forma práctica y deliciosa de cuidar tu dige
 Muchas mujeres ya los eligen como una solución natural frente al estreñimiento y como un apoyo diario para sentirse deshinchadas, activas y saludables.
 
 👉 Probá los panes de lentejas y sentí la diferencia en tu bienestar diario.",,,,https://drive.google.com/file/d/1yaKYfFMcza5M1BO79t_AVZGu7XARvnyh/view?usp=drive_link,https://drive.google.com/file/d/1nO7dS7eJFgrruP2ZnjpfGJvlqkaNudCj/view?usp=drive_link,https://drive.google.com/file/d/1IYt6dz8XRGzNAbD1NnL-CUQNyO9n4LbP/view?usp=drive_link,https://drive.google.com/file/d/1aViFdj5JSW4_nEbkBQC3NPNlwpVx9ZPj/view?usp=drive_link,https://drive.google.com/file/d/18p5r7edl95Fulh4JwSkXTsAJuwfsGlhw/view?usp=drive_link,,1 Unidad,https://youtube.com/shorts/ZGvQwMWOmzY
-Panes,,"$15.000,00","🌾✨ Panes de Garbanzo Sin Gluten
+7,Panes,,"$15.000,00",,"🌾✨ Panes de Garbanzo Sin Gluten
 
 Sabor natural que cuida tu salud.
 
@@ -690,7 +715,7 @@ Como base para sándwiches nutritivos con quesos, fiambres o vegetales.
 En almuerzos o cenas, reemplazando el pan común por una alternativa más saludable.
 
 👉 Elegí los panes de garbanzo para sumar sabor, nutrición y un aliado natural para cuidar tu salud cada día.",,,,https://drive.google.com/file/d/1HxD4rRXMjwcW8-iXAaC3x0mEC0a3_xv3/view?usp=drive_link,https://drive.google.com/file/d/1YYvQ8aecfE_C7lUD4rCqUdZ407nGM70K/view?usp=drive_link,https://drive.google.com/file/d/1FtQOlL-_qTTiPdkQ_ZQMXAuSlojTdnaJ/view?usp=drive_link,,,,1 Unidad,https://youtube.com/shorts/ZGvQwMWOmzY
-Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZuRknlI2tc/view?usp=drive_link,,,,,,1 Unidad,`;
+8,Panes,,"$23.000,00",,,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZuRknlI2tc/view?usp=drive_link,,,,,,1 Unidad,`;
     const FALLBACK_CURSOS_CSV = `Orden,Producto,Descripción,Link Referido,Imagen,Origen
 1,Guía Avanzada de Cocina Sin Gluten,"Descubre los secretos avanzados para dominar texturas perfectas y sabores irresistibles que sorprenderán a todos, sin sacrificar tu salud.",https://go.hotmart.com/I106078657D?dp=1,https://static-media.hotmart.com/_0TQ0PTe72ey__JShzNEVL3cj5U=/300x300/smart/filters:format(webp):background_color(white)/hotmart/product_pictures/5c5de059-850e-453a-9806-b93a5eb40242/DeepinScreenshot_Seleccionararea_20231113150319.png?w=920,Hotmart
 2,Cocina para Celiacos,Inicia desde cero y consigue en poco tiempo conocimientos avanzados en Cocina para Celiacos.,https://go.hotmart.com/W106082969F?ap=bea7,https://static-media.hotmart.com/RUlGw_RTfLiA3Gq4HgIqxcXr3Ws=/filters:background_color(white)/hotmart/product_pictures/77f4ea32-4539-4dd4-821f-807af02f8c45/CocinaparaCeliacos.jpg,Hotmart
@@ -836,13 +861,15 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
 
             const fallbackImg = 'https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png';
 
-            /* ESTRUCTURA DE COLUMNAS DE LA PESTAÑA PRODUCTOS:
-               A: Producto | B: Etiqueta que se muestra en App | C: Precio Individual
-               D: Ingredientes | E: ¿Cómo viene? | F: Presentación | G: (vacía)
-               H: Imagen de Portada al Cargar (la que se ve en el catálogo)
-               I-L: Img1 a Img4 (carrusel interno del detalle; se muestran las
-                    que estén cargadas; si no hay ninguna, se usa la portada)
-               M: Peso por Unidad | N: Cantidad por Kilo | O: Ver Video */
+            /* ESTRUCTURA DE COLUMNAS DE LA PESTAÑA PRODUCTOS (A a Q):
+               A: Orden de Mostrarse en App (número; define el orden del catálogo)
+               B: Producto | C: Etiqueta que se muestra en App | D: Precio Individual
+               E: Formas de Cocción (si tiene texto, aparece el botón naranja)
+               F: Ingredientes | G: ¿Cómo viene? | H: Presentación | I: (vacía)
+               J: Imagen de Portada al Cargar (la que se ve en el catálogo)
+               K-N: Img1 a Img4 (carrusel interno; se muestran las cargadas,
+                    y si no hay ninguna se usa la portada)
+               O: Peso por Unidad | P: Cantidad por Kilo | Q: Ver Video */
             const cover = driveToImg(o['Imagen de Portada al Cargar']) || fallbackImg;
             const internas = [];
             ['Img1','Img2','Img3','Img4'].forEach(k => {
@@ -856,7 +883,7 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
             const isUnit = /1\s*unidad/i.test(cantidad);
 
             products.push({
-                id: idx + 1,
+                orden: parseInt(o['Orden de Mostrarse en App']) || 999,
                 group: resolveGroup(o['Grupo Descuento'] || o['Grupo'] || '', producto + ' ' + title, isUnit),
                 title: title,
                 shortDesc: deriveShortDesc(desc, title),
@@ -869,12 +896,15 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
                 peso: o['Peso por Unidad'] || o['Peso x Unidad'] || '',
                 cantidad: cantidad,
                 badgeTag: o['Etiqueta que se muestra en App'] || '',
-                coccionHTML: formatDescHTML(o['Forma de Cocción'] || o['Cocción'] || ''),
+                coccionHTML: formatDescHTML(o['Formas de Cocción'] || o['Forma de Cocción'] || o['Cocción'] || ''),
                 youtubeId: ytToEmbedId(o['Ver Video']),
                 cover: cover,
                 images: images
             });
         });
+        /* Orden del catálogo según la columna A; los ids internos se asignan después */
+        products.sort((a, b) => a.orden - b.orden);
+        products.forEach((p, i) => { p.id = i + 1; });
         return products;
     }
 
@@ -912,10 +942,95 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
         loadDataFromSheet();
 
         runLoader();
+        setupInstallExperience();
         if (PROMO_INICIO.trim().toLowerCase() === 'activado') {
             setTimeout(() => { document.getElementById('promo-image-modal').classList.add('active'); }, 2800);
         }
     });
+
+    /* ============================================================
+       APP INSTALABLE (Agregar a pantalla de inicio)
+       ------------------------------------------------------------
+       - Android (Chrome): aparece el banner con botón "Instalar App"
+         que dispara la instalación nativa. Si el navegador no ofrece
+         instalación nativa, el banner explica cómo hacerlo a mano.
+       - iPhone: Apple no permite instalación con un botón; el banner
+         guía el único camino que existe: en Safari, Compartir >
+         "Agregar a pantalla de inicio". Si están en otro navegador
+         de iPhone, el banner indica abrir el sitio en Safari.
+       - Si la app ya está instalada (modo standalone), no molesta.
+       ============================================================ */
+    let deferredInstallPrompt = null;
+
+    function setupInstallExperience() {
+        // Manifest generado en vivo (nombre, colores e íconos de la app instalada)
+        try {
+            const manifest = {
+                name: 'Lumi Sin Gluten',
+                short_name: 'Lumi',
+                start_url: location.href.split('#')[0],
+                display: 'standalone',
+                background_color: '#ffffff',
+                theme_color: '#10b981',
+                icons: [
+                    { src: 'https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w192', sizes: '192x192', type: 'image/png' },
+                    { src: 'https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w512', sizes: '512x512', type: 'image/png' }
+                ]
+            };
+            const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = URL.createObjectURL(blob);
+            document.head.appendChild(link);
+        } catch (e) { /* sin manifest, los meta tags del head siguen cubriendo lo básico */ }
+
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        if (isStandalone || localStorage.getItem('lumi_install_dismissed')) return;
+
+        const ua = navigator.userAgent;
+        const isIOS = /iPhone|iPad|iPod/.test(ua);
+        const isAndroid = /Android/.test(ua);
+        const isSafariIOS = isIOS && /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS/.test(ua);
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredInstallPrompt = e;
+            showInstallBanner('Instalá la app de <b>Lumi</b> en tu celular: pedidos más rápidos y acceso con un toque.', true);
+        });
+
+        if (isIOS) {
+            const texto = isSafariIOS
+                ? 'Instalá <b>Lumi</b> en tu iPhone: tocá el botón <b>Compartir</b> (el cuadrado con flecha) y elegí <b>"Agregar a pantalla de inicio"</b>.'
+                : 'Para instalar <b>Lumi</b> en tu iPhone: abrí este sitio en <b>Safari</b>, tocá <b>Compartir</b> y elegí <b>"Agregar a pantalla de inicio"</b>.';
+            setTimeout(() => showInstallBanner(texto, false), 3500);
+        } else if (isAndroid) {
+            // Si a los 6 seg Chrome no ofreció instalación nativa, guiar el camino manual
+            setTimeout(() => {
+                if (!deferredInstallPrompt && document.getElementById('install-banner').style.display === 'none') {
+                    showInstallBanner('Instalá <b>Lumi</b> en tu celular: abrí el menú <b>⋮</b> del navegador y elegí <b>"Agregar a pantalla principal"</b>.', false);
+                }
+            }, 6000);
+        }
+    }
+
+    function showInstallBanner(html, withButton) {
+        const banner = document.getElementById('install-banner');
+        document.getElementById('install-banner-text').innerHTML = html;
+        document.getElementById('install-banner-btn').style.display = withButton ? 'inline-flex' : 'none';
+        banner.style.display = 'block';
+    }
+
+    function triggerInstall() {
+        if (deferredInstallPrompt) {
+            deferredInstallPrompt.prompt();
+            deferredInstallPrompt.userChoice.finally(() => { deferredInstallPrompt = null; dismissInstallBanner(); });
+        }
+    }
+
+    function dismissInstallBanner() {
+        document.getElementById('install-banner').style.display = 'none';
+        localStorage.setItem('lumi_install_dismissed', '1');
+    }
 
     /* Barra de carga 0% a 100%: la barra se llena y el logo Sin Gluten
        avanza sobre ella acompañando el porcentaje. */
@@ -1237,7 +1352,7 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
         let arrowsHTML = p.images.length > 1 ? `
                 <button class="auto-carousel-arrow left" onclick="manualMoveDetailSlide(-1)">❮</button>
                 <button class="auto-carousel-arrow right" onclick="manualMoveDetailSlide(1)">❯</button>` : '';
-        let videoHTML = p.youtubeId ? `<div style="margin-top: 12px;"><strong style="font-size: 0.88rem; color: var(--text-dark);">Video explicativo del producto:</strong><div class="video-container-modal"><div class="video-facade" onclick="playProductVideo('${p.youtubeId}', this)"><img src="https://i.ytimg.com/vi/${p.youtubeId}/hqdefault.jpg" alt="Video de ${p.title}" loading="lazy"><div class="video-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="video-facade-label">Tocá para ver en pantalla completa</div></div></div><a href="https://www.youtube.com/watch?v=${p.youtubeId}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 5px; font-size: 0.78rem; font-weight: 700; color: #dc2626; text-decoration: none; margin-top: 2px;">${ICONS.arrow} Si el video no carga, miralo directo en YouTube</a></div>` : '';
+        let videoHTML = p.youtubeId ? `<div style="margin-top: 12px;"><strong style="font-size: 0.88rem; color: var(--text-dark);">Video explicativo del producto:</strong><div class="video-container-modal" id="video-zone"><div class="video-facade" onclick="tapStartVideo('${p.youtubeId}')"><img src="https://i.ytimg.com/vi/${p.youtubeId}/hqdefault.jpg" alt="Video de ${p.title}" loading="lazy"><div class="video-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="video-facade-label">Tocá para ver en pantalla completa</div></div></div><a href="https://www.youtube.com/watch?v=${p.youtubeId}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 5px; font-size: 0.78rem; font-weight: 700; color: #dc2626; text-decoration: none; margin-top: 2px;">${ICONS.arrow} Si el video no carga, miralo directo en YouTube</a></div>` : '';
 
         let dataLines = '';
         if (p.comoViene) dataLines += `<div style="margin-bottom:4px;"><strong>¿Cómo viene?</strong> ${p.comoViene}</div>`;
@@ -1288,6 +1403,7 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
         `;
 
         updateModalPriceCalculation(p.id); updateCartUI();
+        if (p.youtubeId) setupVideoAutoScroll(p.youtubeId);
         if (p.images.length > 1) {
             detailCarouselInterval = setInterval(() => {
                 detailCarouselIndex = (detailCarouselIndex + 1) % p.images.length;
@@ -1322,6 +1438,7 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
     function closeDetailModal() {
         if (detailCarouselInterval) clearInterval(detailCarouselInterval);
         currentOpenProductId = null;
+        cleanupVideo();
         document.getElementById('detail-modal').classList.remove('active');
     }
 
@@ -1350,23 +1467,128 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
 
     function closeCookingPopup() { document.getElementById('cooking-popup-modal').classList.remove('active'); }
 
-    /* =============== VIDEO EN PANTALLA COMPLETA =============== */
-    function playProductVideo(videoId, facadeEl) {
-        const wrap = facadeEl.parentElement; // .video-container-modal
+    /* =============== VIDEO: AUTOPLAY AL SCROLL + PANTALLA COMPLETA ===============
+       - Al desplazarse hasta el video, arranca solo (silenciado: es la única
+         forma en que los navegadores permiten reproducción automática).
+       - La pastilla "Tocá para pantalla completa con sonido" activa audio,
+         pide máxima calidad y abre pantalla completa SIN reiniciar el video.
+       - La pantalla completa requiere sí o sí un toque del usuario: es una
+         regla de seguridad de todos los navegadores, no se puede automatizar. */
 
-        // Crear el reproductor con autoplay (el toque del usuario lo habilita con sonido)
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&fs=1&vq=hd1080`;
-        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen');
-        iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-        iframe.setAttribute('allowfullscreen', '');
-        wrap.innerHTML = '';
-        wrap.appendChild(iframe);
+    let ytApiLoading = false;
+    let ytPendingInit = null;
+    let currentPlayer = null;
+    let videoObserver = null;
+    let videoStarted = false;
+    let ytFallbackTimer = null;
 
-        // Pedir pantalla completa sobre el contenedor (Android / computadoras).
-        // En iPhone, YouTube abre solo su reproductor nativo a pantalla completa al iniciar.
-        const req = wrap.requestFullscreen || wrap.webkitRequestFullscreen || wrap.msRequestFullscreen;
-        if (req) { try { req.call(wrap); } catch (e) { /* si el navegador lo bloquea, sigue reproduciendo en la ficha */ } }
+    function ensureYTApi(cb) {
+        if (window.YT && window.YT.Player) { cb(); return; }
+        ytPendingInit = cb;
+        if (!ytApiLoading) {
+            ytApiLoading = true;
+            const s = document.createElement('script');
+            s.src = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(s);
+        }
+    }
+    window.onYouTubeIframeAPIReady = function () {
+        if (ytPendingInit) { const cb = ytPendingInit; ytPendingInit = null; cb(); }
+    };
+
+    function setupVideoAutoScroll(videoId) {
+        cleanupVideo();
+        const zone = document.getElementById('video-zone');
+        const scrollRoot = document.querySelector('#detail-modal .modal-card');
+        if (!zone || !('IntersectionObserver' in window)) return;
+        videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(en => {
+                if (en.isIntersecting && !videoStarted) {
+                    videoStarted = true;
+                    startInlineVideo(videoId, true); // true = arranque silencioso automático
+                    if (videoObserver) videoObserver.disconnect();
+                }
+            });
+        }, { root: scrollRoot, threshold: 0.55 });
+        videoObserver.observe(zone);
+    }
+
+    function tapStartVideo(videoId) {
+        // Toque directo sobre la miniatura: arranca CON sonido y a pantalla completa
+        videoStarted = true;
+        if (videoObserver) videoObserver.disconnect();
+        startInlineVideo(videoId, false);
+        requestZoneFullscreen();
+    }
+
+    function startInlineVideo(videoId, muted) {
+        const zone = document.getElementById('video-zone');
+        if (!zone) return;
+        zone.innerHTML = `
+            <div id="yt-player-slot"></div>
+            <button id="video-fs-overlay" onclick="goFullscreenWithSound()">Tocá para pantalla completa con sonido</button>
+        `;
+
+        // Respaldo: si la API de YouTube no carga en 3 seg, usar iframe simple
+        ytFallbackTimer = setTimeout(() => { startPlainIframe(videoId, muted); }, 3000);
+
+        ensureYTApi(() => {
+            if (ytFallbackTimer) { clearTimeout(ytFallbackTimer); ytFallbackTimer = null; }
+            const slot = document.getElementById('yt-player-slot');
+            if (!slot) return;
+            currentPlayer = new YT.Player('yt-player-slot', {
+                width: '100%', height: '100%', videoId: videoId,
+                playerVars: { autoplay: 1, mute: muted ? 1 : 0, rel: 0, fs: 1, playsinline: 1 },
+                events: {
+                    onReady: (e) => {
+                        if (muted) e.target.mute(); else e.target.unMute();
+                        try { e.target.setPlaybackQuality('hd1080'); } catch (_) {}
+                        e.target.playVideo();
+                    }
+                }
+            });
+        });
+    }
+
+    function startPlainIframe(videoId, muted) {
+        const zone = document.getElementById('video-zone');
+        if (!zone) return;
+        currentPlayer = null;
+        zone.innerHTML = `
+            <iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=${muted ? 1 : 0}&rel=0&fs=1&playsinline=1&vq=hd1080"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            ${muted ? '<button id="video-fs-overlay" onclick="goFullscreenWithSound()">Tocá para pantalla completa con sonido</button>' : ''}
+        `;
+    }
+
+    function goFullscreenWithSound() {
+        if (currentPlayer) {
+            try { currentPlayer.unMute(); currentPlayer.setPlaybackQuality('hd1080'); } catch (_) {}
+        } else {
+            // Respaldo sin API: recargar el iframe con sonido
+            const zone = document.getElementById('video-zone');
+            const ifr = zone ? zone.querySelector('iframe') : null;
+            if (ifr) ifr.src = ifr.src.replace('mute=1', 'mute=0');
+        }
+        requestZoneFullscreen();
+        const ov = document.getElementById('video-fs-overlay');
+        if (ov) ov.style.display = 'none';
+    }
+
+    function requestZoneFullscreen() {
+        const zone = document.getElementById('video-zone');
+        if (!zone) return;
+        const req = zone.requestFullscreen || zone.webkitRequestFullscreen || zone.msRequestFullscreen;
+        if (req) { try { req.call(zone); } catch (e) { /* si el navegador lo bloquea, sigue en la ficha */ } }
+    }
+
+    function cleanupVideo() {
+        videoStarted = false;
+        if (videoObserver) { videoObserver.disconnect(); videoObserver = null; }
+        if (ytFallbackTimer) { clearTimeout(ytFallbackTimer); ytFallbackTimer = null; }
+        if (currentPlayer && currentPlayer.destroy) { try { currentPlayer.destroy(); } catch (_) {} }
+        currentPlayer = null;
     }
 
     /* =============== MODAL CARRITO =============== */
