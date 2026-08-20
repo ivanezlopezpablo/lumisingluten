@@ -49,12 +49,14 @@
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
         .loader-overlay.hidden { opacity: 0; visibility: hidden; }
-        .gluten-logo-spin { width: 110px; height: 110px; animation: spinLogo 3s linear infinite; margin-bottom: 24px; }
-        @keyframes spinLogo { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .loader-title { color: var(--text-dark); font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
-        .timeline-bar-container { width: 220px; height: 6px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
-        .timeline-bar-progress { height: 100%; width: 0%; background: linear-gradient(90deg, #10b981, #34d399); border-radius: 10px; animation: fillProgress 2.5s ease-in-out forwards; }
-        @keyframes fillProgress { 0% { width: 0%; } 50% { width: 65%; } 100% { width: 100%; } }
+        .loader-brand { max-width: 210px; max-height: 90px; object-fit: contain; margin-bottom: 14px; }
+        .loader-title { color: var(--text-dark); font-size: 1rem; font-weight: 700; margin-bottom: 34px; }
+        .loader-progress-zone { position: relative; width: 240px; }
+        .loader-runner { position: absolute; left: 0%; top: -40px; width: 34px; height: 34px; transform: translateX(-50%); animation: spinLogo 2.5s linear infinite; transition: left 0.05s linear; }
+        @keyframes spinLogo { from { transform: translateX(-50%) rotate(0deg); } to { transform: translateX(-50%) rotate(360deg); } }
+        .timeline-bar-container { width: 240px; height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
+        .timeline-bar-progress { height: 100%; width: 0%; background: linear-gradient(90deg, #10b981, #34d399); border-radius: 10px; }
+        .loader-pct { margin-top: 10px; font-size: 0.95rem; font-weight: 900; color: var(--lumi-green-dark); }
 
         /* CABECERAS */
         .banner-header-orange { background: #f97316; color: white; padding: 16px 20px; border-radius: 16px; margin-bottom: 16px; }
@@ -180,6 +182,12 @@
 
         .video-container-modal { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin: 12px 0; background: #000; }
         .video-container-modal iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .video-facade { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; }
+        .video-facade img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .video-play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 62px; height: 62px; background: rgba(220, 38, 38, 0.92); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(0,0,0,0.4); transition: transform 0.2s; }
+        .video-facade:hover .video-play-btn { transform: translate(-50%, -50%) scale(1.08); }
+        .video-play-btn svg { width: 26px; height: 26px; fill: #ffffff; stroke: none; margin-left: 4px; }
+        .video-facade-label { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.75); color: white; font-size: 0.72rem; font-weight: 700; padding: 4px 12px; border-radius: 14px; white-space: nowrap; }
         .cart-item-detail { font-size: 0.75rem; color: var(--text-muted); line-height: 1.2; }
         .cart-discount-text { font-size: 0.72rem; color: #059669; font-weight: 700; margin-top: 2px; }
 
@@ -192,11 +200,16 @@
 
 <!-- LOADER -->
 <div class="loader-overlay" id="loader">
-    <img src="https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png" class="gluten-logo-spin" alt="Sin TACC Logo">
-    <div class="loader-title">Cargando Lumi Sin Gluten...</div>
-    <div class="timeline-bar-container">
-        <div class="timeline-bar-progress"></div>
+    <img src="https://drive.google.com/thumbnail?id=11K_bZZFZLuo31uZV_rPduXfdZfdzKSrW&sz=w600" class="loader-brand" alt="Lumi" onerror="this.style.display='none';document.getElementById('loader-brand-text').style.display='block';">
+    <div id="loader-brand-text" style="display:none; font-size: 1.6rem; font-weight: 900; color: var(--text-dark); margin-bottom: 8px;">🌸 Lumi</div>
+    <div class="loader-title">Cargando tu tienda Libre de Gluten...</div>
+    <div class="loader-progress-zone">
+        <img src="https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png" class="loader-runner" id="loader-runner" alt="Sin Gluten">
+        <div class="timeline-bar-container">
+            <div class="timeline-bar-progress" id="loader-fill"></div>
+        </div>
     </div>
+    <div class="loader-pct" id="loader-pct">0%</div>
 </div>
 
 <div class="app-container">
@@ -215,7 +228,7 @@
                 <div class="hero-slides-wrapper" id="hero-track">
                     <div class="hero-slide">
                         <div class="hero-slide-text">
-                            <h2>Lumi Sin Gluten</h2>
+                            <img src="https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w500" alt="Lumi" style="max-height: 46px; max-width: 170px; object-fit: contain; display: block; margin-bottom: 8px;" onerror="this.outerHTML='<h2>Lumi Sin Gluten</h2>';">
                             <p>100% Libre de Gluten artesanal. ¡Pedí y recibilo en tu casa!</p>
                         </div>
                         <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80" class="hero-slide-img" alt="Milanesas">
@@ -279,6 +292,7 @@
             <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.04);">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3102.5841445781615!2d-68.0700000!3d-38.9500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x960a31f133f67175%3A0x6338b3687355d911!2sEl%20Plumerillo%20%26%20Aconquija%2C%20Neuqu%C3%A9n!5e0!3m2!1ses!2sar!4v1700000000000" style="width:100%; height:260px; border:0;" allowfullscreen="" loading="lazy"></iframe>
                 <div style="padding: 16px;">
+                    <img src="https://drive.google.com/thumbnail?id=11K_bZZFZLuo31uZV_rPduXfdZfdzKSrW&sz=w500" alt="Lumi" style="max-height: 44px; max-width: 160px; object-fit: contain; display: block; margin-bottom: 8px;" onerror="this.style.display='none';">
                     <h3 style="font-size: 1.05rem; color: var(--text-dark); margin-bottom: 6px;">Lumi Sin Gluten</h3>
                     <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px;">
                         <strong>Dirección:</strong> El Plumerillo y Aconquija, Ciudad de Neuquén.
@@ -470,7 +484,7 @@
             </select>
 
             <div id="cuit-field-wrapper" style="display: none;">
-                <input type="text" id="user-cuit" class="form-control" placeholder="CUIT / CUIL (Opcional)">
+                <input type="text" id="user-cuit" class="form-control" placeholder="CUIT / CUIL * (Obligatorio para envíos)">
             </div>
 
             <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; margin-bottom: 4px;">
@@ -897,11 +911,32 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
         setDefaultPickupDate();
         loadDataFromSheet();
 
-        setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 2000);
+        runLoader();
         if (PROMO_INICIO.trim().toLowerCase() === 'activado') {
-            setTimeout(() => { document.getElementById('promo-image-modal').classList.add('active'); }, 2500);
+            setTimeout(() => { document.getElementById('promo-image-modal').classList.add('active'); }, 2800);
         }
     });
+
+    /* Barra de carga 0% a 100%: la barra se llena y el logo Sin Gluten
+       avanza sobre ella acompañando el porcentaje. */
+    function runLoader() {
+        const fill = document.getElementById('loader-fill');
+        const runner = document.getElementById('loader-runner');
+        const pctEl = document.getElementById('loader-pct');
+        const loader = document.getElementById('loader');
+        let p = 0;
+        const timer = setInterval(() => {
+            p += 2;
+            if (p > 100) p = 100;
+            fill.style.width = p + '%';
+            runner.style.left = p + '%';
+            pctEl.innerText = p + '%';
+            if (p >= 100) {
+                clearInterval(timer);
+                setTimeout(() => loader.classList.add('hidden'), 350);
+            }
+        }, 42); /* ~2,1 segundos en total */
+    }
 
     function closePromoImageModal() { document.getElementById('promo-image-modal').classList.remove('active'); }
 
@@ -1202,7 +1237,7 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
         let arrowsHTML = p.images.length > 1 ? `
                 <button class="auto-carousel-arrow left" onclick="manualMoveDetailSlide(-1)">❮</button>
                 <button class="auto-carousel-arrow right" onclick="manualMoveDetailSlide(1)">❯</button>` : '';
-        let videoHTML = p.youtubeId ? `<div style="margin-top: 12px;"><strong style="font-size: 0.88rem; color: var(--text-dark);">Video explicativo del producto:</strong><div class="video-container-modal"><iframe src="https://www.youtube-nocookie.com/embed/${p.youtubeId}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><a href="https://www.youtube.com/watch?v=${p.youtubeId}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 5px; font-size: 0.78rem; font-weight: 700; color: #dc2626; text-decoration: none; margin-top: 2px;">${ICONS.arrow} Si el video no carga, miralo directo en YouTube</a></div>` : '';
+        let videoHTML = p.youtubeId ? `<div style="margin-top: 12px;"><strong style="font-size: 0.88rem; color: var(--text-dark);">Video explicativo del producto:</strong><div class="video-container-modal"><div class="video-facade" onclick="playProductVideo('${p.youtubeId}', this)"><img src="https://i.ytimg.com/vi/${p.youtubeId}/hqdefault.jpg" alt="Video de ${p.title}" loading="lazy"><div class="video-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="video-facade-label">Tocá para ver en pantalla completa</div></div></div><a href="https://www.youtube.com/watch?v=${p.youtubeId}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 5px; font-size: 0.78rem; font-weight: 700; color: #dc2626; text-decoration: none; margin-top: 2px;">${ICONS.arrow} Si el video no carga, miralo directo en YouTube</a></div>` : '';
 
         let dataLines = '';
         if (p.comoViene) dataLines += `<div style="margin-bottom:4px;"><strong>¿Cómo viene?</strong> ${p.comoViene}</div>`;
@@ -1315,6 +1350,25 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
 
     function closeCookingPopup() { document.getElementById('cooking-popup-modal').classList.remove('active'); }
 
+    /* =============== VIDEO EN PANTALLA COMPLETA =============== */
+    function playProductVideo(videoId, facadeEl) {
+        const wrap = facadeEl.parentElement; // .video-container-modal
+
+        // Crear el reproductor con autoplay (el toque del usuario lo habilita con sonido)
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&fs=1&vq=hd1080`;
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen');
+        iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        iframe.setAttribute('allowfullscreen', '');
+        wrap.innerHTML = '';
+        wrap.appendChild(iframe);
+
+        // Pedir pantalla completa sobre el contenedor (Android / computadoras).
+        // En iPhone, YouTube abre solo su reproductor nativo a pantalla completa al iniciar.
+        const req = wrap.requestFullscreen || wrap.webkitRequestFullscreen || wrap.msRequestFullscreen;
+        if (req) { try { req.call(wrap); } catch (e) { /* si el navegador lo bloquea, sigue reproduciendo en la ficha */ } }
+    }
+
     /* =============== MODAL CARRITO =============== */
     function toggleCartModal(show) {
         const modal = document.getElementById('cart-modal');
@@ -1423,6 +1477,7 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
         const notes = notesField ? notesField.value.trim() : "";
 
         if (!name || !phone) { alert("Completa Nombre y Teléfono obligatorios."); return; }
+        if (deliveryType === 'Envío por Uber' && !cuit) { alert("Para envíos por Uber, el CUIT / CUIL es obligatorio."); return; }
         if (deliveryType === 'Envío por Uber' && !address) { alert("Ingresá la dirección de entrega para el envío por Uber."); return; }
 
         let subtotal = 0, totalOriginalBase = 0, itemsDetails = [];
@@ -1461,7 +1516,7 @@ Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZ
 
         const actionText = deliveryType === 'Envío por Uber' ? 'envío' : 'retiro';
 
-        let message = `🌱 *NUEVO PEDIDO REGISTRADO - LUMI SIN GLUTEN*\n===============================\n\n`;
+        let message = `*NUEVO PEDIDO REGISTRADO - 🌸Lumi*\n=============================\n\n`;
         message += `👤 *CLIENTE:* ${name}\n📞 *TELÉFONO:* ${phone}\n`;
         if (deliveryType === 'Envío por Uber' && cuit) message += `🧾 *CUIT/CUIL:* ${cuit}\n`;
         message += `🛵 *MODALIDAD:* ${deliveryType}\n🕒 *${actionText.toUpperCase()}:* ${formattedDateStr} a las ${pickupTimeExact} hs aprox.\n💳 *MEDIO DE PAGO:* ${paymentType}\n`;
