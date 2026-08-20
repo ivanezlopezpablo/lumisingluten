@@ -131,6 +131,7 @@
 
         html, body { width: 100%; height: 100%; background-color: #ffffff; color: #333333; overflow-x: hidden; }
         body { display: flex; justify-content: center; align-items: flex-start; }
+        body.promo-open { overflow: hidden; }
 
         /* Espacio inferior: deja lugar libre para la barra de navegación (65px)
            + la barra flotante de Mi Carrito (~50px) + un respiro extra, así el
@@ -253,29 +254,62 @@
         .cart-summary { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; margin: 14px 0; display: flex; flex-direction: column; gap: 10px; }
         .form-control { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; margin-bottom: 10px; outline: none; background: #ffffff; }
 
-        /* POP-UP PROMO */
-        .promo-image-card {
-            position: relative; width: 100%; max-width: 340px;
-            border-radius: 20px; overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-            background: #ffffff;
+        /* ============================================================
+           POP-UP PROMOCIONAL DE INICIO (PANTALLA COMPLETA)
+           ------------------------------------------------------------
+           Ocupa el 100% de la pantalla en cualquier dispositivo.
+           Todo su contenido (título, subtexto, imagen, botón y estado
+           Activado/Desactivado) se controla desde la pestaña Popup
+           de la planilla de Google Sheets.
+           ============================================================ */
+        .promo-fs-overlay {
+            position: fixed; inset: 0;
+            width: 100vw; height: 100vh; height: 100dvh;
+            background: #0f172a; z-index: 6000;
+            display: none;
         }
-        .promo-image-card img.promo-img { display: block; width: 100%; height: auto; }
-        .promo-close-btn {
-            position: absolute; top: 10px; right: 10px;
-            background: rgba(15, 23, 42, 0.65); color: white; border: none;
-            width: 32px; height: 32px; border-radius: 50%;
-            font-size: 1rem; cursor: pointer; z-index: 5;
+        .promo-fs-overlay.active { display: block; animation: promoFadeIn 0.35s ease; }
+        @keyframes promoFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .promo-fs-img {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center top;
+        }
+        .promo-fs-shade {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(15,23,42,0.45) 0%, rgba(15,23,42,0) 30%, rgba(15,23,42,0) 52%, rgba(15,23,42,0.88) 100%);
+            pointer-events: none;
+        }
+        .promo-fs-close {
+            position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: 14px;
+            background: rgba(15, 23, 42, 0.65); color: white; border: 1px solid rgba(255,255,255,0.25);
+            width: 40px; height: 40px; border-radius: 50%;
+            font-size: 1.05rem; cursor: pointer; z-index: 6;
             display: flex; align-items: center; justify-content: center;
         }
-        .promo-download-btn {
-            position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
-            width: calc(100% - 40px);
-            background: var(--lumi-green); color: white; text-decoration: none;
-            padding: 13px 18px; border-radius: 12px;
-            font-size: 0.98rem; font-weight: 800; text-align: center;
+        .promo-fs-content {
+            position: absolute; left: 0; right: 0; bottom: 0; z-index: 5;
+            padding: 20px 22px calc(26px + env(safe-area-inset-bottom, 0px)) 22px;
+            color: white; text-align: center;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .promo-fs-content h2 {
+            font-size: clamp(1.4rem, 5.5vw, 2.1rem); font-weight: 900;
+            line-height: 1.15; margin-bottom: 8px;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.55);
+        }
+        .promo-fs-content p {
+            font-size: clamp(0.9rem, 3.6vw, 1.05rem); opacity: 0.95;
+            line-height: 1.35; margin-bottom: 18px; max-width: 520px;
+            text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+        }
+        .promo-fs-btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            box-shadow: 0 8px 22px rgba(16, 185, 129, 0.5);
+            width: 100%; max-width: 420px;
+            background: var(--lumi-green); color: white; text-decoration: none;
+            padding: 15px 20px; border-radius: 14px;
+            font-size: 1.02rem; font-weight: 800;
+            box-shadow: 0 10px 28px rgba(16, 185, 129, 0.5);
         }
 
         .auto-carousel-container { position: relative; width: 100%; max-width: 340px; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; margin: 0 auto 12px auto; background: #f1f5f9; }
@@ -487,14 +521,27 @@
     </div>
 </div>
 
-<!-- POP-UP PROMOCIONAL DE INICIO -->
-<div class="modal-overlay pop-over-modal" id="promo-image-modal">
-    <div class="promo-image-card">
-        <button class="promo-close-btn" onclick="closePromoImageModal()" aria-label="Cerrar">✕</button>
-        <img src="https://img.magnific.com/psd-gratis/diseno-plantillas-supermercados_23-2151822524.jpg?semt=ais_hybrid&w=740&q=80" class="promo-img" alt="Promoción 🌸Lumi Sin Gluten">
-        <a href="https://app.hotmart.com/" target="_blank" class="promo-download-btn" onclick="closePromoImageModal()">
+<!-- ============================================================
+     POP-UP PROMOCIONAL DE INICIO A PANTALLA COMPLETA
+     ------------------------------------------------------------
+     100% controlado desde la pestaña "Popup" del Google Sheet:
+     Columna A: Nombre de Texto  (título grande)
+     Columna B: Subtexto         (frase debajo del título)
+     Columna C: Imagen (URL)     (imagen de fondo a pantalla completa)
+     Columna D: Texto del Botón  (lo que dice el botón)
+     Columna E: URL Botón        (a dónde lleva el botón)
+     Columna F: Situación        (Activado = se muestra / Desactivado = no)
+     ============================================================ -->
+<div class="promo-fs-overlay" id="promo-image-modal" role="dialog" aria-modal="true" aria-label="Promoción">
+    <img id="promo-fs-img" class="promo-fs-img" src="" alt="Promoción 🌸Lumi Sin Gluten" onerror="this.style.display='none';">
+    <div class="promo-fs-shade"></div>
+    <button class="promo-fs-close" onclick="closePromoImageModal()" aria-label="Cerrar">✕</button>
+    <div class="promo-fs-content">
+        <h2 id="promo-fs-title"></h2>
+        <p id="promo-fs-sub"></p>
+        <a id="promo-fs-btn" class="promo-fs-btn" href="#" target="_blank" rel="noopener" onclick="closePromoImageModal()">
             <svg class="icn" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span>Descargar Programa</span>
+            <span id="promo-fs-btn-text">Ver más</span>
         </a>
     </div>
 </div>
@@ -676,24 +723,22 @@
     const PHONE_DESTINO = "5492996742365";
 
     /* ============================================================
-       POP-UP PROMOCIONAL DE INICIO (imagen + Descargar Programa)
-       ------------------------------------------------------------
-       Escribí "Activado" para que aparezca al abrir la app,
-       o "Desactivado" para ocultarlo por completo.
-       ============================================================ */
-    const PROMO_INICIO = "Desactivado";
-
-    /* ============================================================
        CONEXIÓN CON GOOGLE SHEETS (PLANILLA PUBLICADA)
        ------------------------------------------------------------
-       PUB_BASE es tu enlace publicado. Ese enlace, sin parámetros,
-       devuelve la pestaña CURSOS (confirmado), por eso GID_CURSOS
-       está en "BASE" y ya carga en vivo sin configurar nada.
+       PUB_BASE es tu enlace publicado. Cada pestaña se identifica
+       con su número de gid (se ve al final de la URL después de
+       #gid= cuando hacés clic en la pestaña dentro de la planilla).
 
-       Para que PRODUCTOS también cargue en vivo: abrí la planilla
-       en el navegador, hacé clic en la pestaña Productos y copiá el
-       número que aparece al final de la URL después de  #gid= .
-       Pegá ese número en GID_PRODUCTOS reemplazando el texto.
+       - GID_PRODUCTOS: pestaña Productos (catálogo).
+       - GID_CURSOS: pestaña Cursos. "BASE" usa el enlace publicado
+         tal cual; si esa pestaña base dejó de ser Cursos, pegá acá
+         el gid correcto de la pestaña Cursos.
+       - GID_POPUP: pestaña del Pop-up promocional de inicio, con
+         las columnas: Nombre de Texto | Subtexto | Imagen (URL) |
+         Texto del Botón | URL Botón | Situación (Activado /
+         Desactivado). Escribí "Activado" en la columna F para que
+         el pop-up aparezca a pantalla completa al abrir la app, o
+         "Desactivado" para ocultarlo. Todo se controla desde ahí.
 
        Si algo falla o falta configurar, la app usa los datos de
        respaldo embebidos (copia de tu planilla actual).
@@ -701,6 +746,7 @@
     const PUB_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT9UjFLXp8NZyqPsRDRippLThWSAkbE8x4HguNohH5wGa2O0LTXVQl2wEienug0zVe_ePhcA4H3ZBN1/pub";
     const GID_PRODUCTOS = "957503224";           // Pestaña Productos (conectada en vivo)
     const GID_CURSOS = "BASE";                   // "BASE" = usa el enlace publicado tal cual (Cursos)
+    const GID_POPUP = "1473685333";              // Pestaña Popup (conectada en vivo)
 
     /* DATOS DE RESPALDO (copia de la planilla actual) */
     const FALLBACK_PRODUCTOS_CSV = `Orden de Mostrarse en App,Producto,Etiqueta que se muestra en App,Subtitulo del Producto,Precio Individual,Formas de Cocción,Ingredientes,¿Cómo viene?,Presentación,,Imagen de Portada al Cargar,Img1,Img2,Img3,Img4,Peso por Unidad,Cantidad por Kilo,Ver Video
@@ -858,6 +904,10 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
 8,Curso Profesional de Panadería Gluten Free,"Dirigido a: Chefs, panaderos, emprendedores y amantes de la panadería 👨‍🍳 Descubre el arte de la panadería sin gluten con un enfoque profesional y práctico.",https://go.hotmart.com/O106083511H?dp=1,https://static-media.hotmart.com/8C0pWNeu-RHb9VCq8RkAoSYr7bI=/filters:background_color(white)/hotmart/product_pictures/f340d36c-da45-438b-af23-1a60cf7e18d5/GlutenFree.png,Hotmart
 9,Manual para Emprendedores del Sector Sin Gluten,"Descubre la guía esencial para emprendedores apasionados por la innovación en el sector sin gluten. Desde la concepción de la idea hasta la conquista del éxito en el mercado,",https://go.hotmart.com/C106083569S?dp=1,https://static-media.hotmart.com/-1OAYmJ5GAL2tL1pA_96Gn9hnGM=/filters:background_color(white)/hotmart/product_pictures/89413183-d803-4e25-b0ff-cac38a36bc5e/DeepinScreenshot_Seleccionararea_20231123155001.png,Hotmart`;
 
+    /* Copia de respaldo de la pestaña Popup (por si la planilla no responde) */
+    const FALLBACK_POPUP_CSV = `Nombre de Texto ,Subtexto,Imagen (URL),Texto del Botón,URL Botón,Situación (Activado / Desactivado)
+HALFPAGE BANNER,Supermarket,https://img.magnific.com/psd-gratis/agencia-marketing-digital-plantilla-historia-corporativa-facebook-e-instagram_120329-4320.jpg,Descargar Programa,https://hotmart.com/es,Activado`;
+
     const PECHUGA_DISCOUNTS = { 1:0, 2:0, 3:0.0122, 4:0.0183, 5:0.0245, 6:0.0306, 7:0.0367, 8:0.0429, 9:0.0490, 10:0.0551, 11:0.0612, 12:0.0674, 13:0.0735, 14:0.0796, 15:0.0857 };
     const NALGA_DISCOUNTS = { 1:0, 2:0.0061, 3:0.0122, 4:0.0183, 5:0.0245, 6:0.0306, 7:0.0367, 8:0.0429, 9:0.0490, 10:0.0551, 11:0.0612, 12:0.0674, 13:0.0735, 14:0.0796, 15:0.0857 };
 
@@ -903,6 +953,23 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
             headers.forEach((h, idx) => { obj[h] = (r[idx] !== undefined ? r[idx] : '').trim(); });
             return obj;
         });
+    }
+
+    /* Normaliza nombres de columna: sin mayúsculas, tildes ni símbolos.
+       Así "Situación (Activado / Desactivado)" se encuentra aunque en el
+       Sheet tenga espacios extra o cambie un acento. */
+    function normKey(s) {
+        return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+    }
+
+    function getField(obj, candidates) {
+        const keys = Object.keys(obj);
+        for (const cand of candidates) {
+            const target = normKey(cand);
+            const k = keys.find(key => normKey(key).includes(target));
+            if (k && obj[k]) return String(obj[k]).trim();
+        }
+        return '';
     }
 
     function parsePriceAR(str) {
@@ -1056,6 +1123,39 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
             .sort((a, b) => a.orden - b.orden);
     }
 
+    /* ============================================================
+       POP-UP PROMOCIONAL: LECTURA DESDE EL SHEET
+       ------------------------------------------------------------
+       Lee la pestaña Popup y devuelve la PRIMERA fila cuya columna
+       "Situación" diga exactamente "Activado" (sin importar
+       mayúsculas o tildes). Si ninguna fila está activada, no se
+       muestra ningún pop-up. Así activás/desactivás y cambiás
+       título, subtexto, imagen, texto y URL del botón directamente
+       desde Google Sheets, sin tocar el código.
+       ============================================================ */
+    function csvLooksLikePopup(csvText) {
+        const rows = parseCSV(csvText);
+        if (!rows.length) return false;
+        const headers = rows[0].map(h => normKey(h));
+        return headers.some(h => h.includes('situacion')) && headers.some(h => h.includes('urlboton') || h.includes('textodelboton'));
+    }
+
+    function buildPopupFromCSV(csvText) {
+        const objs = rowsToObjects(parseCSV(csvText));
+        for (const o of objs) {
+            const estado = normKey(getField(o, ['Situación (Activado / Desactivado)', 'Situación', 'Situacion', 'Estado']));
+            if (estado !== 'activado') continue; // "desactivado", vacío u otro texto => no se muestra
+            return {
+                title: getField(o, ['Nombre de Texto', 'Nombre', 'Título', 'Titulo']),
+                sub: getField(o, ['Subtexto', 'Subtitulo', 'Subtítulo']),
+                img: driveToImg(getField(o, ['Imagen (URL)', 'Imagen'])),
+                btnText: getField(o, ['Texto del Botón', 'Texto del Boton', 'Texto Botón']),
+                btnUrl: getField(o, ['URL Botón', 'URL Boton', 'Link Botón', 'Link'])
+            };
+        }
+        return null;
+    }
+
     /* =============== ESTADO GLOBAL =============== */
     let PRODUCTS = buildProductsFromCSV(FALLBACK_PRODUCTOS_CSV);
     let CURSOS = buildCursosFromCSV(FALLBACK_CURSOS_CSV);
@@ -1074,12 +1174,10 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
         initHeroSlider();
         setDefaultPickupDate();
         loadDataFromSheet();
+        initPromoPopup();
 
         runLoader();
         setupInstallExperience();
-        if (PROMO_INICIO.trim().toLowerCase() === 'activado') {
-            setTimeout(() => { document.getElementById('promo-image-modal').classList.add('active'); }, 2800);
-        }
     });
 
     /* ============================================================
@@ -1205,7 +1303,62 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
         }, 42); /* ~2,1 segundos en total */
     }
 
-    function closePromoImageModal() { document.getElementById('promo-image-modal').classList.remove('active'); }
+    /* ============================================================
+       POP-UP PROMOCIONAL: MOSTRAR / OCULTAR
+       ============================================================ */
+    async function initPromoPopup() {
+        let promoData = null;
+        try {
+            const csv = await fetchCSV(GID_POPUP);
+            if (csvLooksLikePopup(csv)) {
+                promoData = buildPopupFromCSV(csv); // puede ser null si está Desactivado
+            } else {
+                console.warn('Popup: la pestaña indicada no tiene las columnas esperadas; usando respaldo.');
+                promoData = buildPopupFromCSV(FALLBACK_POPUP_CSV);
+            }
+        } catch (e) {
+            console.warn('Popup: sin conexión con el Sheet; usando respaldo.', e);
+            promoData = buildPopupFromCSV(FALLBACK_POPUP_CSV);
+        }
+        if (!promoData) return; // Desactivado en el Sheet => no se muestra nada
+        showPromoPopup(promoData);
+    }
+
+    function showPromoPopup(data) {
+        const modal = document.getElementById('promo-image-modal');
+        const imgEl = document.getElementById('promo-fs-img');
+        const titleEl = document.getElementById('promo-fs-title');
+        const subEl = document.getElementById('promo-fs-sub');
+        const btnEl = document.getElementById('promo-fs-btn');
+        const btnTextEl = document.getElementById('promo-fs-btn-text');
+
+        titleEl.innerText = data.title || '';
+        titleEl.style.display = data.title ? 'block' : 'none';
+        subEl.innerText = data.sub || '';
+        subEl.style.display = data.sub ? 'block' : 'none';
+
+        if (data.img) { imgEl.style.display = 'block'; imgEl.src = data.img; }
+        else { imgEl.style.display = 'none'; }
+
+        if (data.btnUrl) {
+            btnEl.style.display = 'inline-flex';
+            btnEl.href = data.btnUrl;
+            btnTextEl.innerText = data.btnText || 'Ver más';
+        } else {
+            btnEl.style.display = 'none';
+        }
+
+        /* Espera a que termine la barra de carga inicial para aparecer */
+        setTimeout(() => {
+            modal.classList.add('active');
+            document.body.classList.add('promo-open');
+        }, 2800);
+    }
+
+    function closePromoImageModal() {
+        document.getElementById('promo-image-modal').classList.remove('active');
+        document.body.classList.remove('promo-open');
+    }
 
     /* =============== CARGA EN VIVO DESDE EL SHEET =============== */
     async function fetchCSV(gid) {
