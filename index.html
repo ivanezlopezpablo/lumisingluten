@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lumi Sin Gluten - App Oficial</title>
-    
+
     <!-- Widget de Reseñas Elfsight -->
     <script src="https://elfsightcdn.com/platform.js" async></script>
 
@@ -28,128 +28,51 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* OCULTAR BARRAS DE SCROLL */
-        ::-webkit-scrollbar {
-            display: none;
-            width: 0px;
-            background: transparent;
-        }
-        * {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        ::-webkit-scrollbar { display: none; width: 0px; background: transparent; }
+        * { -ms-overflow-style: none; scrollbar-width: none; }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            background-color: #ffffff;
-            color: #333333;
-            overflow-x: hidden;
-        }
+        html, body { width: 100%; height: 100%; background-color: #ffffff; color: #333333; overflow-x: hidden; }
+        body { display: flex; justify-content: center; align-items: flex-start; }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
+        .app-container { width: 100vw; min-height: 100vh; background: #ffffff; position: relative; padding-bottom: 90px; }
 
-        .app-container {
-            width: 100vw;
-            min-height: 100vh;
-            background: #ffffff;
-            position: relative;
-            padding-bottom: 90px;
-        }
+        /* ÍCONOS SVG */
+        .icn { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; vertical-align: middle; }
+        .icn-sm { width: 14px; height: 14px; }
+        .icn-nav { width: 22px; height: 22px; margin-bottom: 3px; }
 
-        /* PANTALLA DE CARGA CON LOGO GIRATORIO */
+        /* LOADER */
         .loader-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: #ffffff;
-            z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #ffffff; z-index: 99999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
+        .loader-overlay.hidden { opacity: 0; visibility: hidden; }
+        .gluten-logo-spin { width: 110px; height: 110px; animation: spinLogo 3s linear infinite; margin-bottom: 24px; }
+        @keyframes spinLogo { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .loader-title { color: var(--text-dark); font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
+        .timeline-bar-container { width: 220px; height: 6px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
+        .timeline-bar-progress { height: 100%; width: 0%; background: linear-gradient(90deg, #10b981, #34d399); border-radius: 10px; animation: fillProgress 2.5s ease-in-out forwards; }
+        @keyframes fillProgress { 0% { width: 0%; } 50% { width: 65%; } 100% { width: 100%; } }
 
-        .loader-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .gluten-logo-spin {
-            width: 110px;
-            height: 110px;
-            animation: spinLogo 3s linear infinite;
-            margin-bottom: 24px;
-        }
-
-        @keyframes spinLogo {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .loader-title {
-            color: var(--text-dark);
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .timeline-bar-container {
-            width: 220px;
-            height: 6px;
-            background: #e2e8f0;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .timeline-bar-progress {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #10b981, #34d399);
-            border-radius: 10px;
-            animation: fillProgress 2.5s ease-in-out forwards;
-        }
-
-        @keyframes fillProgress {
-            0% { width: 0%; }
-            50% { width: 65%; }
-            100% { width: 100%; }
-        }
-
-        /* CABECERAS COLORIDAS */
-        .banner-header-green { background: #10b981; color: white; padding: 16px 20px; border-radius: 16px; margin-bottom: 16px; }
+        /* CABECERAS */
         .banner-header-orange { background: #f97316; color: white; padding: 16px 20px; border-radius: 16px; margin-bottom: 16px; }
         .banner-header-blue { background: #0284c7; color: white; padding: 16px 20px; border-radius: 16px; margin-bottom: 16px; }
-        .banner-header-purple { background: #8b5cf6; color: white; padding: 16px 20px; border-radius: 16px; margin-bottom: 16px; }
-        .banner-header-teal { background: #0d9488; color: white; padding: 16px 20px; border-radius: 16px; margin-bottom: 16px; }
+        .banner-header-orange h2, .banner-header-blue h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .banner-header-orange p, .banner-header-blue p { font-size: 0.85rem; opacity: 0.95; line-height: 1.3; }
 
-        .banner-header-green h2, .banner-header-orange h2, .banner-header-blue h2, .banner-header-purple h2, .banner-header-teal h2 {
-            font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;
-        }
-
-        .banner-header-green p, .banner-header-orange p, .banner-header-blue p, .banner-header-purple p, .banner-header-teal p {
-            font-size: 0.85rem; opacity: 0.95; line-height: 1.3;
-        }
-
-        /* SLIDER DEL CATÁLOGO */
+        /* SLIDER */
         .hero-banner-slider {
             position: relative;
             background: linear-gradient(135deg, #059669, #10b981);
             padding: 16px 16px 36px 16px;
-            border-bottom-left-radius: 24px;
-            border-bottom-right-radius: 24px;
-            color: white;
-            overflow: hidden;
+            border-bottom-left-radius: 24px; border-bottom-right-radius: 24px;
+            color: white; overflow: hidden;
         }
-
         .hero-search-box { position: relative; margin-bottom: 16px; z-index: 10; }
         .hero-search-input { width: 100%; padding: 12px 45px 12px 18px; border-radius: 30px; border: none; font-size: 0.95rem; outline: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .hero-search-btn { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); background: var(--lumi-green-dark); color: white; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; cursor: pointer; }
+        .hero-search-btn { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); background: var(--lumi-green-dark); color: white; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .hero-slides-wrapper { display: flex; transition: transform 0.4s ease-in-out; width: 300%; }
         .hero-slide { width: 33.333%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 4px 8px; }
         .hero-slide-text h2 { font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; }
@@ -164,63 +87,54 @@
         .page-section.active { display: block; }
         .section-title { font-size: 1.15rem; color: var(--text-dark); margin: 16px 0 14px 0; font-weight: 800; display: flex; align-items: center; gap: 8px; }
 
-        /* CATÁLOGO Y PRODUCTOS */
+        /* PRODUCTOS */
         .product-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
         .product-card { display: flex; background: #ffffff; border: 1px solid var(--border-color); border-radius: 16px; padding: 12px; gap: 12px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03); transition: transform 0.2s, border-color 0.2s; position: relative; }
         .product-card:hover { border-color: var(--lumi-green); transform: translateY(-2px); }
         .product-img-wrapper { position: relative; width: 100px; height: 100px; flex-shrink: 0; cursor: pointer; }
-        .product-img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+        .product-img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; background: #f1f5f9; }
         .product-badge-overlay { position: absolute; top: -6px; right: -6px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #ffffff; font-size: 0.65rem; font-weight: 800; padding: 3px 7px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.25); white-space: nowrap; z-index: 5; text-transform: uppercase; }
         .product-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 100px; }
         .product-title { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); line-height: 1.25; margin-bottom: 4px; }
-        .product-desc { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; line-height: 1.3; }
+        .product-desc { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .price-box { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
         .price-normal { font-size: 0.98rem; font-weight: 800; color: var(--text-dark); }
         .price-discount { font-size: 0.7rem; color: var(--lumi-green-dark); font-weight: 700; background: #d1fae5; padding: 2px 6px; border-radius: 4px; }
-        .btn-view-details { background: none; border: none; color: #0284c7; font-size: 0.78rem; font-weight: 600; cursor: pointer; padding: 0; text-align: left; }
+        .btn-view-details { background: none; border: none; color: #0284c7; font-size: 0.78rem; font-weight: 600; cursor: pointer; padding: 0; text-align: left; display: inline-flex; align-items: center; gap: 4px; }
 
-        /* GIFT CARDS */
-        .giftcards-container-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 14px; }
-        .giftcard-box { background: #ffffff; border: 2px solid #a7f3d0; border-radius: 16px; padding: 16px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.05); }
-        .giftcard-off-badge { background: #10b981; color: white; font-size: 0.75rem; font-weight: 800; padding: 4px 12px; border-radius: 20px; display: inline-block; margin: 0 auto 8px auto; }
-        .giftcard-title-text { font-size: 0.95rem; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
-        .giftcard-amount-num { font-size: 1.4rem; font-weight: 900; color: var(--text-dark); margin-bottom: 2px; }
-        .giftcard-pay-only { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px; }
-        .btn-giftcard-cart { background: #ffffff; border: 1px solid var(--border-color); color: var(--text-dark); padding: 9px; border-radius: 10px; font-size: 0.85rem; font-weight: 700; cursor: pointer; margin-bottom: 8px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
-        .btn-giftcard-cart:hover { border-color: var(--lumi-green); color: var(--lumi-green-dark); }
-
-        /* LABORAL / CURSOS */
+        /* CURSOS */
         .cursos-list-wrapper { display: flex; flex-direction: column; gap: 14px; margin-top: 14px; }
-        .curso-card-item { display: flex; align-items: center; gap: 16px; background: #ffffff; border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); text-decoration: none; color: inherit; }
-        .curso-icon-bg { font-size: 2.2rem; background: #fff7ed; padding: 12px; border-radius: 14px; flex-shrink: 0; }
+        .curso-card-item { display: flex; align-items: center; gap: 14px; background: #ffffff; border: 1px solid var(--border-color); border-radius: 16px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); text-decoration: none; color: inherit; transition: border-color 0.2s, transform 0.2s; }
+        .curso-card-item:hover { border-color: #f97316; transform: translateY(-2px); }
+        .curso-img { width: 78px; height: 78px; object-fit: cover; border-radius: 12px; flex-shrink: 0; background: #fff7ed; border: 1px solid #ffedd5; }
+        .curso-cta { color: #f97316; font-size: 0.8rem; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; }
 
-        /* NAVEGACIÓN INFERIOR DE 6 ÍCONOS */
+        /* NAVEGACIÓN INFERIOR */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100vw; height: 65px;
             background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-top: 1px solid rgba(226, 232, 240, 0.7); display: flex; justify-content: space-around; align-items: center; z-index: 1000; box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
         }
-        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.6rem; font-weight: 700; cursor: pointer; width: 16.6%; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.62rem; font-weight: 700; cursor: pointer; width: 25%; }
         .nav-item.active { color: var(--lumi-green); }
-        .nav-item-icon { font-size: 1.2rem; margin-bottom: 2px; }
 
-        /* BOTÓN WHATSAPP OFICIAL */
+        /* WHATSAPP */
         .btn-whatsapp-official { background: #25D366; color: white; border: none; padding: 12px 18px; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); width: 100%; }
         .btn-whatsapp-official img.wa-icon-img { width: 20px; height: 20px; object-fit: contain; flex-shrink: 0; }
 
-        /* BARRA FLOTANTE DEL CARRITO */
+        /* CARRITO FLOTANTE */
         .cart-float-btn { position: fixed; bottom: 75px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 650px; background: #10b981; color: white; padding: 12px 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35); cursor: pointer; z-index: 900; border: none; }
         .modal-float-cart-bar { position: sticky; bottom: -8px; left: 0; width: 100%; background: #10b981; color: white; padding: 12px 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.15); cursor: pointer; border: none; margin-top: 16px; z-index: 10; }
         .cart-float-savings-pill { background: rgba(255, 255, 255, 0.25); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 800; white-space: nowrap; }
 
-        /* CONTROLES DE CANTIDAD */
+        /* CANTIDADES */
         .quantity-controls { display: flex; align-items: center; gap: 4px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 3px; }
         .btn-qty { background: #ffffff; border: 1px solid var(--border-color); width: 28px; height: 28px; border-radius: 6px; font-size: 1rem; font-weight: bold; color: var(--text-dark); cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .btn-qty:hover { background: var(--lumi-green); color: white; border-color: var(--lumi-green); }
         .qty-number { width: 22px; text-align: center; font-weight: 700; font-size: 0.88rem; }
         .quantity-controls-sm { display: flex; align-items: center; gap: 3px; background: #ffffff; border: 1px solid var(--border-color); border-radius: 6px; padding: 2px 4px; }
         .btn-qty-sm { background: #f1f5f9; border: 1px solid var(--border-color); width: 20px; height: 20px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; color: var(--text-dark); cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .btn-delete-item { background: none; border: none; color: var(--danger-color); font-size: 0.85rem; cursor: pointer; padding: 2px 4px; }
+        .btn-delete-item { background: none; border: none; color: var(--danger-color); cursor: pointer; padding: 2px 4px; display: inline-flex; align-items: center; }
 
         /* MODALES */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.7); display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(4px); padding: 16px; }
@@ -231,7 +145,32 @@
         .cart-summary { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; margin: 14px 0; display: flex; flex-direction: column; gap: 10px; }
         .form-control { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; margin-bottom: 10px; outline: none; background: #ffffff; }
 
-        .auto-carousel-container { position: relative; width: 100%; height: 210px; border-radius: 14px; overflow: hidden; margin-bottom: 12px; background: #f1f5f9; }
+        /* POP-UP PROMO */
+        .promo-image-card {
+            position: relative; width: 100%; max-width: 340px;
+            border-radius: 20px; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+            background: #ffffff;
+        }
+        .promo-image-card img.promo-img { display: block; width: 100%; height: auto; }
+        .promo-close-btn {
+            position: absolute; top: 10px; right: 10px;
+            background: rgba(15, 23, 42, 0.65); color: white; border: none;
+            width: 32px; height: 32px; border-radius: 50%;
+            font-size: 1rem; cursor: pointer; z-index: 5;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .promo-download-btn {
+            position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+            width: calc(100% - 40px);
+            background: var(--lumi-green); color: white; text-decoration: none;
+            padding: 13px 18px; border-radius: 12px;
+            font-size: 0.98rem; font-weight: 800; text-align: center;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            box-shadow: 0 8px 22px rgba(16, 185, 129, 0.5);
+        }
+
+        .auto-carousel-container { position: relative; width: 100%; max-width: 340px; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; margin: 0 auto 12px auto; background: #f1f5f9; }
         .auto-carousel-track { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
         .auto-carousel-slide { min-width: 100%; height: 100%; }
         .auto-carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
@@ -244,28 +183,14 @@
         .cart-item-detail { font-size: 0.75rem; color: var(--text-muted); line-height: 1.2; }
         .cart-discount-text { font-size: 0.72rem; color: #059669; font-weight: 700; margin-top: 2px; }
 
-        .points-badge { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; }
-        .admin-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 10px; }
-        .admin-table th, .admin-table td { border: 1px solid var(--border-color); padding: 8px; text-align: left; }
-        .admin-table th { background: #f1f5f9; font-weight: bold; }
-
-        .toggle-container { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: #ffffff; border: 1px solid var(--border-color); border-radius: 10px; margin-top: 8px; }
-        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--lumi-green); }
-        input:checked + .slider:before { transform: translateX(20px); }
-
-        .address-item-card {
-            background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; margin-bottom: 6px;
-            display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;
-        }
+        .product-long-desc { font-size: 0.87rem; color: #334155; line-height: 1.55; margin-bottom: 14px; }
+        .product-long-desc b { color: var(--text-dark); }
+        .data-chip-box { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; font-size: 0.85rem; margin-bottom: 14px; display: flex; flex-direction: column; gap: 6px; }
     </style>
 </head>
 <body>
 
-<!-- LOADER INICIAL -->
+<!-- LOADER -->
 <div class="loader-overlay" id="loader">
     <img src="https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png" class="gluten-logo-spin" alt="Sin TACC Logo">
     <div class="loader-title">Cargando Lumi Sin Gluten...</div>
@@ -277,32 +202,34 @@
 <div class="app-container">
     <div class="content" style="padding-top: 0;">
 
-        <!-- 1. PÁGINA CATÁLOGO -->
+        <!-- 1. CATÁLOGO -->
         <div id="page-catalog" class="page-section active">
             <div class="hero-banner-slider" id="hero-slider" style="margin: 0 -16px 16px -16px;">
                 <div class="hero-search-box">
-                    <input type="text" class="hero-search-input" id="search-input" placeholder="Locales, platos y productos..." oninput="filterProducts()">
-                    <button class="hero-search-btn">🔍</button>
+                    <input type="text" class="hero-search-input" id="search-input" placeholder="Buscar productos..." oninput="filterProducts()">
+                    <button class="hero-search-btn" aria-label="Buscar">
+                        <svg class="icn" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </button>
                 </div>
 
                 <div class="hero-slides-wrapper" id="hero-track">
                     <div class="hero-slide">
                         <div class="hero-slide-text">
-                            <h2>🌱 Lumi Sin Gluten</h2>
+                            <h2>Lumi Sin Gluten</h2>
                             <p>100% Libre de Gluten artesanal. ¡Pedí y recibilo en tu casa!</p>
                         </div>
                         <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80" class="hero-slide-img" alt="Milanesas">
                     </div>
                     <div class="hero-slide">
                         <div class="hero-slide-text">
-                            <h2>🎁 Descuentos por Kilo</h2>
+                            <h2>Descuentos por Kilo</h2>
                             <p>Aprovechá precios especiales acumulando kilos de Nalga y Pechuga.</p>
                         </div>
                         <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" class="hero-slide-img" alt="Hamburguesas">
                     </div>
                     <div class="hero-slide">
                         <div class="hero-slide-text">
-                            <h2>🛵 Envíos por Uber</h2>
+                            <h2>Envíos por Uber</h2>
                             <p>Despachamos directamente a tu domicilio de forma rápida y segura.</p>
                         </div>
                         <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=400&q=80" class="hero-slide-img" alt="Nuggets">
@@ -316,328 +243,106 @@
                 </div>
             </div>
 
-            <div class="section-title">📦 Nuestro Catálogo</div>
+            <div class="section-title">Nuestro Catálogo</div>
             <div class="product-list" id="product-list"></div>
 
             <div style="margin-top: 30px; padding-top: 20px; border-top: 2px dashed #e2e8f0;">
-                <div class="section-title">⭐ Lo que dicen nuestros clientes</div>
+                <div class="section-title">Lo que dicen nuestros clientes</div>
                 <div class="elfsight-app-d6b31c62-d125-4138-997a-dac92616ff65" data-elfsight-app-lazy></div>
             </div>
         </div>
 
-        <!-- 2. PÁGINA GIFT CARDS -->
-        <div id="page-giftcards" class="page-section">
-            <div class="banner-header-green" style="margin: 0 -16px 16px -16px; border-radius: 0 0 20px 20px;">
-                <h2>❤️ El arte de regalar con amor</h2>
-                <p>Sorprendé a quien más querés con un gesto de salud y sabor. Ser buena persona también es agasajar con algo que hace bien.</p>
-            </div>
-
-            <div class="section-title">🎁 Tarjetas de Regalo (Gift Cards)</div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
-                Adquirí tus Tarjetas de Regalo con descuentos exclusivos. Podés utilizarlas con tu código de uso único en tus próximas compras.
-            </p>
-
-            <div class="giftcards-container-grid">
-                <div class="giftcard-box">
-                    <div>
-                        <span class="giftcard-off-badge">5% OFF</span>
-                        <div class="giftcard-title-text">Gift Card Lumi</div>
-                        <div class="giftcard-amount-num">$5.000</div>
-                        <div class="giftcard-pay-only">Pagás solo $4.750</div>
-                    </div>
-                    <div>
-                        <button class="btn-giftcard-cart" onclick="addGiftCardToCart(101, 'Gift Card Lumi $5.000', 4750, 5, 5000)">
-                            🛒 Agregar al Carrito
-                        </button>
-                        <button class="btn-whatsapp-official" onclick="buyGiftCardDirect(5000, 5)">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/3840px-WhatsApp.svg.png" class="wa-icon-img" alt="WA">
-                            <span>Comprar Directo</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="giftcard-box">
-                    <div>
-                        <span class="giftcard-off-badge">8% OFF</span>
-                        <div class="giftcard-title-text">Gift Card Lumi</div>
-                        <div class="giftcard-amount-num">$8.000</div>
-                        <div class="giftcard-pay-only">Pagás solo $7.360</div>
-                    </div>
-                    <div>
-                        <button class="btn-giftcard-cart" onclick="addGiftCardToCart(102, 'Gift Card Lumi $8.000', 7360, 8, 8000)">
-                            🛒 Agregar al Carrito
-                        </button>
-                        <button class="btn-whatsapp-official" onclick="buyGiftCardDirect(8000, 8)">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/3840px-WhatsApp.svg.png" class="wa-icon-img" alt="WA">
-                            <span>Comprar Directo</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="giftcard-box">
-                    <div>
-                        <span class="giftcard-off-badge">10% OFF</span>
-                        <div class="giftcard-title-text">Gift Card Lumi</div>
-                        <div class="giftcard-amount-num">$10.000</div>
-                        <div class="giftcard-pay-only">Pagás solo $9.000</div>
-                    </div>
-                    <div>
-                        <button class="btn-giftcard-cart" onclick="addGiftCardToCart(103, 'Gift Card Lumi $10.000', 9000, 10, 10000)">
-                            🛒 Agregar al Carrito
-                        </button>
-                        <button class="btn-whatsapp-official" onclick="buyGiftCardDirect(10000, 10)">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/3840px-WhatsApp.svg.png" class="wa-icon-img" alt="WA">
-                            <span>Comprar Directo</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="giftcard-box">
-                    <div>
-                        <span class="giftcard-off-badge">15% OFF</span>
-                        <div class="giftcard-title-text">Gift Card Lumi</div>
-                        <div class="giftcard-amount-num">$15.000</div>
-                        <div class="giftcard-pay-only">Pagás solo $12.750</div>
-                    </div>
-                    <div>
-                        <button class="btn-giftcard-cart" onclick="addGiftCardToCart(104, 'Gift Card Lumi $15.000', 12750, 15, 15000)">
-                            🛒 Agregar al Carrito
-                        </button>
-                        <button class="btn-whatsapp-official" onclick="buyGiftCardDirect(15000, 15)">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/3840px-WhatsApp.svg.png" class="wa-icon-img" alt="WA">
-                            <span>Comprar Directo</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. PÁGINA PUNTOS & CANJE -->
-        <div id="page-points" class="page-section">
-            <div class="banner-header-purple" style="margin: 0 -16px 16px -16px; border-radius: 0 0 20px 20px;">
-                <h2>⭐ Club Lumi Puntos</h2>
-                <p>Acumulá puntos con cada compra y canjealos por deliciosos productos, envíos o descuentos directos.</p>
-            </div>
-
-            <div style="background: #f3e8ff; border: 1px solid #d8b4fe; border-radius: 16px; padding: 16px; margin-bottom: 20px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <div style="font-size: 0.85rem; color: #6b21a8; font-weight: 700;">Tus Puntos Confirmados:</div>
-                        <div style="font-size: 1.8rem; font-weight: 900; color: #581c87;" id="user-confirmed-points">0 Pts</div>
-                    </div>
-                </div>
-                <div style="font-size: 0.75rem; color: #7e22ce; margin-top: 6px;" id="user-pending-points-info">
-                    * Puntos pendientes de aprobación por Ailén: 0 Pts
-                </div>
-
-                <div class="toggle-container">
-                    <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-dark);">Notificaciones Push de Ofertas:</span>
-                    <label class="switch">
-                        <input type="checkbox" id="user-push-toggle" onchange="togglePushSettings(this.checked)">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="section-title">🎁 Catálogo de Canje de Puntos</div>
-            <div class="product-list" id="rewards-list">
-                <div class="product-card">
-                    <div class="product-info">
-                        <div class="product-title">🍔 1 Kg Hamburguesas de Pechuga</div>
-                        <div class="product-desc">Alimento a valor $0. Canjeá tus puntos por un kilo entero.</div>
-                        <div style="margin-top: 6px;"><span class="points-badge">⭐ 50 Puntos</span></div>
-                    </div>
-                    <button onclick="redeemReward('1 Kg Hamburguesas de Pechuga', 50)" style="background: #8b5cf6; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer;">Canjear</button>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-info">
-                        <div class="product-title">🛵 Envío Gratis (Neuquén o Cipolletti)</div>
-                        <div class="product-desc">Bonificación del 100% en tu próximo despacho a domicilio.</div>
-                        <div style="margin-top: 6px;"><span class="points-badge">⭐ 15 Puntos</span></div>
-                    </div>
-                    <button onclick="redeemReward('Envío Gratis Neuquén/Cipolletti', 15)" style="background: #8b5cf6; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer;">Canjear</button>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-info">
-                        <div class="product-title">🎟️ Cuponera de $5.000 de Descuento</div>
-                        <div class="product-desc">Aplica un descuento inmediato de $5.000 en el subtotal de tu orden.</div>
-                        <div style="margin-top: 6px;"><span class="points-badge">⭐ 30 Puntos</span></div>
-                    </div>
-                    <button onclick="redeemReward('Cuponera Descuento $5.000', 30)" style="background: #8b5cf6; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer;">Canjear</button>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-info">
-                        <div class="product-title">🍗 1 Kg Nuggets Crocantes</div>
-                        <div class="product-desc">Bocaditos artesanales de pechuga sin TACC a valor $0.</div>
-                        <div style="margin-top: 6px;"><span class="points-badge">⭐ 45 Puntos</span></div>
-                    </div>
-                    <button onclick="redeemReward('1 Kg Nuggets Crocantes', 45)" style="background: #8b5cf6; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer;">Canjear</button>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-info">
-                        <div class="product-title">🥩 1 Kg Milanesas de Nalga</div>
-                        <div class="product-desc">Corte vacuno premium artesanal a valor $0 con tus puntos.</div>
-                        <div style="margin-top: 6px;"><span class="points-badge">⭐ 80 Puntos</span></div>
-                    </div>
-                    <button onclick="redeemReward('1 Kg Milanesas de Nalga', 80)" style="background: #8b5cf6; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer;">Canjear</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. PÁGINA ESTUDIO / CURSOS -->
+        <!-- 2. ESTUDIO / CURSOS -->
         <div id="page-laboral" class="page-section">
             <div class="banner-header-orange" style="margin: 0 -16px 16px -16px; border-radius: 0 0 20px 20px;">
-                <h2>🚀 Construí tu propio futuro laboral</h2>
+                <h2>Construí tu propio futuro laboral</h2>
                 <p>Descubrí cómo el conocimiento y la capacitación te abren puertas para salir adelante, emprender desde el hogar e independizarte.</p>
             </div>
 
-            <div class="section-title">💼 Oportunidades & Cursos Laborales</div>
+            <div class="section-title">Oportunidades &amp; Cursos Laborales</div>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
                 Capacitate en la elaboración artesanal libre de gluten y aprendé sobre emprendimientos de la salud con nuestros cursos recomendados:
             </p>
 
-            <div class="cursos-list-wrapper">
-                <a href="https://www.hotmart.com" target="_blank" class="curso-card-item">
-                    <span class="curso-icon-bg">🎓</span>
-                    <div>
-                        <h3 style="font-size: 0.98rem; font-weight: 800; color: var(--text-dark);">Curso Profesional de Cocina Sin Gluten</h3>
-                        <p style="font-size: 0.82rem; color: var(--text-muted); margin: 4px 0;">Aprende técnicas profesionales de amasado, conservación y elaboración de productos aptos.</p>
-                        <span style="color: #f97316; font-size: 0.8rem; font-weight: 800;">Ver Curso en Hotmart ➔</span>
-                    </div>
-                </a>
-
-                <a href="https://www.hotmart.com" target="_blank" class="curso-card-item">
-                    <span class="curso-icon-bg">🍞</span>
-                    <div>
-                        <h3 style="font-size: 0.98rem; font-weight: 800; color: var(--text-dark);">Emprendimiento de Panadería Celíaca desde Casa</h3>
-                        <p style="font-size: 0.82rem; color: var(--text-muted); margin: 4px 0;">Guía paso a paso para iniciar tu propia línea de productos congelados y panificados.</p>
-                        <span style="color: #f97316; font-size: 0.8rem; font-weight: 800;">Ver Curso en Hotmart ➔</span>
-                    </div>
-                </a>
-            </div>
+            <div class="cursos-list-wrapper" id="cursos-list"></div>
         </div>
 
-        <!-- 5. PÁGINA UBICACIÓN -->
+        <!-- 3. UBICACIÓN -->
         <div id="page-location" class="page-section">
             <div class="banner-header-blue" style="margin: 0 -16px 16px -16px; border-radius: 0 0 20px 20px;">
-                <h2>📍 Llegá fácil y coordiná tu retiro</h2>
+                <h2>Llegá fácil y coordiná tu retiro</h2>
                 <p>Para tu mejor atención, te recomendamos coordinar tu pedido con anticipación antes de pasar a retirar por nuestro local.</p>
             </div>
 
-            <div class="section-title">📍 Ubicación & Atención</div>
+            <div class="section-title">Ubicación &amp; Atención</div>
 
             <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.04);">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3102.5841445781615!2d-68.0700000!3d-38.9500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x960a31f133f67175%3A0x6338b3687355d911!2sEl%20Plumerillo%20%26%20Aconquija%2C%20Neuqu%C3%A9n!5e0!3m2!1ses!2sar!4v1700000000000" style="width:100%; height:260px; border:0;" allowfullscreen="" loading="lazy"></iframe>
                 <div style="padding: 16px;">
-                    <h3 style="font-size: 1.05rem; color: var(--text-dark); margin-bottom: 6px;">🌱 Lumi Sin Gluten</h3>
+                    <h3 style="font-size: 1.05rem; color: var(--text-dark); margin-bottom: 6px;">Lumi Sin Gluten</h3>
                     <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px;">
-                        <strong>📍 Dirección:</strong> El Plumerillo y Aconquija, Ciudad de Neuquén.
+                        <strong>Dirección:</strong> El Plumerillo y Aconquija, Ciudad de Neuquén.
                     </p>
                     <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;">
-                        <strong>🕒 Horarios de Atención:</strong><br>
+                        <strong>Horarios de Atención:</strong><br>
                         Lunes a Viernes de 11:00 a 14:00 hs y de 19:00 a 21:00 hs.
                     </p>
-                    <a href="https://wa.me/5492996742365" target="_blank" class="btn-whatsapp-official" style="margin-bottom: 12px;">
+                    <a href="https://wa.me/5492996742365" target="_blank" class="btn-whatsapp-official">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/3840px-WhatsApp.svg.png" class="wa-icon-img" alt="WA">
                         <span>Contactar por WhatsApp</span>
                     </a>
-                    
-                    <button onclick="openAdminModal()" style="background: none; border: none; color: var(--text-muted); font-size: 0.75rem; width: 100%; text-decoration: underline; cursor: pointer; margin-top: 10px;">
-                        🔐 Acceso Panel de Administración Ailén
-                    </button>
                 </div>
             </div>
         </div>
-        <!-- 6. PÁGINA PERFIL DE USUARIO -->
-        <div id="page-profile" class="page-section">
-            <div class="banner-header-teal" style="margin: 0 -16px 16px -16px; border-radius: 0 0 20px 20px;">
-                <h2>👤 Mi Perfil de Cliente</h2>
-                <p>Gestioná tus datos personales y domicilios frecuentes para cargar tu carrito automáticamente.</p>
-            </div>
-
-            <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
-                <h3 style="font-size: 1rem; color: var(--text-dark); margin-bottom: 12px;">📄 Datos Personales</h3>
-                
-                <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-dark);">Nombre y Apellido *</label>
-                <input type="text" id="profile-name" class="form-control" placeholder="Ej: María González">
-
-                <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-dark);">Teléfono de Contacto (ID WhatsApp) *</label>
-                <input type="tel" id="profile-phone" class="form-control" placeholder="Ej: 2996742365">
-
-                <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-dark);">CUIT / CUIL (Para Facturación)</label>
-                <input type="text" id="profile-cuit" class="form-control" placeholder="Ej: 20-35123456-9">
-
-                <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-dark);">Integrantes celíacos en el hogar</label>
-                <input type="number" id="profile-celiacs" class="form-control" min="0" value="1">
-
-                <hr style="border: none; border-top: 1px dashed var(--border-color); margin: 16px 0;">
-
-                <h3 style="font-size: 1rem; color: var(--text-dark); margin-bottom: 8px;">📍 Domicilios Registrados</h3>
-                <div id="profile-addresses-list"></div>
-
-                <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; margin-top: 10px;">
-                    <strong style="font-size: 0.82rem; display: block; margin-bottom: 6px;">+ Agregar Nuevo Domicilio</strong>
-                    <div style="display: flex; gap: 6px; margin-bottom: 6px;">
-                        <input type="text" id="new-addr-tag" class="form-control" placeholder="Etiqueta (Ej: Casa, Trabajo)" style="flex: 1; margin:0;">
-                        <input type="text" id="new-addr-val" class="form-control" placeholder="Dirección exactas" style="flex: 2; margin:0;">
-                    </div>
-                    <button onclick="addAddressToProfile()" style="background: var(--text-dark); color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; width: 100%; cursor: pointer;">Agregar Dirección</button>
-                </div>
-
-                <button onclick="saveUserProfile()" style="background: var(--lumi-green); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; width: 100%; margin-top: 16px; cursor: pointer;">
-                    💾 Guardar Cambios del Perfil
-                </button>
-            </div>
-        </div>
-
 
     </div>
 </div>
 
-<!-- BARRA FLOTANTE DEL CARRITO -->
+<!-- CARRITO FLOTANTE -->
 <button class="cart-float-btn" id="cart-float-btn" onclick="toggleCartModal(true)">
     <div style="display: flex; align-items: center; gap: 8px;">
         <span class="cart-float-savings-pill" id="float-savings-pill" style="display:none;"></span>
-        <span id="float-items-count">🛒 Pedido (0 ítems)</span>
+        <svg class="icn" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span id="float-items-count">Mi Carrito (0 ítems)</span>
     </div>
     <span id="cart-total-btn">$0,00</span>
 </button>
 
-<!-- NAVEGACIÓN INFERIOR DE 6 ÍCONOS -->
+<!-- NAVEGACIÓN INFERIOR -->
 <div class="bottom-nav">
-    <div class="nav-item active" id="tab-catalog" onclick="switchTab('catalog')"><span class="nav-item-icon">🛍️</span><span>Catálogo</span></div>
-    <div class="nav-item" id="tab-giftcards" onclick="switchTab('giftcards')"><span class="nav-item-icon">🎁</span><span>Gift Card</span></div>
-    <div class="nav-item" id="tab-points" onclick="switchTab('points')"><span class="nav-item-icon">⭐</span><span>Puntos</span></div>
-    <div class="nav-item" id="tab-laboral" onclick="switchTab('laboral')"><span class="nav-item-icon">🎓</span><span>Estudio</span></div>
-    <div class="nav-item" id="tab-location" onclick="switchTab('location')"><span class="nav-item-icon">📍</span><span>Ubicación</span></div>
-    <div class="nav-item" id="tab-profile" onclick="switchTab('profile')"><span class="nav-item-icon">👤</span><span>Perfil</span></div>
-</div>
-
-<!-- POP-UP SOLICITUD PUSH TRAS 5 SEGUNDOS -->
-<div class="modal-overlay pop-over-modal" id="push-prompt-modal">
-    <div class="modal-card" style="text-align: center; max-width: 400px;">
-        <div style="font-size: 2.5rem; margin-bottom: 8px;">🔔</div>
-        <h3>¿Querés recibir novedades y ofertas?</h3>
-        <p style="font-size: 0.88rem; color: var(--text-muted); margin: 12px 0; line-height: 1.4;">
-            Activá las notificaciones push para enterarte de descuentos exclusivos, promociones relámpago y el estado de tus puntos.
-        </p>
-        <button onclick="acceptPushFromPrompt()" style="background: var(--lumi-green); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; margin-bottom: 8px;">
-            ¡Sí, activar notificaciones!
-        </button>
-        <button onclick="declinePushFromPrompt()" style="background: none; border: none; color: var(--text-muted); font-size: 0.8rem; cursor: pointer;">
-            Ahora no
-        </button>
+    <div class="nav-item active" id="tab-catalog" onclick="switchTab('catalog')">
+        <svg class="icn icn-nav" viewBox="0 0 24 24"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9z"/><path d="M9 21v-6h6v6"/></svg>
+        <span>Catálogo</span>
+    </div>
+    <div class="nav-item" id="tab-cart" onclick="toggleCartModal(true)">
+        <svg class="icn icn-nav" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span>Mi Carrito</span>
+    </div>
+    <div class="nav-item" id="tab-laboral" onclick="switchTab('laboral')">
+        <svg class="icn icn-nav" viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>
+        <span>Cursos</span>
+    </div>
+    <div class="nav-item" id="tab-location" onclick="switchTab('location')">
+        <svg class="icn icn-nav" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Ubicación</span>
     </div>
 </div>
 
-<!-- MODALES AUXILIARES UBER Y HORARIOS -->
+<!-- POP-UP PROMOCIONAL DE INICIO -->
+<div class="modal-overlay pop-over-modal" id="promo-image-modal">
+    <div class="promo-image-card">
+        <button class="promo-close-btn" onclick="closePromoImageModal()" aria-label="Cerrar">✕</button>
+        <img src="https://img.magnific.com/psd-gratis/diseno-plantillas-supermercados_23-2151822524.jpg?semt=ais_hybrid&w=740&q=80" class="promo-img" alt="Promoción Lumi Sin Gluten">
+        <a href="https://app.hotmart.com/" target="_blank" class="promo-download-btn" onclick="closePromoImageModal()">
+            <svg class="icn" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Descargar Programa</span>
+        </a>
+    </div>
+</div>
+
+<!-- MODALES AUXILIARES -->
 <div class="modal-overlay pop-over-modal" id="uber-info-modal">
     <div class="modal-card" style="text-align: center;">
-        <div style="font-size: 2.5rem; margin-bottom: 8px;">🛵</div>
         <h3>Información de Envío por Uber</h3>
         <p style="font-size: 0.88rem; color: var(--text-muted); margin: 12px 0; line-height: 1.4;">
             El costo del servicio de Uber se <strong>simulará al momento de despachar tu pedido</strong> (el valor varía según los horarios del día).<br><br>
@@ -649,12 +354,11 @@
 
 <div class="modal-overlay pop-over-modal" id="local-address-modal">
     <div class="modal-card" style="text-align: center;">
-        <div style="font-size: 2.5rem; margin-bottom: 8px;">🏠</div>
         <h3>Retiro por Local Lumi Sin Gluten</h3>
         <p style="font-size: 0.88rem; color: var(--text-muted); margin: 12px 0; line-height: 1.4;">
             Te esperamos para retirar tu pedido en:<br>
-            <strong>📍 El Plumerillo y Aconquija, Ciudad de Neuquén</strong>.<br><br>
-            <strong>🕒 Horarios de Atención:</strong><br>
+            <strong>El Plumerillo y Aconquija, Ciudad de Neuquén</strong>.<br><br>
+            <strong>Horarios de Atención:</strong><br>
             Lunes a Viernes de 11:00 a 14:00 hs y de 19:00 a 21:00 hs.
         </p>
         <button onclick="closeLocalAddressModal()" style="background: var(--lumi-green); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer;">Entendido, ¡gracias!</button>
@@ -663,7 +367,6 @@
 
 <div class="modal-overlay pop-over-modal" id="uber-cash-modal">
     <div class="modal-card" style="text-align: center;">
-        <div style="font-size: 2.5rem; margin-bottom: 8px;">⚠️</div>
         <h3 style="color: #ef4444;">Efectivo no disponible en envíos por Uber</h3>
         <p style="font-size: 0.88rem; color: var(--text-muted); margin: 12px 0; line-height: 1.4;">
             No es posible cobrar en efectivo para envíos ya que el chofer de Uber no puede retornar el dinero del cobro.<br><br>
@@ -675,12 +378,11 @@
 
 <div class="modal-overlay pop-over-modal" id="schedule-warning-modal">
     <div class="modal-card" style="text-align: center; max-width: 420px;">
-        <div style="font-size: 2.5rem; margin-bottom: 8px;">🗓️</div>
         <h3 style="color: var(--text-dark);">Día fuera de atención</h3>
         <p style="font-size: 0.88rem; color: var(--text-muted); margin: 12px 0; line-height: 1.4;">
             Lumi Sin Gluten atiende únicamente de <strong>Lunes a Viernes</strong>.<br>
             Los días <strong>Sábados y Domingos</strong> permanecemos cerrados.<br><br>
-            <strong>🕒 Horarios de Atención:</strong><br>
+            <strong>Horarios de Atención:</strong><br>
             - Turno Mañana: 11:00 a 14:00 hs<br>
             - Turno Tarde: 19:00 a 21:00 hs
         </p>
@@ -692,12 +394,11 @@
 
 <div class="modal-overlay pop-over-modal" id="time-range-warning-modal">
     <div class="modal-card" style="text-align: center; max-width: 420px;">
-        <div style="font-size: 2.5rem; margin-bottom: 8px;">⏰</div>
         <h3 style="color: var(--text-dark);">Horario Fuera de Atención</h3>
         <p style="font-size: 0.88rem; color: var(--text-muted); margin: 12px 0; line-height: 1.4;">
             Por favor, seleccioná una hora que esté dentro de nuestros turnos de atención:<br><br>
-            ☀️ <strong>Turno Mañana:</strong> 11:00 a 14:00 hs<br>
-            🌙 <strong>Turno Tarde:</strong> 19:00 a 21:00 hs
+            <strong>Turno Mañana:</strong> 11:00 a 14:00 hs<br>
+            <strong>Turno Tarde:</strong> 19:00 a 21:00 hs
         </p>
         <button onclick="closeTimeRangeWarningModal()" style="background: var(--lumi-green); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer;">
             Entendido, elegir otra hora
@@ -708,7 +409,7 @@
 <!-- MODAL DETALLE DE PRODUCTO -->
 <div class="modal-overlay" id="detail-modal">
     <div class="modal-card" style="padding-bottom: 12px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 10px;">
             <h2 id="detail-title" style="font-size: 1.1rem; color: var(--text-dark);">Detalle del Producto</h2>
             <button class="btn-close" onclick="closeDetailModal()">✕</button>
         </div>
@@ -716,119 +417,65 @@
     </div>
 </div>
 
-<!-- POP-UP EMERGENTE INGREDIENTES -->
+<!-- POP-UP EMERGENTE FICHA DE INGREDIENTES -->
 <div class="modal-overlay pop-over-modal" id="ingredients-popup-modal">
-    <div class="modal-card" style="max-width: 420px;">
+    <div class="modal-card" style="max-width: 460px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <h3 style="font-size: 1.05rem; color: var(--text-dark);">🌾 Ficha de Ingredientes y Certificación</h3>
+            <h3 style="font-size: 1.05rem; color: var(--text-dark);">Ficha de Ingredientes y Certificación</h3>
             <button class="btn-close" onclick="closeIngredientsPopup()">✕</button>
         </div>
-        <div id="ingredients-popup-body" style="font-size: 0.88rem; line-height: 1.5; color: var(--text-muted);"></div>
-        <button onclick="closeIngredientsPopup()" style="background: var(--lumi-green); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 14px; cursor: pointer;">
+        <div id="ingredients-popup-body" style="font-size: 0.88rem; line-height: 1.55; color: #334155;"></div>
+        <button onclick="closeIngredientsPopup()" style="background: var(--lumi-green); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 14px; cursor: pointer; width: 100%;">
             Cerrar Ficha
         </button>
     </div>
 </div>
 
-<!-- POP-UP EMERGENTE COCCIÓN -->
+<!-- POP-UP EMERGENTE FORMA DE COCCIÓN -->
 <div class="modal-overlay pop-over-modal" id="cooking-popup-modal">
-    <div class="modal-card" style="max-width: 420px;">
+    <div class="modal-card" style="max-width: 460px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <h3 style="font-size: 1.05rem; color: var(--text-dark);">🍳 Recomendaciones de Cocción</h3>
+            <h3 style="font-size: 1.05rem; color: var(--text-dark);">Recomendaciones de Cocción</h3>
             <button class="btn-close" onclick="closeCookingPopup()">✕</button>
         </div>
-        <div id="cooking-popup-body" style="font-size: 0.88rem; line-height: 1.5; color: var(--text-muted);"></div>
-        <button onclick="closeCookingPopup()" style="background: var(--lumi-green); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 14px; cursor: pointer;">
+        <div id="cooking-popup-body" style="font-size: 0.88rem; line-height: 1.55; color: #334155;"></div>
+        <button onclick="closeCookingPopup()" style="background: var(--lumi-green); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 14px; cursor: pointer; width: 100%;">
             Entendido
         </button>
     </div>
 </div>
 
-<!-- MODAL PANEL DE ADMINISTRACIÓN PARA AILÉN -->
-<div class="modal-overlay pop-over-modal" id="admin-panel-modal">
-    <div class="modal-card" style="max-width: 650px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-            <h3 style="font-size: 1.1rem; color: var(--text-dark);">👩‍🍳 Panel de Gestión - Ailén</h3>
-            <button class="btn-close" onclick="closeAdminModal()">✕</button>
-        </div>
-
-        <div style="background: #f1f5f9; border-radius: 12px; padding: 14px; margin-bottom: 16px; border: 1px solid var(--border-color);">
-            <strong style="font-size: 0.9rem; display: block; margin-bottom: 8px; color: var(--text-dark);">📢 Enviar Notificación Push a Clientes:</strong>
-            
-            <input type="text" id="push-title-input" class="form-control" placeholder="Título (Ej: ¡Oferta Relámpago en Lumi!)">
-            <input type="text" id="push-msg-input" class="form-control" placeholder="Mensaje contenido (Ej: 15% de descuento en milanesas)">
-            <input type="url" id="push-img-input" class="form-control" placeholder="URL de Imagen opcional (http://...)">
-            
-            <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-dark);">Redirección al hacer clic:</label>
-            <select id="push-redirect-target" class="form-control" onchange="toggleCustomUrlField()">
-                <option value="catalog">🛍️ Ir a Sección Catálogo</option>
-                <option value="points">⭐ Ir a Sección Puntos</option>
-                <option value="giftcards">🎁 Ir a Sección Gift Cards</option>
-                <option value="custom">🔗 Link Personalizado Externo / Web</option>
-            </select>
-
-            <input type="url" id="push-custom-url" class="form-control" placeholder="https://..." style="display:none;">
-
-            <button onclick="sendPushNotificationEnriched()" style="background: var(--lumi-green-dark); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%;">
-                🚀 Despachar Notificación Push
-            </button>
-        </div>
-
-        <h4 style="font-size: 0.95rem; margin-bottom: 8px;">📊 Base de Datos de Clientes y Puntos:</h4>
-        <div style="overflow-x: auto;">
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Cliente / Tel</th>
-                        <th>Celíacos</th>
-                        <th>Pts Aprobados</th>
-                        <th>Pts Pendientes</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody id="admin-db-body"></tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL CARRITO COMPLETO EN GRANDE -->
+<!-- MODAL CARRITO -->
 <div class="modal-overlay" id="cart-modal">
     <div class="modal-card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <h2>🛒 Tu Pedido en Lumi Sin Gluten</h2>
+            <h2 style="display: flex; align-items: center; gap: 8px;">
+                <svg class="icn" viewBox="0 0 24 24" style="stroke: var(--lumi-green-dark);"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                Tu Pedido en Lumi Sin Gluten
+            </h2>
             <button class="btn-close" onclick="toggleCartModal(false)">✕</button>
-        </div>
-
-        <div id="promo-code-section" style="margin-bottom: 12px; display: none;">
-            <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 4px;">Código promocional:</label>
-            <div style="display: flex; gap: 8px;">
-                <input type="text" id="promo-input" class="form-control" style="margin: 0; text-transform: uppercase;" placeholder="Ej: LUMI1">
-                <button onclick="applyPromoCode()" style="background: var(--text-dark); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: bold; cursor: pointer;">Aplicar</button>
-            </div>
-            <div id="promo-status" style="font-size: 0.8rem; font-weight: 600; margin-top: 4px;"></div>
         </div>
 
         <div class="cart-summary" id="cart-summary-list"></div>
 
         <div id="checkout-form-section" style="display: none; flex-direction: column; gap: 10px;">
-            <h3 style="font-size: 0.95rem;">📍 Datos de Entrega y Registro</h3>
+            <h3 style="font-size: 0.95rem;">Datos de Entrega y Registro</h3>
             <input type="text" id="user-name" class="form-control" placeholder="Nombre y Apellido *" required>
             <input type="tel" id="user-phone" class="form-control" placeholder="Teléfono de contacto *" required>
-            <input type="text" id="user-cuit" class="form-control" placeholder="CUIT / CUIL (Opcional)">
-            
-            <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-dark);">📊 Datos Estadísticos:</label>
-            <input type="number" id="user-celiac-count" class="form-control" placeholder="¿Cuántas personas celíacas viven en tu casa? *" min="0" value="1" required>
 
-            <label style="font-size: 0.82rem; font-weight: 700;">Modalidad de Entrega:</label>
+            <label style="font-size: 0.82rem; font-weight: 700;">Modalidad de Compra:</label>
             <select id="delivery-type" class="form-control" onchange="handleDeliveryTypeChange()">
-                <option value="Retiro en Local">🏠 Retiro por Local / Take Away (Gratis)</option>
-                <option value="Envío por Uber">🛵 Envío por Uber (Costo a simular después)</option>
+                <option value="Retiro por Domicilio">Retiro por Domicilio</option>
+                <option value="Envío por Uber">Envío por Uber (Costo a simular después)</option>
             </select>
+
+            <div id="cuit-field-wrapper" style="display: none;">
+                <input type="text" id="user-cuit" class="form-control" placeholder="CUIT / CUIL (Opcional)">
+            </div>
 
             <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; margin-bottom: 4px;">
                 <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 6px; color: var(--text-dark);">
-                    🕒 Día y Hora exacta aproximada:
+                    Día y Hora exacta aproximada:
                 </label>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <input type="date" id="pickup-date" class="form-control" style="flex: 1.2; min-width: 130px; margin-bottom: 0;" onchange="validatePickupDate()">
@@ -841,14 +488,14 @@
 
             <label style="font-size: 0.82rem; font-weight: 700;">Forma de Pago:</label>
             <select id="payment-type" class="form-control" onchange="handlePaymentTypeChange()">
-                <option value="Efectivo">💵 Dinero Efectivo</option>
-                <option value="Transferencia">🏦 Transferencia Bancaria</option>
-                <option value="Mercado Pago">💳 Mercado Pago</option>
+                <option value="Efectivo">Dinero Efectivo</option>
+                <option value="Transferencia">Transferencia Bancaria</option>
+                <option value="Mercado Pago">Mercado Pago</option>
             </select>
 
             <div id="address-fields-wrapper" style="display: none; flex-direction: column; gap: 10px;">
-                <label style="font-size: 0.82rem; font-weight: 700;">Seleccionar Domicilio de Entrega:</label>
-                <select id="user-address-select" class="form-control"></select>
+                <label style="font-size: 0.82rem; font-weight: 700;">Dirección de Entrega:</label>
+                <input type="text" id="user-address-input" class="form-control" placeholder="Calle, número y referencia (Ej: El Plumerillo 312)">
                 <textarea id="user-notes" class="form-control" placeholder="Notas sobre el pedido / entrega" rows="2"></textarea>
             </div>
 
@@ -859,58 +506,436 @@
 
 <script>
     const PHONE_DESTINO = "5492996742365";
-    const VALID_PROMO_CODES = ["LUMI", ...Array.from({ length: 300 }, (_, i) => `LUMI${i + 1}`)];
-    let usedCodes = new Set();
-    let isPromoApplied = false;
-    let appliedCodeName = "";
+
+    /* ============================================================
+       POP-UP PROMOCIONAL DE INICIO (imagen + Descargar Programa)
+       ------------------------------------------------------------
+       Escribí "Activado" para que aparezca al abrir la app,
+       o "Desactivado" para ocultarlo por completo.
+       ============================================================ */
+    const PROMO_INICIO = "Desactivado";
+
+    /* ============================================================
+       CONEXIÓN CON GOOGLE SHEETS (PLANILLA PUBLICADA)
+       ------------------------------------------------------------
+       PUB_BASE es tu enlace publicado. Ese enlace, sin parámetros,
+       devuelve la pestaña CURSOS (confirmado), por eso GID_CURSOS
+       está en "BASE" y ya carga en vivo sin configurar nada.
+
+       Para que PRODUCTOS también cargue en vivo: abrí la planilla
+       en el navegador, hacé clic en la pestaña Productos y copiá el
+       número que aparece al final de la URL después de  #gid= .
+       Pegá ese número en GID_PRODUCTOS reemplazando el texto.
+
+       Si algo falla o falta configurar, la app usa los datos de
+       respaldo embebidos (copia de tu planilla actual).
+       ============================================================ */
+    const PUB_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT9UjFLXp8NZyqPsRDRippLThWSAkbE8x4HguNohH5wGa2O0LTXVQl2wEienug0zVe_ePhcA4H3ZBN1/pub";
+    const GID_PRODUCTOS = "957503224";           // Pestaña Productos (conectada en vivo)
+    const GID_CURSOS = "BASE";                   // "BASE" = usa el enlace publicado tal cual (Cursos)
+
+    /* DATOS DE RESPALDO (copia de la planilla actual) */
+    const FALLBACK_PRODUCTOS_CSV = `Producto,Etiqueta que se muestra en App,Precio Individual,Ingredientes,¿Cómo viene?,Presentación,,Imagen de Portada al Cargar,Img1,Img2,Img3,Img4,Peso por Unidad,Cantidad por Kilo,Ver Video
+Nuggets,,"$17.500,00","✨ Nuggets de Pechuga: El Snack Favorito, Ahora Saludable ✨
+
+¡Imposible comer solo uno! 🐥
+
+Elaborados con 100% pechuga de pollo, estos nuggets son la evolución del snack: tiernos por dentro, súper nutritivos y con ese toque artesanal que los hace únicos. Están suavemente sazonados con una pizca de sal, maicena, pimentón dulce para el color y cúrcuma por sus increíbles propiedades naturales.
+
+Su secreto mejor guardado es el rebozado: una mezcla crocante de rebozador Libre de Gluten y polenta Libre de Gluten, ligada con huevo natural, que logra una textura dorada y un ""crunch"" irresistible en cada bocado.
+
+¿Por qué elegirlos?
+100% Libres de Gluten: Una opción segura, casera y deliciosa para celíacos.
+
+Energía Natural: La combinación de proteína pura y el toque de polenta es ideal para deportistas y chicos en crecimiento.
+
+Sabor con Propósito: Sin conservantes ni saborizantes artificiales, solo especias naturales.
+
+👉 Ideales para una cena rápida, un picoteo divertido o para llevar en la vianda. Porque comer sano también puede (y debe) ser muy tentador. 🥗🎉",❄ Congelados,"Bandeja de Tergopol, correctamente divididos con Folex para su fácil retiro y cocción",,https://drive.google.com/file/d/1i-MxOzaGBUn_6dv8ZmWXba9w1qd-qtUt/view?usp=drive_link,,,,,40 a 50 gramos por Unidad,24 a 28 Unidades Aprox por Kg,
+Arrollado,,"$23.000,00","✨ **Arrollado de Pechuga de Pollo con Panceta Ahumada: Sabor Artesanal para Compartir** ✨
+
+¡Una opción irresistible para cualquier ocasión! 🍗🥓
+
+Nuestro **Arrollado de Pechuga de Pollo** está elaborado con pechuga de pollo cuidadosamente seleccionada y un relleno abundante que combina el sabor inconfundible del **jamón**, la **panceta ahumada**, el **huevo duro**, la **zanahoria**, el **morrón**, el **perejil fresco**, un delicado toque de **mostaza** y **queso rallado sin lactosa**, logrando una combinación equilibrada, jugosa y llena de sabor.
+
+Cada pieza es artesanal y tiene un peso aproximado de **1,1 kg a 1,5 kg**, por lo que cada arrollado es único.
+
+Además, viene **congelado y listo para cocinar** de la forma que más te guste: al horno, en freidora de aire o incluso a la parrilla, para que disfrutes una comida práctica sin perder el sabor casero.
+
+**¿Por qué elegirlo?**
+
+✅ **100% Libre de Gluten:** Elaborado con ingredientes aptos para personas celíacas y evitando la contaminación cruzada.
+
+🥩 **Alto en proteínas:** Una excelente alternativa para quienes buscan una alimentación rica en proteínas y llena de sabor.
+
+🧀 **Con queso rallado sin lactosa:** Más personas pueden disfrutarlo sin resignar el gusto.
+
+👨‍👩‍👧‍👦 **Ideal para compartir:** Perfecto para reuniones familiares, almuerzos de domingo, celebraciones o simplemente para tener siempre una opción lista en el freezer.
+
+❄️ **Práctico y conveniente:** Solo necesitás cocinarlo y disfrutar de una comida artesanal, abundante y deliciosa.
+
+👉 Un clásico reinventado, con ingredientes de calidad y el auténtico sabor casero que distingue a **Lumi Libre de Gluten**. Porque comer rico, seguro y sin gluten también puede ser una experiencia para compartir. 💛
+",❄ Congelados,"Envuelto en Film plástico, con hilo de chorizo. ",,https://drive.google.com/file/d/189QhUk1AJeTMwecxb3Ai8jW1dVcxtj1J/view?usp=drive_link,,,,,"Desde 1.1kg a 1.5kg de peso aproximado (Hacer la compra, luego se define el valor final del mismo)",1 Unidad,
+Milanesas de Pollo,,"$17.500,00","✨ Milanesas de Pechuga: Calidad Superior Libre de Gluten ✨
+
+Las favoritas de la familia 💚.
+
+Elaboradas con pechuga de pollo de selección, garantizamos un corte magro, tierno y con el auténtico sabor de lo casero. Cada pieza es cuidadosamente condimentada con perejil fresco, ajo en su punto justo y apenas una pizca de sal, logrando un equilibrio perfecto que conquista todos los paladares.
+
+Su secreto está en el rebozado: utilizamos un exclusivo rebozador de harina de arroz libre de gluten, que asegura una textura increíblemente crocante, un dorado apetitoso y una experiencia gastronómica segura para todos.
+
+¿Por qué elegirlas?
+Nutrición de Calidad: Ideales para deportistas que buscan una comida rica en proteínas, ligera y de fácil digestión.
+
+Sabor que Encanta: La opción preferida de los más chicos, permitiéndoles disfrutar de una comida nutritiva sin resignar el placer de lo rico.
+
+Seguridad Garantizada: Una alternativa 100% libre de gluten diseñada para que puedas compartir una cena sana y confiable en familia 👨‍👩‍👧‍👦.
+
+👉 Crocantes por fuera, jugosas por dentro. La elección inteligente para quienes eligen lo natural y seguro. 🍗✨",❄ Congelados,"Bandeja de Tergopol, correctamente divididos con Folex para su fácil retiro y cocción",,https://drive.google.com/file/d/18W6bWbqBEU_GFzjKdtwLfDQPbYaZqDyG/view?usp=drive_link,https://drive.google.com/file/d/1F9QDSfSnhMfrzb0yCk5-eLQlfgC1UdkM/view?usp=drive_link,https://drive.google.com/file/d/1FhETp-KAV-uwQ9UImXYZYNuNOT6EwoyR/view?usp=drive_link,https://drive.google.com/file/d/1fARW8AJoBplo-LyWGawtXjRcijMjY_Pd/view?usp=drive_link,https://drive.google.com/file/d/1BJabIEDFQATTDH6HftNrQxBw_qbDN8fk/view?usp=drive_link,70 a 120g por Unidad,8 a 12 Unidades Aprox por Kg,https://youtu.be/ceE__8Oh4jg
+Milanesas de Carne,,"$35.500,00","🥩✨ Milanesas de Carne: El Sabor de Siempre, Libre de Gluten
+El clásico de la mesa argentina, ahora más saludable. 💚
+
+Elaboradas exclusivamente con Nalga de selección, un corte naturalmente magro y tierno, nuestras milanesas se destacan por su frescura. Las maceramos con perejil fresco, ajo natural y apenas una pizca de sal, respetando ese sabor casero que tanto nos gusta, sin aditivos innecesarios.
+
+Su rebozado está hecho con harina de arroz premium libre de gluten, lo que garantiza una textura excepcionalmente crocante y un dorado perfecto, siendo la opción más segura y liviana para tu día a día.
+
+¿Por qué son las preferidas?
+Pura Proteína: Ideales para deportistas y personas activas que buscan una comida nutritiva y de fácil digestión.
+
+Seguridad y Confianza: Una alternativa 100% libre de gluten, pensada para que todos en la mesa puedan disfrutar del mismo plato con total tranquilidad.
+
+Versatilidad Total: La solución perfecta para las viandas de los chicos o una cena rápida, rica y sana en familia 👨‍👩‍👧‍👦.
+
+👉 Textura increíble, sabor auténtico. Porque comer Libre de Gluten también es un placer para los sentidos. 🍽️✨",❄ Congelados,"Bandeja de Tergopol, correctamente divididos con Folex para su fácil retiro y cocción",,https://drive.google.com/file/d/1Ix_DJnzRBJy8rIgICVqKiMmOFgSlE8Gc/view?usp=drive_link,https://drive.google.com/file/d/1riMydPjpMiAWDy_p1Xu0ebsf_O5lUf5s/view?usp=drive_link,,,,70 a 120g por Unidad,8 a 12 Unidades Aprox por Kg,https://youtu.be/ceE__8Oh4jg
+Hamburguesas,,"$17.500,00","🍔🐔 Hamburguesas de Pechuga: 100% Pollo, 100% Libre de Gluten
+Sabor real y practicidad para tu día a día. 💚
+
+Nuestras hamburguesas están elaboradas exclusivamente con pechuga de pollo seleccionada, garantizando un producto magro, tierno y libre de excesos. Las condimentamos de forma natural con perejil fresco, ajo en su punto justo y una pizca mínima de sal, logrando ese equilibrio casero que resalta la calidad de la materia prima.
+
+Al ser 100% libres de gluten, son la solución perfecta para quienes buscan una comida rápida, nutritiva y totalmente segura sin sacrificar el placer de una buena hamburguesa.
+
+¿Por qué elegirlas?
+Nutrición Superior: Una fuente de proteína magra de alta calidad, ideal para deportistas y personas que cuidan su alimentación.
+
+La Favorita de los Chicos: Su textura suave y sabor equilibrado las convierten en la opción número uno para las cenas divertidas y saludables.
+
+Listas en Minutos: Gracias a su formato, son perfectas para resolver una comida en poco tiempo, ya sea al horno o a la plancha, siempre manteniendo su jugosidad.
+
+👉 Lo mejor del pollo en formato hamburguesa. Una elección práctica, sana y deliciosa para compartir en familia. 🏃‍♂️💪",❄ Congelados,Cada Medallon se encuentra cubierto de ambos lados con Folex para su fácil retiro y utilización. Presentación en Bandeja de Tergopol. ,,https://drive.google.com/file/d/18gfVrOeTT4sAb2G0dbTtmGKusPvklAal/view?usp=drive_link,,,,,120g por Unidad,8 Unidades por Kg,https://youtube.com/shorts/0IyejvyOxF0
+Panes,,"$15.000,00","🌾💜 Panes de Lentejas Sin Gluten
+
+El aliado natural para la digestión y el bienestar femenino.
+
+✅ Hechos con lentejas seleccionadas, una pizca de sal y aceite de girasol.
+✅ Horneados, sin frituras, sin conservantes ni aditivos artificiales.
+✅ Certificados libres de gluten, seguros y aptos para celíacos.
+
+💚 Beneficios que marcan la diferencia:
+
+Gracias a su alto contenido de fibra natural, son un aliado clave para mejorar el tránsito intestinal. Especialmente recomendados para mujeres que suelen padecer estreñimiento o digestiones lentas, ayudando a sentirse más ligeras y con energía renovada.
+
+Contribuyen al equilibrio de la flora gastrointestinal, mejorando la salud digestiva y el bienestar general.
+
+Aportan proteínas vegetales, hierro y energía sostenida, fundamentales para quienes cuidan su salud, practican deportes o buscan una alimentación balanceada.
+
+🍴 Un pan, mil momentos:
+
+En el desayuno o merienda con miel, dulces o mermeladas.
+
+Como base para sándwiches saludables con vegetales, quesos o fiambres.
+
+En almuerzos o cenas, acompañando tus comidas con una opción más ligera y nutritiva que el pan común.
+
+✨ Por qué elegirlos:
+Porque no son solo un pan, son una forma práctica y deliciosa de cuidar tu digestión, mantenerte en equilibrio y sumar proteínas vegetales de calidad.
+Muchas mujeres ya los eligen como una solución natural frente al estreñimiento y como un apoyo diario para sentirse deshinchadas, activas y saludables.
+
+👉 Probá los panes de lentejas y sentí la diferencia en tu bienestar diario.",,,,https://drive.google.com/file/d/1yaKYfFMcza5M1BO79t_AVZGu7XARvnyh/view?usp=drive_link,https://drive.google.com/file/d/1nO7dS7eJFgrruP2ZnjpfGJvlqkaNudCj/view?usp=drive_link,https://drive.google.com/file/d/1IYt6dz8XRGzNAbD1NnL-CUQNyO9n4LbP/view?usp=drive_link,https://drive.google.com/file/d/1aViFdj5JSW4_nEbkBQC3NPNlwpVx9ZPj/view?usp=drive_link,https://drive.google.com/file/d/18p5r7edl95Fulh4JwSkXTsAJuwfsGlhw/view?usp=drive_link,,1 Unidad,https://youtube.com/shorts/ZGvQwMWOmzY
+Panes,,"$15.000,00","🌾✨ Panes de Garbanzo Sin Gluten
+
+Sabor natural que cuida tu salud.
+
+✅ Elaborados con garbanzos seleccionados, una pizca justa de sal y un toque de aceite de girasol.
+✅ Horneados, sin frituras, sin conservantes ni aditivos artificiales.
+✅ 100% libres de gluten y aptos para celíacos.
+
+💚 Beneficios para vos y tu familia:
+
+Los garbanzos aportan proteínas de origen vegetal, energía de calidad y una buena dosis de fibra natural.
+
+Favorecen una digestión más ligera y ayudan a mantener el equilibrio intestinal, aportando bienestar en el día a día.
+
+Una opción versátil para toda la familia, los niños y quienes buscan cuidar su alimentación 🏃‍♀️👨‍👩‍👧‍👦.
+
+🍴 Cómo disfrutarlos:
+
+En desayunos o meriendas con dulces, mermeladas o miel.
+
+Como base para sándwiches nutritivos con quesos, fiambres o vegetales.
+
+En almuerzos o cenas, reemplazando el pan común por una alternativa más saludable.
+
+👉 Elegí los panes de garbanzo para sumar sabor, nutrición y un aliado natural para cuidar tu salud cada día.",,,,https://drive.google.com/file/d/1HxD4rRXMjwcW8-iXAaC3x0mEC0a3_xv3/view?usp=drive_link,https://drive.google.com/file/d/1YYvQ8aecfE_C7lUD4rCqUdZ407nGM70K/view?usp=drive_link,https://drive.google.com/file/d/1FtQOlL-_qTTiPdkQ_ZQMXAuSlojTdnaJ/view?usp=drive_link,,,,1 Unidad,https://youtube.com/shorts/ZGvQwMWOmzY
+Panes,,"$23.000,00",,,,,https://drive.google.com/file/d/1WNHHa_StxvuC8Ia0TSBbBKZuRknlI2tc/view?usp=drive_link,,,,,,1 Unidad,`;
+    const FALLBACK_CURSOS_CSV = `Orden,Producto,Descripción,Link Referido,Imagen,Origen
+1,Guía Avanzada de Cocina Sin Gluten,"Descubre los secretos avanzados para dominar texturas perfectas y sabores irresistibles que sorprenderán a todos, sin sacrificar tu salud.",https://go.hotmart.com/I106078657D?dp=1,https://static-media.hotmart.com/_0TQ0PTe72ey__JShzNEVL3cj5U=/300x300/smart/filters:format(webp):background_color(white)/hotmart/product_pictures/5c5de059-850e-453a-9806-b93a5eb40242/DeepinScreenshot_Seleccionararea_20231113150319.png?w=920,Hotmart
+2,Cocina para Celiacos,Inicia desde cero y consigue en poco tiempo conocimientos avanzados en Cocina para Celiacos.,https://go.hotmart.com/W106082969F?ap=bea7,https://static-media.hotmart.com/RUlGw_RTfLiA3Gq4HgIqxcXr3Ws=/filters:background_color(white)/hotmart/product_pictures/77f4ea32-4539-4dd4-821f-807af02f8c45/CocinaparaCeliacos.jpg,Hotmart
+3,Postres Irresistibles sin Gluten y sin Lácteos,Pensados para disfrutar sin restricciones y con resultados reales.,https://go.hotmart.com/F106083010H?dp=1,https://static-media.hotmart.com/MnlpPOEWY_CYTkRumNZbNvueYGs=/filters:background_color(white)/hotmart/product_pictures/2ac0a2b9-720b-41aa-ae10-941b0fd1a185/40recetassingluten40recetassinlacteos.png,Hotmart
+4,Método Cocina Segura Sin Gluten,"Método que te guiará en el camino hacia una vida sin gluten, brindándote los conocimientos y herramientas necesarios para una cocina segura y saludable.",https://go.hotmart.com/V106083105F?dp=1,https://static-media.hotmart.com/PgtWKu9U-9fZY6Gm8udjfcB2ioY=/filters:background_color(white)/hotmart/product_pictures/2a8c727f-b506-4fe8-b4f6-07d038d38ebf/RedCreamCreativeIllustration1001FoodReceiptEbookCover.jpg,Hotmart
+10,Platos y Comidas para Diabéticos e Hipertensos,Inicia desde cero y consigue en poco tiempo conocimientos avanzados en Cocina para Diabéticos e Hipertensos.,https://go.hotmart.com/Y106083265B?ap=75f9,https://static-media.hotmart.com/nBpCpDkM0o-b_YloiaYPRhzH4g8=/filters:background_color(white)/hotmart/product_pictures/d9d00297-69da-4deb-b327-dc8f1e75d821/CocinaparaDiabticoseHipertensos.jpg,Hotmart
+11,Platos y Comidas para personas Hepáticas y con Insuficiencia renal,"Este curso te permite iniciar desde cero y conseguir en poco tiempo conocimientos avanzados en Cocina para Personas Cardíacas, Hepáticas y con Insuficiencia Renal.",https://go.hotmart.com/P106083337I?ap=347e,https://static-media.hotmart.com/J9OSOxcWe6sPutVJK3WgwSAGDw8=/filters:background_color(white)/hotmart/product_pictures/4871e72c-f76c-4b2d-a089-08e69e6d8992/CocinaparaPersonasCardacasHepticasyconInsuficienciaRenal.jpg,Hotmart
+5,Higiene Alimentaria,"Se enseñarán los estándares de limpieza y desinfección, así como los procedimientos de emergencia ante una intoxicación alimentaria. ",https://go.hotmart.com/C106083402O?dp=1,https://static-media.hotmart.com/WYO3XLA2MreQwgVtAgT9q_PZZLY=/filters:background_color(white)/hotmart/product_pictures/2f1386a7-7ad4-4936-8f4b-05ac3183b5e5/YellowMinimalistElegantFoodMagazineCover600600px.png,Hotmart
+6,Curso Pan Saludable con Masa Madre sin Gluten desde Cero,"CURSO en el cual aprenderás las BASES de la PANADERÍA SIN GLUTEN con masa madre. A partir de aquí vas a poder crear diversas variedad de panes, con distintas propiedades nutricionales, sin gluten, y fermentados.",https://go.hotmart.com/Y106083590I?dp=1,https://static-media.hotmart.com/wHM9UdgT6KLG9ChKA6ypO_3kbp4=/filters:background_color(white)/hotmart/product_pictures/062166fb-241b-490e-9e20-b07d83057ab3/20210804_174229_02.jpg,Hotmart
+7,Curso Panettone Saludable sin Gluten con Masa Madre,"Vas a aprender a hacer, en casa y detalladamente, todos los pasos y los secretos para hacer un PANETTONE/PAN DULCE natural con masa madre SIN GLUTEN reforzada.",https://go.hotmart.com/B106083471R?dp=1,https://static-media.hotmart.com/8D_qoQki-mg_rbQpqAbrjj1KY3M=/filters:background_color(white)/hotmart/product_pictures/ce60264b-a081-4d1d-9025-aa164dfd23f3/20211129_154405_02.jpg,Hotmart
+8,Curso Profesional de Panadería Gluten Free,"Dirigido a: Chefs, panaderos, emprendedores y amantes de la panadería 👨‍🍳 Descubre el arte de la panadería sin gluten con un enfoque profesional y práctico.",https://go.hotmart.com/O106083511H?dp=1,https://static-media.hotmart.com/8C0pWNeu-RHb9VCq8RkAoSYr7bI=/filters:background_color(white)/hotmart/product_pictures/f340d36c-da45-438b-af23-1a60cf7e18d5/GlutenFree.png,Hotmart
+9,Manual para Emprendedores del Sector Sin Gluten,"Descubre la guía esencial para emprendedores apasionados por la innovación en el sector sin gluten. Desde la concepción de la idea hasta la conquista del éxito en el mercado,",https://go.hotmart.com/C106083569S?dp=1,https://static-media.hotmart.com/-1OAYmJ5GAL2tL1pA_96Gn9hnGM=/filters:background_color(white)/hotmart/product_pictures/89413183-d803-4e25-b0ff-cac38a36bc5e/DeepinScreenshot_Seleccionararea_20231123155001.png,Hotmart`;
 
     const PECHUGA_DISCOUNTS = { 1:0, 2:0, 3:0.0122, 4:0.0183, 5:0.0245, 6:0.0306, 7:0.0367, 8:0.0429, 9:0.0490, 10:0.0551, 11:0.0612, 12:0.0674, 13:0.0735, 14:0.0796, 15:0.0857 };
     const NALGA_DISCOUNTS = { 1:0, 2:0.0061, 3:0.0122, 4:0.0183, 5:0.0245, 6:0.0306, 7:0.0367, 8:0.0429, 9:0.0490, 10:0.0551, 11:0.0612, 12:0.0674, 13:0.0735, 14:0.0796, 15:0.0857 };
 
-    const PRODUCTS = [
-        { 
-            id: 1, group: "pechuga", title: "Milanesas de Pechuga Sin Gluten", desc: "Pechuga seleccionada libre de TACC.", priceNormal: 17500, weight: "1 Kg por bolsa/bandeja", units: "8 a 12 uds", ingredients: "Filet de pechuga, rebozador sin TACC certificado, huevo fresco, mezcla especias naturales.", nutrition: "100% Libre de TACC. Apto celíacos.", cookingMethod: "🔥 <b>Horno fuerte precalentado:</b> Cocinar en asadera aceitada a 200°C durante 15 a 20 minutos girando a la mitad.<br><br>🍳 <b>Sartén/Plancha:</b> Dorar con abundante aceite caliente durante 3 a 4 minutos por lado hasta lograr un rebozado crujiente.", badgeTag: "⭐ El Más Elegido", youtubeId: "ceE__8Oh4jg", images: ["https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&q=80", "https://images.unsplash.com/photo-1562967914-608f82629710?w=600&q=80", "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80"]
-        },
-        { 
-            id: 2, group: "pechuga", title: "Hamburguesas de Pechuga Sin Gluten", desc: "Medallones de pechuga jugosos.", priceNormal: 17500, weight: "1 Kg por bolsa/bandeja", units: "8 a 10 uds", ingredients: "Pechuga molida magra, huevo, sal marina fina, perejil picado.", nutrition: "Alto contenido proteico.", cookingMethod: "🍳 <b>Plancha/Sartén antiadherente:</b> Cocinar a fuego medio con un chorrito de aceite durante 5 a 6 minutos por lado.<br><br>🔥 <b>Horno:</b> Cocinar a 190°C durante 15 minutos hasta dorar.", badgeTag: "🔥 Oferta Especial", youtubeId: "ceE__8Oh4jg", images: ["https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80", "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&q=80"]
-        },
-        { 
-            id: 3, group: "pechuga", title: "Nuggets de Pechuga Sin Gluten", desc: "Bocaditos crocantes de pechuga.", priceNormal: 17500, weight: "1 Kg por bolsa", units: "20 a 25 uds", ingredients: "Pechuga trozada, empanado crujiente de maíz y arroz sin TACC.", nutrition: "Súper crocantes y suaves.", cookingMethod: "🔥 <b>Horno o Airfryer:</b> Precalentar a 200°C y hornear durante 12 a 15 minutos sin mover.<br><br>🍳 <b>Freidora:</b> Sumergir en aceite bien caliente (180°C) durante 3 a 4 minutos hasta dorar bien.", badgeTag: "✨ Nuevo Producto", youtubeId: "ceE__8Oh4jg", images: ["https://images.unsplash.com/photo-1562967914-608f82629710?w=600&q=80", "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&q=80"]
-        },
-        { 
-            id: 4, group: "nalga", title: "Milanesas de Nalga Sin Gluten", desc: "Milanesas artesanales de carne vacuna.", priceNormal: 35500, weight: "1 Kg por bandeja", units: "6 a 10 uds", ingredients: "Nalga vacuna tiernizada, rebozador certificado apto, huevo, perejil, ajo fresco.", nutrition: "Corte vacuno magro de primera calidad.", cookingMethod: "🔥 <b>Horno:</b> En asadera lubricada con aceite a 210°C unos 12 a 15 minutos (dar vuelta a mitad de cocción).<br><br>🍳 <b>Sartén:</b> Freír en aceite bien caliente 2-3 minutos por lado.", badgeTag: "🥩 Corte Premium", youtubeId: "ceE__8Oh4jg", images: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&q=80", "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80"]
+    /* ÍCONOS SVG REUTILIZABLES */
+    const ICONS = {
+        eye: '<svg class="icn icn-sm" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
+        trash: '<svg class="icn icn-sm" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
+        arrow: '<svg class="icn icn-sm" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>',
+        list: '<svg class="icn icn-sm" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>',
+        flame: '<svg class="icn icn-sm" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>',
+        snow: '<svg class="icn icn-sm" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"/><line x1="4" y1="6" x2="20" y2="18"/><line x1="20" y1="6" x2="4" y2="18"/></svg>',
+        box: '<svg class="icn icn-sm" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+        scale: '<svg class="icn icn-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
+    };
+
+    /* =============== UTILIDADES DE PARSEO =============== */
+    function parseCSV(text) {
+        const rows = []; let row = []; let field = ''; let inQuotes = false;
+        for (let i = 0; i < text.length; i++) {
+            const c = text[i];
+            if (inQuotes) {
+                if (c === '"') {
+                    if (text[i + 1] === '"') { field += '"'; i++; }
+                    else inQuotes = false;
+                } else field += c;
+            } else {
+                if (c === '"') inQuotes = true;
+                else if (c === ',') { row.push(field); field = ''; }
+                else if (c === '\r') { /* ignorar */ }
+                else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+                else field += c;
+            }
         }
-    ];
+        if (field.length > 0 || row.length > 0) { row.push(field); rows.push(row); }
+        return rows;
+    }
+
+    function rowsToObjects(rows) {
+        if (!rows.length) return [];
+        const headers = rows[0].map(h => (h || '').trim());
+        return rows.slice(1).map(r => {
+            const obj = {};
+            headers.forEach((h, idx) => { obj[h] = (r[idx] !== undefined ? r[idx] : '').trim(); });
+            return obj;
+        });
+    }
+
+    function parsePriceAR(str) {
+        if (!str) return null;
+        const clean = String(str).replace(/[^0-9.,]/g, '').replace(/\./g, '').replace(',', '.');
+        const num = parseFloat(clean);
+        return isNaN(num) ? null : num;
+    }
+
+    function driveToImg(url) {
+        if (!url) return null;
+        const m = String(url).match(/\/d\/([a-zA-Z0-9_-]+)/) || String(url).match(/[?&]id=([a-zA-Z0-9_-]+)/);
+        if (m) return `https://drive.google.com/thumbnail?id=${m[1]}&sz=w1000`;
+        if (String(url).startsWith('http')) return url;
+        return null;
+    }
+
+    function ytToEmbedId(url) {
+        if (!url) return null;
+        const m = String(url).match(/(?:youtu\.be\/|shorts\/|watch\?v=|embed\/)([a-zA-Z0-9_-]{6,})/);
+        return m ? m[1] : null;
+    }
+
+    function stripDecor(s) {
+        return (s || '').replace(/\*/g, '').replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}).!]+$/gu, '').trim();
+    }
+
+    function deriveTitle(producto, desc) {
+        const firstLine = (desc || '').split('\n').map(l => l.trim()).filter(Boolean)[0] || '';
+        let candidate = firstLine.includes(':') ? firstLine.split(':')[0] : firstLine;
+        candidate = stripDecor(candidate);
+        if (candidate && candidate.length >= 4 && candidate.length <= 70) return candidate;
+        return producto || 'Producto Lumi';
+    }
+
+    function deriveShortDesc(desc, title) {
+        const lines = (desc || '').split('\n').map(l => stripDecor(l)).filter(l => l && l !== title);
+        for (const l of lines) {
+            if (l.length >= 15 && !l.toLowerCase().startsWith(title.toLowerCase())) {
+                return l.length > 110 ? l.slice(0, 107) + '...' : l;
+            }
+        }
+        return 'Elaboración artesanal 100% libre de gluten.';
+    }
+
+    function deriveGroup(text) {
+        const t = (text || '').toLowerCase();
+        if (/carne|nalga|vacun/.test(t)) return 'nalga';
+        if (/pollo|pechuga|nugget|hamburgues/.test(t)) return 'pechuga';
+        return null;
+    }
+
+    /* El grupo de descuento se puede fijar desde el Sheet con la columna
+       "Grupo Descuento": escribir Pollo (o Pechuga) / Carne (o Nalga) / No.
+       Si la columna no existe o está vacía, se deduce por el nombre del
+       producto, y los vendidos por unidad (panes, arrollado) quedan afuera. */
+    function resolveGroup(explicit, fallbackText, isUnit) {
+        const e = (explicit || '').toLowerCase().trim();
+        if (e) {
+            if (/carne|nalga|vacun/.test(e)) return 'nalga';
+            if (/pollo|pechuga/.test(e)) return 'pechuga';
+            return null; // "No", "-", etc. => sin descuento por cantidad
+        }
+        if (isUnit) return null;
+        return deriveGroup(fallbackText);
+    }
+
+    function formatDescHTML(desc) {
+        let html = (desc || '')
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
+            .replace(/\n/g, '<br>');
+        return html;
+    }
+
+    function buildProductsFromCSV(csvText) {
+        const objs = rowsToObjects(parseCSV(csvText));
+        const products = [];
+        objs.forEach((o, idx) => {
+            const producto = o['Producto'] || '';
+            const desc = o['Ingredientes'] || '';
+            const price = parsePriceAR(o['Precio Individual']);
+            if (!producto && !desc) return;
+            if (price === null) return;
+
+            const fallbackImg = 'https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png';
+
+            /* ESTRUCTURA DE COLUMNAS DE LA PESTAÑA PRODUCTOS:
+               A: Producto | B: Etiqueta que se muestra en App | C: Precio Individual
+               D: Ingredientes | E: ¿Cómo viene? | F: Presentación | G: (vacía)
+               H: Imagen de Portada al Cargar (la que se ve en el catálogo)
+               I-L: Img1 a Img4 (carrusel interno del detalle; se muestran las
+                    que estén cargadas; si no hay ninguna, se usa la portada)
+               M: Peso por Unidad | N: Cantidad por Kilo | O: Ver Video */
+            const cover = driveToImg(o['Imagen de Portada al Cargar']) || fallbackImg;
+            const internas = [];
+            ['Img1','Img2','Img3','Img4'].forEach(k => {
+                const img = driveToImg(o[k]);
+                if (img) internas.push(img);
+            });
+            const images = internas.length ? internas : [cover];
+
+            const title = deriveTitle(producto, desc);
+            const cantidad = o['Cantidad por Kilo'] || '';
+            const isUnit = /1\s*unidad/i.test(cantidad);
+
+            products.push({
+                id: idx + 1,
+                group: resolveGroup(o['Grupo Descuento'] || o['Grupo'] || '', producto + ' ' + title, isUnit),
+                title: title,
+                shortDesc: deriveShortDesc(desc, title),
+                fullDescHTML: formatDescHTML(desc),
+                priceNormal: price,
+                unitWord: isUnit ? 'u.' : 'Kg',
+                unitSuffix: isUnit ? 'c/u' : '/kg',
+                comoViene: o['¿Cómo viene?'] || '',
+                presentacion: o['Presentación'] || '',
+                peso: o['Peso por Unidad'] || o['Peso x Unidad'] || '',
+                cantidad: cantidad,
+                badgeTag: o['Etiqueta que se muestra en App'] || '',
+                coccionHTML: formatDescHTML(o['Forma de Cocción'] || o['Cocción'] || ''),
+                youtubeId: ytToEmbedId(o['Ver Video']),
+                cover: cover,
+                images: images
+            });
+        });
+        return products;
+    }
+
+    function buildCursosFromCSV(csvText) {
+        const objs = rowsToObjects(parseCSV(csvText));
+        return objs
+            .filter(o => (o['Producto'] || '').trim() && (o['Link Referido'] || '').trim())
+            .map(o => ({
+                orden: parseInt(o['Orden']) || 999,
+                nombre: o['Producto'],
+                desc: o['Descripción'] || '',
+                link: o['Link Referido'],
+                img: o['Imagen'] || ''
+            }))
+            .sort((a, b) => a.orden - b.orden);
+    }
+
+    /* =============== ESTADO GLOBAL =============== */
+    let PRODUCTS = buildProductsFromCSV(FALLBACK_PRODUCTOS_CSV);
+    let CURSOS = buildCursosFromCSV(FALLBACK_CURSOS_CSV);
 
     let cart = {};
-    let giftCardCart = {};
     let currentHeroSlide = 0;
     let detailCarouselInterval = null;
     let detailCarouselIndex = 0;
     let currentOpenProductId = null;
-
-    let dbClients = JSON.parse(localStorage.getItem('lumi_db_clients')) || {};
-    let userProfile = JSON.parse(localStorage.getItem('lumi_user_profile')) || {
-        name: '', phone: '', cuit: '', celiacs: 1, addresses: [{ tag: 'Casa', val: 'El Plumerillo 312' }]
-    };
+    let lastCheckout = JSON.parse(localStorage.getItem('lumi_last_checkout')) || {};
 
     window.addEventListener('DOMContentLoaded', () => {
         renderProducts();
+        renderCursos();
         updateCartUI();
         initHeroSlider();
         setDefaultPickupDate();
-        updateUserPointsDisplay();
-        initPushToggleState();
-        loadProfileToUI();
+        loadDataFromSheet();
 
         setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 2000);
-
-        setTimeout(() => {
-            const pushStatus = localStorage.getItem('lumi_push_status');
-            if (!pushStatus) { document.getElementById('push-prompt-modal').classList.add('active'); }
-        }, 5000);
+        if (PROMO_INICIO.trim().toLowerCase() === 'activado') {
+            setTimeout(() => { document.getElementById('promo-image-modal').classList.add('active'); }, 2500);
+        }
     });
 
+    function closePromoImageModal() { document.getElementById('promo-image-modal').classList.remove('active'); }
+
+    /* =============== CARGA EN VIVO DESDE EL SHEET =============== */
+    async function fetchCSV(gid) {
+        const url = (gid === 'BASE')
+            ? `${PUB_BASE}?output=csv`
+            : `${PUB_BASE}?gid=${gid}&single=true&output=csv`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.text();
+    }
+
+    async function loadDataFromSheet() {
+        // Productos
+        try {
+            if (GID_PRODUCTOS && !GID_PRODUCTOS.startsWith('PEGAR')) {
+                const csv = await fetchCSV(GID_PRODUCTOS);
+                const fresh = buildProductsFromCSV(csv);
+                if (fresh.length) { PRODUCTS = fresh; cart = {}; renderProducts(); updateCartUI(); renderCartSummary(); }
+            }
+        } catch (e) { console.warn('Productos: usando datos de respaldo.', e); }
+
+        // Cursos
+        try {
+            if (GID_CURSOS && !GID_CURSOS.startsWith('PEGAR')) {
+                const csv = await fetchCSV(GID_CURSOS);
+                const fresh = buildCursosFromCSV(csv);
+                if (fresh.length) { CURSOS = fresh; renderCursos(); }
+            }
+        } catch (e) { console.warn('Cursos: usando datos de respaldo.', e); }
+    }
+
+    /* =============== FECHAS Y HORARIOS =============== */
     function getNextWorkingDay(dateObj) {
         let nextDate = new Date(dateObj);
         let day = nextDate.getDay();
@@ -990,13 +1015,16 @@
         const deliveryType = document.getElementById('delivery-type').value;
         const paymentSelect = document.getElementById('payment-type');
         const addressWrapper = document.getElementById('address-fields-wrapper');
+        const cuitWrapper = document.getElementById('cuit-field-wrapper');
 
         if (deliveryType === 'Envío por Uber') {
             addressWrapper.style.display = 'flex';
+            cuitWrapper.style.display = 'block';
             document.getElementById('uber-info-modal').classList.add('active');
             if (paymentSelect.value === 'Efectivo') paymentSelect.value = 'Transferencia';
         } else {
             addressWrapper.style.display = 'none';
+            cuitWrapper.style.display = 'none';
             document.getElementById('local-address-modal').classList.add('active');
         }
         renderCartSummary();
@@ -1015,6 +1043,7 @@
     function closeUberCashModal() { document.getElementById('uber-cash-modal').classList.remove('active'); }
     function closeLocalAddressModal() { document.getElementById('local-address-modal').classList.remove('active'); }
 
+    /* =============== DESCUENTOS POR GRUPO =============== */
     function getGroupTotalKg(groupName) {
         let total = 0;
         Object.keys(cart).forEach(id => {
@@ -1025,35 +1054,43 @@
     }
 
     function getGroupDiscountPct(groupName, totalKg) {
-        if (totalKg < 1) return 0;
+        if (!groupName || totalKg < 1) return 0;
         const boundedKg = Math.min(totalKg, 15);
         if (groupName === 'pechuga') return PECHUGA_DISCOUNTS[boundedKg] || 0;
         if (groupName === 'nalga') return NALGA_DISCOUNTS[boundedKg] || 0;
         return 0;
     }
 
+    function getProductPct(p) {
+        if (!p.group) return 0;
+        return getGroupDiscountPct(p.group, getGroupTotalKg(p.group));
+    }
+
+    /* =============== RENDER CATÁLOGO =============== */
     function renderProducts(list = PRODUCTS) {
         const container = document.getElementById('product-list');
         container.innerHTML = list.map(p => {
             const qty = cart[p.id] || 0;
-            let promoBadge = p.group === 'pechuga' ? `<span class="price-discount">Desc. Progresivo desde 3 Kg</span>` : `<span class="price-discount">Desc. Progresivo desde 2 Kg</span>`;
+            let promoBadge = '';
+            if (p.group === 'pechuga') promoBadge = `<span class="price-discount">Desc. Progresivo desde 3 Kg</span>`;
+            else if (p.group === 'nalga') promoBadge = `<span class="price-discount">Desc. Progresivo desde 2 Kg</span>`;
             return `
                 <div class="product-card">
                     <div class="product-img-wrapper" onclick="openDetailModal(${p.id})">
                         ${p.badgeTag ? `<div class="product-badge-overlay">${p.badgeTag}</div>` : ''}
-                        <img src="${p.images[0]}" class="product-img" alt="${p.title}">
+                        <img src="${p.cover}" class="product-img" alt="${p.title}" loading="lazy" onerror="this.onerror=null;this.src='https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png';">
                     </div>
                     <div class="product-info">
                         <div>
                             <div class="product-title">${p.title}</div>
-                            <div class="product-desc">${p.desc}</div>
+                            <div class="product-desc">${p.shortDesc}</div>
                         </div>
                         <div>
                             <div class="price-box">
-                                <span class="price-normal">$${p.priceNormal.toLocaleString('es-AR')}/kg</span>
+                                <span class="price-normal">$${p.priceNormal.toLocaleString('es-AR')}${p.unitSuffix}</span>
                                 ${promoBadge}
                             </div>
-                            <button class="btn-view-details" onclick="openDetailModal(${p.id})">👁️ Ver más detalles</button>
+                            <button class="btn-view-details" onclick="openDetailModal(${p.id})">${ICONS.eye} Ver más detalles</button>
                         </div>
                     </div>
                     <div class="quantity-controls">
@@ -1066,6 +1103,23 @@
         }).join('');
     }
 
+    /* =============== RENDER CURSOS =============== */
+    function renderCursos() {
+        const container = document.getElementById('cursos-list');
+        if (!container) return;
+        container.innerHTML = CURSOS.map(c => `
+            <a href="${c.link}" target="_blank" rel="noopener" class="curso-card-item">
+                <img src="${c.img}" class="curso-img" alt="${c.nombre}" loading="lazy" onerror="this.style.display='none';">
+                <div>
+                    <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--text-dark); line-height: 1.25;">${c.nombre}</h3>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin: 4px 0; line-height: 1.35;">${c.desc}</p>
+                    <span class="curso-cta">Ver Curso ${ICONS.arrow}</span>
+                </div>
+            </a>
+        `).join('');
+    }
+
+    /* =============== CARRITO =============== */
     function changeQty(productId, delta) {
         const currentQty = cart[productId] || 0;
         const newQty = Math.max(0, currentQty + delta);
@@ -1081,14 +1135,6 @@
         }
     }
 
-    function changeGiftCardQty(id, delta) {
-        if (!giftCardCart[id]) return;
-        const newQty = giftCardCart[id].qty + delta;
-        if (newQty <= 0) delete giftCardCart[id]; else giftCardCart[id].qty = newQty;
-        updateCartUI();
-        renderCartSummary();
-    }
-
     function removeProductItem(productId) {
         delete cart[productId];
         const el = document.getElementById(`qty-${productId}`);
@@ -1102,42 +1148,21 @@
         }
     }
 
-    function removeGiftCardItem(id) { delete giftCardCart[id]; updateCartUI(); renderCartSummary(); }
-
-    function addGiftCardToCart(id, title, price, discountPct, originalAmount) {
-        if (!giftCardCart[id]) giftCardCart[id] = { title, price, discountPct, originalAmount, qty: 1 };
-        else giftCardCart[id].qty += 1;
-        updateCartUI();
-        renderCartSummary();
-    }
-
     function updateCartUI() {
-        let totalKg = 0, totalGiftCards = 0, subtotalConDescuentos = 0, totalOriginalBase = 0;
-        const totalPechugaKg = getGroupTotalKg('pechuga'), totalNalgaKg = getGroupTotalKg('nalga');
-        const pctPechuga = getGroupDiscountPct('pechuga', totalPechugaKg), pctNalga = getGroupDiscountPct('nalga', totalNalgaKg);
+        let totalItems = 0, subtotalConDescuentos = 0, totalOriginalBase = 0;
 
         Object.keys(cart).forEach(id => {
             const qty = cart[id], p = PRODUCTS.find(prod => prod.id == id);
             if (p && qty > 0) {
-                totalKg += qty;
-                let unitPrice = p.priceNormal;
-                if (p.group === 'pechuga') unitPrice = p.priceNormal * (1 - pctPechuga);
-                if (p.group === 'nalga') unitPrice = p.priceNormal * (1 - pctNalga);
+                totalItems += qty;
+                const unitPrice = p.priceNormal * (1 - getProductPct(p));
                 subtotalConDescuentos += unitPrice * qty;
                 totalOriginalBase += p.priceNormal * qty;
             }
         });
 
-        Object.keys(giftCardCart).forEach(id => {
-            const gc = giftCardCart[id];
-            totalGiftCards += gc.qty;
-            subtotalConDescuentos += gc.price * gc.qty;
-            totalOriginalBase += (gc.originalAmount || gc.price) * gc.qty;
-        });
-
-        let extraPromoDiscount = isPromoApplied ? subtotalConDescuentos * 0.10 : 0;
-        let finalPrice = subtotalConDescuentos - extraPromoDiscount;
-        let totalAhorro = (totalOriginalBase - subtotalConDescuentos) + extraPromoDiscount;
+        let finalPrice = subtotalConDescuentos;
+        let totalAhorro = totalOriginalBase - subtotalConDescuentos;
         const formattedTotal = `$${finalPrice.toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:2})}`;
 
         document.getElementById('cart-total-btn').innerText = formattedTotal;
@@ -1148,11 +1173,7 @@
             pill.innerText = `Ahorro de $${totalAhorro.toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:2})}`;
         } else { pill.style.display = "none"; }
 
-        let labelItems = [];
-        if (totalKg > 0) labelItems.push(`${totalKg} kg`);
-        if (totalGiftCards > 0) labelItems.push(`${totalGiftCards} Gift Card${totalGiftCards > 1 ? 's' : ''}`);
-
-        const itemsStr = `🛒 Pedido (${labelItems.length > 0 ? labelItems.join(' + ') : '0 ítems'})`;
+        const itemsStr = `Mi Carrito (${totalItems} ítem${totalItems === 1 ? '' : 's'})`;
         document.getElementById('float-items-count').innerText = itemsStr;
 
         const modalPill = document.getElementById('modal-float-savings-pill');
@@ -1169,27 +1190,42 @@
         }
     }
 
+    /* =============== DETALLE DE PRODUCTO =============== */
     function openDetailModal(id) {
         const p = PRODUCTS.find(item => item.id === id);
         if (!p) return;
         currentOpenProductId = id; detailCarouselIndex = 0;
         if (detailCarouselInterval) clearInterval(detailCarouselInterval);
         const qty = cart[p.id] || 0;
-        let carouselSlidesHTML = p.images.map(img => `<div class="auto-carousel-slide"><img src="${img}" alt="${p.title}"></div>`).join('');
-        let videoHTML = p.youtubeId ? `<div style="margin-top: 12px;"><strong style="font-size: 0.88rem; color: var(--text-dark);">📹 Video explicativo del producto:</strong><div class="video-container-modal"><iframe src="https://www.youtube.com/embed/${p.youtubeId}" allowfullscreen></iframe></div></div>` : '';
+        const fallbackImg = 'https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png';
+        let carouselSlidesHTML = p.images.map(img => `<div class="auto-carousel-slide"><img src="${img}" alt="${p.title}" onerror="this.onerror=null;this.src='${fallbackImg}';"></div>`).join('');
+        let arrowsHTML = p.images.length > 1 ? `
+                <button class="auto-carousel-arrow left" onclick="manualMoveDetailSlide(-1)">❮</button>
+                <button class="auto-carousel-arrow right" onclick="manualMoveDetailSlide(1)">❯</button>` : '';
+        let videoHTML = p.youtubeId ? `<div style="margin-top: 12px;"><strong style="font-size: 0.88rem; color: var(--text-dark);">Video explicativo del producto:</strong><div class="video-container-modal"><iframe src="https://www.youtube-nocookie.com/embed/${p.youtubeId}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><a href="https://www.youtube.com/watch?v=${p.youtubeId}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 5px; font-size: 0.78rem; font-weight: 700; color: #dc2626; text-decoration: none; margin-top: 2px;">${ICONS.arrow} Si el video no carga, miralo directo en YouTube</a></div>` : '';
+
+        let dataLines = '';
+        if (p.comoViene) dataLines += `<div style="margin-bottom:4px;"><strong>¿Cómo viene?</strong> ${p.comoViene}</div>`;
+        if (p.presentacion) dataLines += `<div style="margin-bottom:4px;"><strong>Presentación:</strong> ${p.presentacion}</div>`;
+        if (p.peso) dataLines += `<div style="margin-bottom:4px;"><strong>Peso por Unidad:</strong> ${p.peso}</div>`;
+        if (p.cantidad) dataLines += `<div style="margin-bottom:10px;"><strong>Unidades aprox:</strong> ${p.cantidad}</div>`;
+
+        let popupButtons = `<button onclick="openIngredientsPopup(${p.id})" style="background: var(--text-dark); color: white; border: none; padding: 9px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: 100%;">${ICONS.list} Ver Ficha de Ingredientes Completa</button>`;
+        if (p.coccionHTML) {
+            popupButtons += `<button onclick="openCookingPopup(${p.id})" style="background: #f97316; color: white; border: none; padding: 9px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: 100%;">${ICONS.flame} Forma de Cocción</button>`;
+        }
 
         document.getElementById('detail-title').innerText = p.title;
         document.getElementById('detail-body').innerHTML = `
             <div class="auto-carousel-container">
-                <button class="auto-carousel-arrow left" onclick="manualMoveDetailSlide(-1)">❮</button>
+                ${arrowsHTML}
                 <div class="auto-carousel-track" id="detail-carousel-track">${carouselSlidesHTML}</div>
-                <button class="auto-carousel-arrow right" onclick="manualMoveDetailSlide(1)">❯</button>
             </div>
             <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 14px; padding: 14px; margin-bottom: 14px;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                     <div>
-                        <div style="font-size: 1.2rem; font-weight: 800; color: var(--text-dark);">$${p.priceNormal.toLocaleString('es-AR')}/kg</div>
-                        <div style="font-size: 0.78rem; color: #059669; font-weight: 700; margin-top: 2px;" id="modal-discount-tag">Descuento progresivo según acumulado de Kilos</div>
+                        <div style="font-size: 1.2rem; font-weight: 800; color: var(--text-dark);">$${p.priceNormal.toLocaleString('es-AR')}${p.unitSuffix}</div>
+                        <div style="font-size: 0.78rem; color: #059669; font-weight: 700; margin-top: 2px;" id="modal-discount-tag">${p.group ? 'Descuento progresivo según acumulado de Kilos' : 'Producto artesanal Libre de Gluten'}</div>
                     </div>
                     <div class="quantity-controls" style="background: #ffffff;">
                         <button class="btn-qty" onclick="changeQty(${p.id}, -1)">-</button>
@@ -1199,50 +1235,50 @@
                 </div>
                 <div id="modal-subtotal-info" style="font-size: 0.88rem; font-weight: 800; color: #0284c7; text-align: right; margin-top: 4px;"></div>
             </div>
-            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:12px;">${p.desc}</p>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:12px;">${p.shortDesc}</p>
             <div style="background:#f8fafc; padding:12px; border-radius:12px; font-size:0.85rem; margin-bottom:14px; border: 1px solid var(--border-color);">
-                <div style="margin-bottom:4px;"><strong>Presentación:</strong> ${p.weight}</div>
-                <div style="margin-bottom:10px;"><strong>Unidades aprox:</strong> ${p.units}</div>
+                ${dataLines}
                 <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <button onclick="openIngredientsPopup(${p.id})" style="background: var(--text-dark); color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer; text-align: center;">🌾 Ver Ficha de Ingredientes Completa (Pop-up)</button>
-                    <button onclick="openCookingPopup(${p.id})" style="background: #f97316; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer; text-align: center;">🍳 Forma de Cocción (Pop-up)</button>
+                    ${popupButtons}
                 </div>
             </div>
             ${videoHTML}
             <button class="modal-float-cart-bar" onclick="closeDetailModal(); toggleCartModal(true);">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <span class="cart-float-savings-pill" id="modal-float-savings-pill" style="display:none;"></span>
-                    <span id="modal-float-items-count">🛒 Pedido (0 ítems)</span>
+                    <span id="modal-float-items-count">Mi Carrito (0 ítems)</span>
                 </div>
                 <span id="modal-cart-total-btn">$0,00</span>
             </button>
         `;
 
         updateModalPriceCalculation(p.id); updateCartUI();
-        detailCarouselInterval = setInterval(() => {
-            detailCarouselIndex = (detailCarouselIndex + 1) % p.images.length;
-            const track = document.getElementById('detail-carousel-track');
-            if (track) track.style.transform = `translateX(-${detailCarouselIndex * 100}%)`;
-        }, 1000);
+        if (p.images.length > 1) {
+            detailCarouselInterval = setInterval(() => {
+                detailCarouselIndex = (detailCarouselIndex + 1) % p.images.length;
+                const track = document.getElementById('detail-carousel-track');
+                if (track) track.style.transform = `translateX(-${detailCarouselIndex * 100}%)`;
+            }, 3000);
+        }
         document.getElementById('detail-modal').classList.add('active');
     }
 
     function updateModalPriceCalculation(productId) {
         const p = PRODUCTS.find(item => item.id === productId); if (!p) return;
         const qty = cart[productId] || 0;
-        const pct = getGroupDiscountPct(p.group, getGroupTotalKg(p.group));
+        const pct = getProductPct(p);
         const subtotalEl = document.getElementById('modal-subtotal-info');
         const tagEl = document.getElementById('modal-discount-tag');
         if (subtotalEl) {
             const finalUnitPrice = p.priceNormal * (1 - pct);
             subtotalEl.innerText = qty > 0 ? `Subtotal acumulado: $${(finalUnitPrice * qty).toLocaleString('es-AR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}` : 'Sin unidades en carrito';
         }
-        if (tagEl) { tagEl.innerText = pct > 0 ? `¡Descuento del ${(pct * 100).toFixed(1)}% aplicado en tu grupo!` : 'Descuento progresivo según acumulado de Kilos'; }
+        if (tagEl && p.group) { tagEl.innerText = pct > 0 ? `¡Descuento del ${(pct * 100).toFixed(1)}% aplicado en tu grupo!` : 'Descuento progresivo según acumulado de Kilos'; }
     }
 
     function manualMoveDetailSlide(delta) {
         const p = PRODUCTS.find(item => item.id == currentOpenProductId);
-        const total = p ? p.images.length : 3;
+        const total = p ? p.images.length : 1;
         detailCarouselIndex = (detailCarouselIndex + delta + total) % total;
         const track = document.getElementById('detail-carousel-track');
         if (track) track.style.transform = `translateX(-${detailCarouselIndex * 100}%)`;
@@ -1254,13 +1290,13 @@
         document.getElementById('detail-modal').classList.remove('active');
     }
 
+    /* =============== POP-UPS DE FICHA Y COCCIÓN =============== */
     function openIngredientsPopup(id) {
         const p = PRODUCTS.find(item => item.id === id); if (!p) return;
         document.getElementById('ingredients-popup-body').innerHTML = `
-            <p style="margin-bottom:8px;"><strong>Producto:</strong> ${p.title}</p>
-            <p style="margin-bottom:8px;"><strong>🌾 Ingredientes detallados:</strong><br>${p.ingredients}</p>
-            <p style="margin-bottom:8px;"><strong>📊 Información nutricional:</strong><br>${p.nutrition}</p>
-            <div style="background: #d1fae5; color: #065f46; padding: 8px; border-radius: 6px; font-weight: bold; text-align: center; margin-top: 10px;">✔ Certificado Sin TACC / Apto Celíacos</div>
+            <p style="margin-bottom:10px;"><strong>Producto:</strong> ${p.title}</p>
+            <div style="margin-bottom:10px;">${p.fullDescHTML}</div>
+            <div style="background: #d1fae5; color: #065f46; padding: 8px; border-radius: 6px; font-weight: bold; text-align: center; margin-top: 10px;">Apto Celíaco</div>
         `;
         document.getElementById('ingredients-popup-modal').classList.add('active');
     }
@@ -1268,60 +1304,52 @@
     function closeIngredientsPopup() { document.getElementById('ingredients-popup-modal').classList.remove('active'); }
 
     function openCookingPopup(id) {
-        const p = PRODUCTS.find(item => item.id === id); if (!p) return;
+        const p = PRODUCTS.find(item => item.id === id); if (!p || !p.coccionHTML) return;
         document.getElementById('cooking-popup-body').innerHTML = `
             <p style="margin-bottom:12px;"><strong>Producto:</strong> ${p.title}</p>
-            <p style="margin-bottom:12px; line-height:1.5;">${p.cookingMethod}</p>
-            <div style="background: #fff7ed; color: #c2410c; padding: 10px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; border: 1px solid #ffedd5;">⚠️ Tip Lumi: Para mantener la certificación Sin TACC, asegurate de utilizar utensilios y aceite limpios sin residuos de productos con gluten.</div>
+            <div style="margin-bottom:12px;">${p.coccionHTML}</div>
+            <div style="background: #fff7ed; color: #c2410c; padding: 10px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; border: 1px solid #ffedd5;">Tip Lumi: Para que tu comida siga siendo apta para celíacos, asegurate de utilizar utensilios y aceite limpios, sin residuos de productos con gluten.</div>
         `;
         document.getElementById('cooking-popup-modal').classList.add('active');
     }
 
     function closeCookingPopup() { document.getElementById('cooking-popup-modal').classList.remove('active'); }
 
+    /* =============== MODAL CARRITO =============== */
     function toggleCartModal(show) {
         const modal = document.getElementById('cart-modal');
-        if (show) { renderCartSummary(); fillCheckoutFromProfile(); modal.classList.add('active'); }
+        if (show) { renderCartSummary(); fillCheckoutFromLastOrder(); modal.classList.add('active'); }
         else { modal.classList.remove('active'); }
     }
 
-    function fillCheckoutFromProfile() {
-        if (userProfile.name) document.getElementById('user-name').value = userProfile.name;
-        if (userProfile.phone) document.getElementById('user-phone').value = userProfile.phone;
-        if (userProfile.cuit) document.getElementById('user-cuit').value = userProfile.cuit;
-        if (userProfile.celiacs) document.getElementById('user-celiac-count').value = userProfile.celiacs;
-
-        const addrSelect = document.getElementById('user-address-select');
-        if (addrSelect) {
-            addrSelect.innerHTML = userProfile.addresses.map(a => `<option value="${a.val}">${a.tag}: ${a.val}</option>`).join('');
-        }
+    function fillCheckoutFromLastOrder() {
+        if (lastCheckout.name) document.getElementById('user-name').value = lastCheckout.name;
+        if (lastCheckout.phone) document.getElementById('user-phone').value = lastCheckout.phone;
+        if (lastCheckout.cuit) document.getElementById('user-cuit').value = lastCheckout.cuit;
+        if (lastCheckout.address) document.getElementById('user-address-input').value = lastCheckout.address;
     }
 
     function renderCartSummary() {
         const container = document.getElementById('cart-summary-list');
-        const promoSection = document.getElementById('promo-code-section');
         const checkoutFormSection = document.getElementById('checkout-form-section');
         const waWrapper = document.getElementById('whatsapp-order-btn-wrapper');
 
-        const pctPechuga = getGroupDiscountPct('pechuga', getGroupTotalKg('pechuga'));
-        const pctNalga = getGroupDiscountPct('nalga', getGroupTotalKg('nalga'));
-
         let html = '', subtotal = 0, totalDescuentoProgresivo = 0;
-        const hasProducts = Object.keys(cart).length > 0, hasGiftCards = Object.keys(giftCardCart).length > 0;
+        const hasProducts = Object.keys(cart).length > 0;
 
-        if (!hasProducts && !hasGiftCards) {
+        if (!hasProducts) {
             container.innerHTML = `
                 <div style="text-align: center; padding: 20px 10px;">
-                    <div style="font-size: 2.5rem; margin-bottom: 8px;">🛒</div>
+                    <svg class="icn" viewBox="0 0 24 24" style="width:40px; height:40px; stroke: var(--text-muted); margin-bottom: 8px;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
                     <strong style="font-size: 1rem; color: var(--text-dark); display: block; margin-bottom: 4px;">Tu carrito está vacío</strong>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Agregá al menos 1 producto o Gift Card del catálogo para continuar con los datos de entrega.</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Agregá al menos 1 producto del catálogo para continuar con los datos de entrega.</p>
                 </div>
             `;
-            promoSection.style.display = 'none'; checkoutFormSection.style.display = 'none';
+            checkoutFormSection.style.display = 'none';
             return;
         }
 
-        promoSection.style.display = 'block'; checkoutFormSection.style.display = 'flex';
+        checkoutFormSection.style.display = 'flex';
         waWrapper.innerHTML = `
             <button class="btn-whatsapp-official" onclick="sendWhatsAppOrder()">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/3840px-WhatsApp.svg.png" class="wa-icon-img" alt="WA">
@@ -1332,7 +1360,7 @@
         Object.keys(cart).forEach(id => {
             const qty = cart[id], p = PRODUCTS.find(prod => prod.id == id);
             if (p && qty > 0) {
-                let pct = p.group === 'pechuga' ? pctPechuga : pctNalga;
+                const pct = getProductPct(p);
                 const priceWithDiscount = p.priceNormal * (1 - pct);
                 const itemTotal = priceWithDiscount * qty;
                 const originalTotal = p.priceNormal * qty;
@@ -1344,13 +1372,13 @@
                     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-color); padding-bottom: 10px;">
                         <div style="flex: 1; padding-right: 8px;">
                             <strong style="font-size: 0.88rem; color: var(--text-dark);">${p.title}</strong>
-                            <div class="cart-item-detail">Precio base: $${p.priceNormal.toLocaleString('es-AR')}/kg</div>
-                            ${itemSavings > 0 ? `<div class="cart-discount-text">⚡ Desc. por cantidad aplicado: -$${itemSavings.toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:2})} (${(pct*100).toFixed(1)}% OFF)</div>` : `<div class="cart-item-detail" style="color: var(--text-muted);">Sin desc. por cantidad</div>`}
+                            <div class="cart-item-detail">Precio base: $${p.priceNormal.toLocaleString('es-AR')}${p.unitSuffix}</div>
+                            ${itemSavings > 0 ? `<div class="cart-discount-text">Desc. por cantidad aplicado: -$${itemSavings.toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:2})} (${(pct*100).toFixed(1)}% OFF)</div>` : (p.group ? `<div class="cart-item-detail" style="color: var(--text-muted);">Sin desc. por cantidad</div>` : '')}
                         </div>
                         <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
                             <span style="font-weight: 800; font-size: 0.95rem;">$${itemTotal.toLocaleString('es-AR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
                             <div style="display: flex; align-items: center; gap: 4px;">
-                                <button class="btn-delete-item" onclick="removeProductItem(${p.id})" title="Eliminar">🗑️</button>
+                                <button class="btn-delete-item" onclick="removeProductItem(${p.id})" title="Eliminar">${ICONS.trash}</button>
                                 <div class="quantity-controls-sm">
                                     <button class="btn-qty-sm" onclick="changeQty(${p.id}, -1)">-</button>
                                     <span style="font-size: 0.75rem; font-weight: bold; width: 18px; text-align: center;">${qty}</span>
@@ -1363,47 +1391,11 @@
             }
         });
 
-        Object.keys(giftCardCart).forEach(id => {
-            const gc = giftCardCart[id]; const itemTotal = gc.price * gc.qty; subtotal += itemTotal;
-            html += `
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-color); padding-bottom: 10px;">
-                    <div style="flex: 1; padding-right: 8px;">
-                        <strong style="font-size: 0.88rem; color: var(--text-dark);">🎁 ${gc.title}</strong>
-                        <div class="cart-item-detail">Valor real: $${(gc.originalAmount || gc.price).toLocaleString('es-AR')} c/u</div>
-                        <div class="cart-discount-text">🎉 Beneficio Gift Card: ${gc.discountPct}% OFF (Pagás $${gc.price.toLocaleString('es-AR')} c/u)</div>
-                    </div>
-                    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
-                        <span style="font-weight: 800; font-size: 0.95rem;">$${itemTotal.toLocaleString('es-AR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
-                        <div style="display: flex; align-items: center; gap: 4px;">
-                            <button class="btn-delete-item" onclick="removeGiftCardItem(${id})" title="Eliminar">🗑️</button>
-                            <div class="quantity-controls-sm">
-                                <button class="btn-qty-sm" onclick="changeGiftCardQty(${id}, -1)">-</button>
-                                <span style="font-size: 0.75rem; font-weight: bold; width: 18px; text-align: center;">${gc.qty}</span>
-                                <button class="btn-qty-sm" onclick="changeGiftCardQty(${id}, 1)">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-
-        let promoDiscount = isPromoApplied ? subtotal * 0.10 : 0;
-        let subtotalFinal = subtotal - promoDiscount;
+        let subtotalFinal = subtotal;
 
         if (totalDescuentoProgresivo > 0) {
-            html += `<div style="display: flex; justify-content: space-between; color: #059669; font-size: 0.78rem; font-weight: 700; margin-top: 4px;"><span>🎉 Total Ahorrado por Kilos:</span><span>-$${totalDescuentoProgresivo.toLocaleString('es-AR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></div>`;
+            html += `<div style="display: flex; justify-content: space-between; color: #059669; font-size: 0.78rem; font-weight: 700; margin-top: 4px;"><span>Total Ahorrado por Kilos:</span><span>-$${totalDescuentoProgresivo.toLocaleString('es-AR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></div>`;
         }
-        if (isPromoApplied && promoDiscount > 0) {
-            html += `<div style="display: flex; justify-content: space-between; color: #059669; font-size: 0.78rem; font-weight: 700;"><span>✨ Cupón Promocional (${appliedCodeName}):</span><span>-$${promoDiscount.toLocaleString('es-AR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></div>`;
-        }
-
-        let estimatedPoints = Math.floor(subtotalFinal / 1000);
-        html += `
-            <div style="background: #f3e8ff; border: 1px solid #d8b4fe; padding: 8px 12px; border-radius: 8px; margin-top: 6px; font-size: 0.8rem; color: #6b21a8; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
-                <span>⭐ Puntos a sumar con esta compra:</span><span>+${estimatedPoints} Pts</span>
-            </div>
-            <div style="font-size: 0.7rem; color: #7e22ce; font-style: italic; margin-top: -2px;">* Puntos sujetos a confirmación de compra por Ailén.</div>
-        `;
 
         html += `
             <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.1rem; border-top: 2px dashed #cbd5e1; padding-top: 8px; margin-top: 4px;">
@@ -1413,59 +1405,50 @@
         container.innerHTML = html;
     }
 
+    /* =============== ENVÍO DEL PEDIDO =============== */
     function sendWhatsAppOrder() {
         if (!validatePickupDate() || !validatePickupTime()) return;
 
         const name = document.getElementById('user-name').value.trim();
         const phone = document.getElementById('user-phone').value.trim();
         const cuit = document.getElementById('user-cuit').value.trim();
-        const celiacsCount = document.getElementById('user-celiac-count').value.trim();
         const deliveryType = document.getElementById('delivery-type').value;
         const paymentType = document.getElementById('payment-type').value;
-        const addressSelect = document.getElementById('user-address-select');
+        const addressInput = document.getElementById('user-address-input');
         const notesField = document.getElementById('user-notes');
         const pickupDate = document.getElementById('pickup-date').value;
         const pickupTimeExact = document.getElementById('pickup-time-exact').value;
 
-        const address = addressSelect ? addressSelect.value : "";
+        const address = addressInput ? addressInput.value.trim() : "";
         const notes = notesField ? notesField.value.trim() : "";
 
-        if (!name || !phone || celiacsCount === "") { alert("Completa Nombre, Teléfono y Celíacos obligatorios."); return; }
-
-        const pctPechuga = getGroupDiscountPct('pechuga', getGroupTotalKg('pechuga'));
-        const pctNalga = getGroupDiscountPct('nalga', getGroupTotalKg('nalga'));
+        if (!name || !phone) { alert("Completa Nombre y Teléfono obligatorios."); return; }
+        if (deliveryType === 'Envío por Uber' && !address) { alert("Ingresá la dirección de entrega para el envío por Uber."); return; }
 
         let subtotal = 0, totalOriginalBase = 0, itemsDetails = [];
 
         Object.keys(cart).forEach(id => {
             const qty = cart[id], p = PRODUCTS.find(prod => prod.id == id);
             if (p && qty > 0) {
-                let pct = p.group === 'pechuga' ? pctPechuga : pctNalga;
+                const pct = getProductPct(p);
                 const priceWithDiscount = p.priceNormal * (1 - pct);
                 const itemTotal = priceWithDiscount * qty;
                 const originalTotal = p.priceNormal * qty;
                 const itemSavings = originalTotal - itemTotal;
 
                 subtotal += itemTotal; totalOriginalBase += originalTotal;
-                let discountStatus = pct > 0 ? `⚡ *SI TIENE DESCUENTO APLICADO* (${(pct*100).toFixed(1)}% OFF - Ahorro: $${itemSavings.toLocaleString('es-AR')})` : `⚪ *SIN DESCUENTO APLICADO* (Acumulá más Kg para obtener descuento)`;
-                itemsDetails.push(`• *${p.title}*\n  - Cantidad: *${qty} Kg*\n  - Precio Base: $${p.priceNormal.toLocaleString('es-AR')}/kg\n  - Estado: ${discountStatus}\n  - Subtotal Item: *$${itemTotal.toLocaleString('es-AR')}*`);
+                let discountStatus = pct > 0 ? `⚡ *SI TIENE DESCUENTO APLICADO* (${(pct*100).toFixed(1)}% OFF - Ahorro: $${itemSavings.toLocaleString('es-AR')})` : `⚪ *SIN DESCUENTO APLICADO*`;
+                itemsDetails.push(`• *${p.title}*\n  - Cantidad: *${qty} ${p.unitWord}*\n  - Precio Base: $${p.priceNormal.toLocaleString('es-AR')}${p.unitSuffix}\n  - Estado: ${discountStatus}\n  - Subtotal Item: *$${itemTotal.toLocaleString('es-AR')}*`);
             }
-        });
-
-        Object.keys(giftCardCart).forEach(id => {
-            const gc = giftCardCart[id]; const itemTotal = gc.price * gc.qty; const originalVal = (gc.originalAmount || gc.price) * gc.qty;
-            subtotal += itemTotal; totalOriginalBase += originalVal;
-            itemsDetails.push(`• *🎁 ${gc.title}*\n  - Cantidad: *${gc.qty} u.*\n  - Valor Nominal: $${(gc.originalAmount || gc.price).toLocaleString('es-AR')} c/u\n  - Beneficio Aplicado: *${gc.discountPct}% OFF* (Pagás $${gc.price.toLocaleString('es-AR')} c/u)\n  - Subtotal Item: *$${itemTotal.toLocaleString('es-AR')}*`);
         });
 
         if (itemsDetails.length === 0) { alert("Tu carrito está vacío."); return; }
 
-        let promoDiscount = isPromoApplied ? subtotal * 0.10 : 0;
-        let finalPrice = subtotal - promoDiscount;
-        let totalAhorroGeneral = (totalOriginalBase - subtotal) + promoDiscount;
-        let puntosGanados = Math.floor(finalPrice / 1000);
+        let finalPrice = subtotal;
+        let totalAhorroGeneral = totalOriginalBase - subtotal;
 
-        registerClientPurchase(phone, name, celiacsCount, finalPrice, puntosGanados);
+        lastCheckout = { name, phone, cuit, address };
+        localStorage.setItem('lumi_last_checkout', JSON.stringify(lastCheckout));
 
         let dayName = "", formattedDateStr = "";
         if (pickupDate) {
@@ -1480,9 +1463,9 @@
 
         let message = `🌱 *NUEVO PEDIDO REGISTRADO - LUMI SIN GLUTEN*\n===============================\n\n`;
         message += `👤 *CLIENTE:* ${name}\n📞 *TELÉFONO:* ${phone}\n`;
-        if (cuit) message += `🧾 *CUIT/CUIL:* ${cuit}\n`;
-        message += `🌾 *CELÍACOS EN EL HOGAR:* ${celiacsCount}\n🛵 *MODALIDAD:* ${deliveryType}\n🕒 *${actionText.toUpperCase()}:* ${formattedDateStr} a las ${pickupTimeExact} hs aprox.\n💳 *MEDIO DE PAGO:* ${paymentType}\n`;
-        
+        if (deliveryType === 'Envío por Uber' && cuit) message += `🧾 *CUIT/CUIL:* ${cuit}\n`;
+        message += `🛵 *MODALIDAD:* ${deliveryType}\n🕒 *${actionText.toUpperCase()}:* ${formattedDateStr} a las ${pickupTimeExact} hs aprox.\n💳 *MEDIO DE PAGO:* ${paymentType}\n`;
+
         if (deliveryType === 'Envío por Uber') {
             if (address) message += `📍 *DIRECCIÓN DE ENTREGA:* ${address}\n`;
             if (notes) message += `📝 *NOTAS:* ${notes}\n`;
@@ -1491,191 +1474,18 @@
         message += `\n📦 *DETALLE DE PRODUCTOS SOLICITADOS:*\n-----------------------------------\n` + itemsDetails.join('\n\n') + `\n\n-----------------------------------\n`;
 
         if (totalAhorroGeneral > 0) message += `🎉 *AHORRO TOTAL EN ESTE PEDIDO:* $${totalAhorroGeneral.toLocaleString('es-AR', {minimumFractionDigits:2})}\n`;
-        if (isPromoApplied && promoDiscount > 0) message += `✨ *CUPÓN APLICADO (${appliedCodeName}):* -$${promoDiscount.toLocaleString('es-AR', {minimumFractionDigits:2})}\n`;
 
-        message += `💰 *TOTAL FINAL A PAGAR:* *$${finalPrice.toLocaleString('es-AR', {minimumFractionDigits:2})}*\n⭐ *PUNTOS A SUMAR:* +${puntosGanados} Pts (Pendiente de confirmación por Ailén)\n\n¡Muchas gracias! Quedo a la espera de la confirmación.`;
+        message += `💰 *TOTAL FINAL A PAGAR:* *$${finalPrice.toLocaleString('es-AR', {minimumFractionDigits:2})}*\n\n¡Muchas gracias! Quedo a la espera de la confirmación.`;
 
         window.open(`https://wa.me/${PHONE_DESTINO}?text=${encodeURIComponent(message)}`, '_blank');
-    }
-
-    function buyGiftCardDirect(amount, discount) {
-        const finalPrice = amount * (1 - (discount / 100));
-        const message = `🌱 *GIFT CARD - LUMI SIN GLUTEN*\n\nHola! Quiero comprar la Gift Card de *$${amount.toLocaleString('es-AR')}* con el *${discount}% OFF* (Monto promocional a pagar: *$${finalPrice.toLocaleString('es-AR')}*).`;
-        window.open(`https://wa.me/${PHONE_DESTINO}?text=${encodeURIComponent(message)}`, '_blank');
-    }
-
-    function applyPromoCode() {
-        const input = document.getElementById('promo-input').value.trim().toUpperCase();
-        const status = document.getElementById('promo-status');
-        if (VALID_PROMO_CODES.includes(input) && !usedCodes.has(input)) {
-            isPromoApplied = true; appliedCodeName = input;
-            status.style.color = "#059669"; status.innerText = `¡Código ${input} aplicado!`;
-        } else {
-            status.style.color = "#ef4444"; status.innerText = "Código no válido o usado.";
-        }
-        renderCartSummary(); updateCartUI();
     }
 
     function filterProducts() {
         const query = document.getElementById('search-input').value.toLowerCase().trim();
-        renderProducts(PRODUCTS.filter(p => p.title.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query)));
-    }
-
-    /* GESTIÓN DE PERFIL Y DOMICILIOS */
-    function loadProfileToUI() {
-        document.getElementById('profile-name').value = userProfile.name || '';
-        document.getElementById('profile-phone').value = userProfile.phone || '';
-        document.getElementById('profile-cuit').value = userProfile.cuit || '';
-        document.getElementById('profile-celiacs').value = userProfile.celiacs || 1;
-        renderProfileAddresses();
-    }
-
-    function renderProfileAddresses() {
-        const container = document.getElementById('profile-addresses-list');
-        container.innerHTML = userProfile.addresses.map((a, idx) => `
-            <div class="address-item-card">
-                <div><strong>${a.tag}:</strong> ${a.val}</div>
-                <button onclick="removeAddressFromProfile(${idx})" style="background:none; border:none; color:var(--danger-color); font-weight:bold; cursor:pointer;">🗑️</button>
-            </div>
-        `).join('');
-    }
-
-    function addAddressToProfile() {
-        const tag = document.getElementById('new-addr-tag').value.trim();
-        const val = document.getElementById('new-addr-val').value.trim();
-        if (!tag || !val) { alert("Completá etiqueta y dirección."); return; }
-        userProfile.addresses.push({ tag, val });
-        document.getElementById('new-addr-tag').value = '';
-        document.getElementById('new-addr-val').value = '';
-        renderProfileAddresses();
-    }
-
-    function removeAddressFromProfile(idx) {
-        userProfile.addresses.splice(idx, 1);
-        renderProfileAddresses();
-    }
-
-    function saveUserProfile() {
-        userProfile.name = document.getElementById('profile-name').value.trim();
-        userProfile.phone = document.getElementById('profile-phone').value.trim();
-        userProfile.cuit = document.getElementById('profile-cuit').value.trim();
-        userProfile.celiacs = document.getElementById('profile-celiacs').value.trim();
-        localStorage.setItem('lumi_user_profile', JSON.stringify(userProfile));
-        localStorage.setItem('lumi_current_phone', userProfile.phone);
-        alert("¡Perfil guardado correctamente!");
-    }
-
-    /* PUNTOS Y ADMIN AILÉN */
-    function registerClientPurchase(phone, name, celiacs, amount, points) {
-        if (!dbClients[phone]) { dbClients[phone] = { name: name, celiacs: celiacs, confirmedPoints: 0, pendingPoints: 0, history: [] }; }
-        dbClients[phone].name = name; dbClients[phone].celiacs = celiacs; dbClients[phone].pendingPoints += points;
-        dbClients[phone].history.push({ date: new Date().toLocaleDateString('es-AR'), amount: amount, points: points });
-        localStorage.setItem('lumi_db_clients', JSON.stringify(dbClients));
-        localStorage.setItem('lumi_current_phone', phone);
-        updateUserPointsDisplay();
-    }
-
-    function updateUserPointsDisplay() {
-        const currentPhone = localStorage.getItem('lumi_current_phone');
-        if (currentPhone && dbClients[currentPhone]) {
-            document.getElementById('user-confirmed-points').innerText = `${dbClients[currentPhone].confirmedPoints} Pts`;
-            document.getElementById('user-pending-points-info').innerText = `* Puntos pendientes de aprobación por Ailén: ${dbClients[currentPhone].pendingPoints} Pts`;
-        }
-    }
-
-    function redeemReward(rewardTitle, costPoints) {
-        const currentPhone = localStorage.getItem('lumi_current_phone');
-        if (!currentPhone || !dbClients[currentPhone] || dbClients[currentPhone].confirmedPoints < costPoints) {
-            alert("No tenés suficientes puntos confirmados para canjear esta recompensa."); return;
-        }
-        dbClients[currentPhone].confirmedPoints -= costPoints;
-        localStorage.setItem('lumi_db_clients', JSON.stringify(dbClients));
-        updateUserPointsDisplay();
-        const message = `🌱 *CANJE DE PUNTOS - LUMI SIN GLUTEN*\n\nHola Ailén! Soy *${dbClients[currentPhone].name}* (${currentPhone}) y quiero canjear *${costPoints} Puntos* por: *${rewardTitle}*.`;
-        window.open(`https://wa.me/${PHONE_DESTINO}?text=${encodeURIComponent(message)}`, '_blank');
-    }
-
-    function acceptPushFromPrompt() { localStorage.setItem('lumi_push_status', 'enabled'); document.getElementById('push-prompt-modal').classList.remove('active'); initPushToggleState(); requestNativePushPermission(); }
-    function declinePushFromPrompt() { localStorage.setItem('lumi_push_status', 'disabled'); document.getElementById('push-prompt-modal').classList.remove('active'); initPushToggleState(); }
-    function togglePushSettings(enabled) { localStorage.setItem('lumi_push_status', enabled ? 'enabled' : 'disabled'); if(enabled) requestNativePushPermission(); }
-    function initPushToggleState() { const toggle = document.getElementById('user-push-toggle'); if (toggle) toggle.checked = (localStorage.getItem('lumi_push_status') === 'enabled'); }
-    function requestNativePushPermission() { if ('Notification' in window) Notification.requestPermission(); }
-
-    function openAdminModal() {
-        const pass = prompt("Ingresá la contraseña de administradora (Ailén):");
-        if (pass === "lumi123") { renderAdminDB(); document.getElementById('admin-panel-modal').classList.add('active'); }
-        else if (pass !== null) alert("Contraseña incorrecta.");
-    }
-
-    function closeAdminModal() { document.getElementById('admin-panel-modal').classList.remove('active'); }
-    function toggleCustomUrlField() { document.getElementById('push-custom-url').style.display = (document.getElementById('push-redirect-target').value === 'custom') ? 'block' : 'none'; }
-
-    function sendPushNotificationEnriched() {
-        const title = document.getElementById('push-title-input').value.trim() || '🌱 Lumi Sin Gluten';
-        const msg = document.getElementById('push-msg-input').value.trim();
-        const imgUrl = document.getElementById('push-img-input').value.trim();
-        const targetSection = document.getElementById('push-redirect-target').value;
-        const customUrl = document.getElementById('push-custom-url').value.trim();
-
-        if (!msg) { alert("Ingresá un mensaje para la notificación."); return; }
-
-        if ('Notification' in window && Notification.permission === 'granted') {
-            const notif = new Notification(title, {
-                body: msg, icon: 'https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png',
-                image: imgUrl || undefined, data: { targetSection, customUrl }
-            });
-            notif.onclick = function(e) {
-                e.preventDefault(); window.focus();
-                if (notif.data.targetSection === 'custom' && notif.data.customUrl) window.open(notif.data.customUrl, '_blank');
-                else if (notif.data.targetSection) switchTab(notif.data.targetSection);
-            };
-            alert("¡Notificación push enviada!");
-        } else alert("Debes habilitar notificaciones push en el dispositivo.");
-    }
-
-    function renderAdminDB() {
-        const tbody = document.getElementById('admin-db-body');
-        let html = '';
-        Object.keys(dbClients).forEach(phone => {
-            const cli = dbClients[phone];
-            html += `
-                <tr>
-                    <td><strong>${cli.name}</strong><br><small>${phone}</small></td>
-                    <td>${cli.celiacs} hs</td>
-                    <td><strong>${cli.confirmedPoints} Pts</strong></td>
-                    <td>${cli.pendingPoints} Pts</td>
-                    <td>
-                        <button onclick="approvePoints('${phone}')" style="background:#10b981; color:white; border:none; padding:4px 6px; border-radius:4px; font-weight:bold; cursor:pointer;">✔</button>
-                        <button onclick="editPointsPrompt('${phone}')" style="background:#0284c7; color:white; border:none; padding:4px 6px; border-radius:4px; font-weight:bold; cursor:pointer;">✏️</button>
-                        <button onclick="deleteClient('${phone}')" style="background:#ef4444; color:white; border:none; padding:4px 6px; border-radius:4px; font-weight:bold; cursor:pointer;">🗑️</button>
-                    </td>
-                </tr>
-            `;
-        });
-        tbody.innerHTML = html || `<tr><td colspan="5" style="text-align:center;">No hay clientes registrados en la base aún.</td></tr>`;
-    }
-
-    function approvePoints(phone) {
-        if (dbClients[phone]) {
-            dbClients[phone].confirmedPoints += dbClients[phone].pendingPoints; dbClients[phone].pendingPoints = 0;
-            localStorage.setItem('lumi_db_clients', JSON.stringify(dbClients)); renderAdminDB(); updateUserPointsDisplay();
-        }
-    }
-
-    function editPointsPrompt(phone) {
-        if (dbClients[phone]) {
-            const newPts = prompt(`Puntos actuales de ${dbClients[phone].name}: ${dbClients[phone].confirmedPoints}.\nNuevo valor:`);
-            if (newPts !== null && !isNaN(newPts)) {
-                dbClients[phone].confirmedPoints = parseInt(newPts);
-                localStorage.setItem('lumi_db_clients', JSON.stringify(dbClients)); renderAdminDB(); updateUserPointsDisplay();
-            }
-        }
-    }
-
-    function deleteClient(phone) {
-        if (confirm(`¿Eliminar cliente ${phone}?`)) {
-            delete dbClients[phone]; localStorage.setItem('lumi_db_clients', JSON.stringify(dbClients)); renderAdminDB(); updateUserPointsDisplay();
-        }
+        renderProducts(PRODUCTS.filter(p =>
+            p.title.toLowerCase().includes(query) ||
+            p.shortDesc.toLowerCase().includes(query)
+        ));
     }
 </script>
 </body>
