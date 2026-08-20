@@ -217,7 +217,7 @@
 
 <!-- LOADER -->
 <div class="loader-overlay" id="loader">
-    <img src="https://drive.google.com/thumbnail?id=1gjzqLdhkKTWRuplnzQodANz7yy_OIFQb&sz=w600" class="loader-brand" alt="🌸Lumi" onerror="this.style.display='none';document.getElementById('loader-brand-text').style.display='block';">
+    <img src="https://firebasestorage.googleapis.com/v0/b/digestos-536e1.firebasestorage.app/o/Lumi%20Sin%20Gluten%2FLumi%20SIn%20Tacc%20Fondo%20Blanco%20Letras%20en%20Negro%20(1).png?alt=media&token=d07a318c-356b-4b37-8bee-001aa6207f0a" class="loader-brand" alt="🌸Lumi" onerror="this.style.display='none';document.getElementById('loader-brand-text').style.display='block';">
     <div id="loader-brand-text" style="display:none; font-size: 1.6rem; font-weight: 900; color: var(--text-dark); margin-bottom: 8px;">🌸Lumi</div>
     <div class="loader-title">Cargando tu tienda Libre de Gluten...</div>
     <div class="loader-progress-zone">
@@ -401,8 +401,8 @@
     <div class="modal-card" style="text-align: center;">
         <h3 style="color: #ef4444;">Efectivo no disponible en envíos por Uber</h3>
         <p style="font-size: 0.88rem; color: var(--text-muted); margin: 12px 0; line-height: 1.4;">
-            No es posible cobrar en efectivo para envíos ya que el chofer de Uber no puede retornar el dinero del cobro.<br><br>
-            Para envíos únicamente aceptamos <strong>Transferencia</strong> o <strong>Mercado Pago</strong>.
+            No aceptamos efectivo en los envíos porque el Uber <strong>solo lleva el pedido hasta el domicilio indicado y no regresa a 🌸Lumi</strong>: no tenemos forma de recibir ese dinero. A esto se suman cuestiones netamente de <strong>seguridad</strong>.<br><br>
+            Para envíos aceptamos únicamente <strong>Transferencia</strong> o <strong>Mercado Pago</strong>.
         </p>
         <button onclick="closeUberCashModal()" style="background: var(--text-dark); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer;">Cambiar Forma de Pago</button>
     </div>
@@ -523,8 +523,8 @@
             </select>
 
             <div id="address-fields-wrapper" style="display: none; flex-direction: column; gap: 10px;">
-                <label style="font-size: 0.82rem; font-weight: 700;">Dirección de Entrega:</label>
-                <input type="text" id="user-address-input" class="form-control" placeholder="Calle, número y referencia (Ej: El Plumerillo 312)">
+                <label style="font-size: 0.82rem; font-weight: 700;">Dirección de Entrega: <span style="color: var(--danger-color);">*</span></label>
+                <input type="text" id="user-address-input" class="form-control" placeholder="Calle, número y referencia * (Ej: El Plumerillo 312)" required>
                 <textarea id="user-notes" class="form-control" placeholder="Notas sobre el pedido / entrega" rows="2"></textarea>
             </div>
 
