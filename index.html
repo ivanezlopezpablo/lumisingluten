@@ -175,22 +175,39 @@
           }
         });
 
-        /* Invitación amigable: a los 15 segundos de la primera visita
-           (para no pisar el pop-up publicitario), se muestra el cartel
-           deslizante invitando a suscribirse. Si el cliente lo ignora,
-           se vuelve a ofrecer recién a los 3 días, sin ser insistente. */
+        /* Invitación llamativa en el centro de la pantalla: a los 15
+           segundos de la visita (para no pisar el pop-up publicitario)
+           se abre un cartel propio invitando a suscribirse. Al tocar
+           "¡Aceptar!" se dispara el permiso real de notificaciones.
+           Si lo ignora, se vuelve a ofrecer recién a los 3 días. */
         try {
           const yaSuscripto = OneSignal.User.PushSubscription.optedIn;
+          const permisoDado = OneSignal.Notifications.permission; // true si ya aceptó en el navegador
           const ultimoAviso = parseInt(localStorage.getItem('lumi_push_last_prompt') || '0');
           const tresDias = 3 * 24 * 60 * 60 * 1000;
-          if (!yaSuscripto && (Date.now() - ultimoAviso) > tresDias) {
+          if (!yaSuscripto && !permisoDado && (Date.now() - ultimoAviso) > tresDias) {
             setTimeout(() => {
               localStorage.setItem('lumi_push_last_prompt', String(Date.now()));
-              OneSignal.Slidedown.promptPush();
+              const m = document.getElementById('push-invite-modal');
+              if (m) m.classList.add('active');
             }, 15000);
           }
         } catch (e) { /* si el navegador no soporta push, no molesta */ }
       });
+
+      /* Botones del popup de notificaciones */
+      function lumiAcceptPush() {
+        const m = document.getElementById('push-invite-modal');
+        if (m) m.classList.remove('active');
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function(OneSignal) {
+          try { await OneSignal.Notifications.requestPermission(); } catch (e) {}
+        });
+      }
+      function lumiDeclinePush() {
+        const m = document.getElementById('push-invite-modal');
+        if (m) m.classList.remove('active');
+      }
     </script>
 
     <style>
@@ -447,8 +464,69 @@
             .promo-fs-content p { font-size: 0.98rem; }
         }
 
-        .auto-carousel-container { position: relative; width: 100%; max-width: 340px; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; margin: 0 auto 12px auto; background: #f1f5f9; }
-        .auto-carousel-track { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
+        /* ============================================================
+           POPUP DE INVITACIÓN A NOTIFICACIONES (centrado y llamativo)
+           ============================================================ */
+        .push-invite-overlay {
+            position: fixed; inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            z-index: 5500; display: none;
+            justify-content: center; align-items: center; padding: 20px;
+        }
+        .push-invite-overlay.active { display: flex; animation: promoFadeIn 0.3s ease; }
+        .push-invite-card {
+            background: #ffffff; width: 100%; max-width: 400px;
+            border-radius: 22px; padding: 28px 22px 22px 22px;
+            text-align: center; position: relative;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            animation: pushCardPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes pushCardPop {
+            from { opacity: 0; transform: scale(0.7) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .push-invite-bell {
+            width: 74px; height: 74px; margin: 0 auto 14px auto;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 26px rgba(16, 185, 129, 0.45);
+        }
+        .push-invite-bell svg {
+            width: 36px; height: 36px; stroke: #ffffff; fill: none;
+            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+            transform-origin: top center;
+            animation: bellRing 2.2s ease-in-out infinite;
+        }
+        @keyframes bellRing {
+            0%, 55%, 100% { transform: rotate(0deg); }
+            60% { transform: rotate(14deg); }
+            66% { transform: rotate(-12deg); }
+            72% { transform: rotate(9deg); }
+            78% { transform: rotate(-6deg); }
+            84% { transform: rotate(3deg); }
+            90% { transform: rotate(0deg); }
+        }
+        .push-invite-card h3 { font-size: 1.25rem; font-weight: 900; color: var(--text-dark); margin-bottom: 8px; line-height: 1.25; }
+        .push-invite-card p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 18px; }
+        .push-invite-accept {
+            display: block; width: 100%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white; border: none;
+            padding: 15px; border-radius: 14px;
+            font-size: 1.05rem; font-weight: 900; cursor: pointer;
+            box-shadow: 0 10px 26px rgba(16, 185, 129, 0.45);
+            margin-bottom: 10px;
+        }
+        .push-invite-accept:active { transform: scale(0.98); }
+        .push-invite-later {
+            background: none; border: none;
+            color: var(--text-muted); font-size: 0.85rem; font-weight: 700;
+            cursor: pointer; padding: 6px;
+        }
+
+        .auto-carousel-container { position: relative; width: 100%; max-width: 340px; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; margin: 0 auto 12px auto; background: #f1f5f9; }        .auto-carousel-track { display: flex; width: 100%; height: 100%; transition: transform 0.4s ease-in-out; }
         .auto-carousel-slide { min-width: 100%; height: 100%; }
         .auto-carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
         .auto-carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(15, 23, 42, 0.6); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5; }
@@ -699,6 +777,19 @@
                 <span id="promo-fs-btn-text">Ver más</span>
             </a>
         </div>
+    </div>
+</div>
+
+<!-- POPUP DE INVITACIÓN A NOTIFICACIONES (centrado) -->
+<div class="push-invite-overlay" id="push-invite-modal" role="dialog" aria-modal="true" aria-label="Notificaciones">
+    <div class="push-invite-card">
+        <div class="push-invite-bell">
+            <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
+        <h3>🌸 ¡No te pierdas nada de Lumi!</h3>
+        <p>¿Querés recibir notificaciones de <strong>promociones, nuevos productos y más</strong>? ¡Poné Aceptar!</p>
+        <button class="push-invite-accept" onclick="lumiAcceptPush()">¡Aceptar!</button>
+        <button class="push-invite-later" onclick="lumiDeclinePush()">Ahora no</button>
     </div>
 </div>
 
