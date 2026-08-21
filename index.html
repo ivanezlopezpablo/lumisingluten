@@ -135,6 +135,22 @@
           appId: "9c046e6f-02d8-4fc3-bba5-aed870df71bb",
           safari_web_id: "web.onesignal.auto.194684e9-1eab-45d0-91dc-36dcc25bd22e",
           language: "es",
+          /* Textos en español del cartel deslizante de invitación */
+          promptOptions: {
+            slidedown: {
+              prompts: [
+                {
+                  type: "push",
+                  autoPrompt: false,
+                  text: {
+                    actionMessage: "🌸 ¿Querés recibir notificaciones de promociones, nuevos productos y más? ¡Poné Aceptar!",
+                    acceptButton: "¡Aceptar!",
+                    cancelButton: "Ahora no"
+                  }
+                }
+              ]
+            }
+          },
           /* Campanita flotante para suscribirse/desuscribirse cuando quieran */
           notifyButton: {
             enable: true,
@@ -170,14 +186,7 @@
           if (!yaSuscripto && (Date.now() - ultimoAviso) > tresDias) {
             setTimeout(() => {
               localStorage.setItem('lumi_push_last_prompt', String(Date.now()));
-              OneSignal.Slidedown.promptPush({
-                force: false,
-                text: {
-                  actionMessage: "🌸 ¿Querés enterarte de promos, descuentos y productos nuevos sin gluten? Activá las notificaciones.",
-                  acceptButton: "¡Sí, quiero!",
-                  cancelButton: "Ahora no"
-                }
-              });
+              OneSignal.Slidedown.promptPush();
             }, 15000);
           }
         } catch (e) { /* si el navegador no soporta push, no molesta */ }
