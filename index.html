@@ -184,18 +184,17 @@
         });
 
         /* Invitación llamativa en el centro de la pantalla: espera a
-           que termine la pantalla de carga inicial (~2,5 seg) y, una
-           vez visible la app, cuenta 2 segundos más y muestra el
-           popup. Al tocar "¡Aceptar!" se dispara el permiso real de
-           notificaciones. Si lo ignora, se vuelve a ofrecer a los 3 días. */
+           que termine la pantalla de carga inicial y, con la app ya
+           visible, cuenta 2 segundos y muestra el popup. Aparece en
+           CADA visita hasta que la persona acepte las notificaciones
+           (los clientes entran 1 o 2 veces al mes, así que cada
+           ingreso es una oportunidad de suscribirlos). Una vez
+           suscriptos, no se les muestra nunca más. */
         try {
           const yaSuscripto = OneSignal.User.PushSubscription.optedIn;
           const permisoDado = OneSignal.Notifications.permission; // true si ya aceptó en el navegador
-          const ultimoAviso = parseInt(localStorage.getItem('lumi_push_last_prompt') || '0');
-          const tresDias = 3 * 24 * 60 * 60 * 1000;
-          if (!yaSuscripto && !permisoDado && (Date.now() - ultimoAviso) > tresDias) {
+          if (!yaSuscripto && !permisoDado) {
             const mostrarPopupPush = () => {
-              localStorage.setItem('lumi_push_last_prompt', String(Date.now()));
               const m = document.getElementById('push-invite-modal');
               if (m) m.classList.add('active');
             };
@@ -219,12 +218,40 @@
         if (m) m.classList.remove('active');
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function(OneSignal) {
-          try { await OneSignal.Notifications.requestPermission(); } catch (e) {}
+          try {
+            await OneSignal.Notifications.requestPermission();
+            /* Si aceptó el permiso del navegador, abrir las preferencias
+               de segmentación (solo la primera vez) */
+            if (OneSignal.Notifications.permission && !localStorage.getItem('lumi_push_prefs_done')) {
+              const p = document.getElementById('push-prefs-modal');
+              if (p) p.classList.add('active');
+            }
+          } catch (e) {}
         });
       }
       function lumiDeclinePush() {
         const m = document.getElementById('push-invite-modal');
         if (m) m.classList.remove('active');
+      }
+
+      /* Guarda las preferencias como etiquetas (Data Tags) en OneSignal.
+         Con estas 2 etiquetas ("interes" y "provincia") después se crean
+         los Segmentos en el panel para enviar push dirigidos. */
+      function lumiSavePushPrefs() {
+        const interes = document.getElementById('push-pref-interes').value;
+        const provincia = document.getElementById('push-pref-provincia').value;
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function(OneSignal) {
+          try { await OneSignal.User.addTags({ interes: interes, provincia: provincia }); } catch (e) {}
+        });
+        localStorage.setItem('lumi_push_prefs_done', '1');
+        const p = document.getElementById('push-prefs-modal');
+        if (p) p.classList.remove('active');
+      }
+      function lumiSkipPushPrefs() {
+        localStorage.setItem('lumi_push_prefs_done', '1');
+        const p = document.getElementById('push-prefs-modal');
+        if (p) p.classList.remove('active');
       }
     </script>
 
@@ -808,6 +835,32 @@
         <p>¿Querés recibir notificaciones de <strong>promociones, nuevos productos y más</strong>? ¡Poné Aceptar!</p>
         <button class="push-invite-accept" onclick="lumiAcceptPush()">¡Aceptar!</button>
         <button class="push-invite-later" onclick="lumiDeclinePush()">Ahora no</button>
+    </div>
+</div>
+
+<!-- POPUP DE PREFERENCIAS (segmentación: qué recibir y de qué provincia) -->
+<div class="push-invite-overlay" id="push-prefs-modal" role="dialog" aria-modal="true" aria-label="Preferencias de notificaciones">
+    <div class="push-invite-card" style="text-align: left;">
+        <h3 style="text-align: center;">💚 ¡Genial! Personalizá tus avisos</h3>
+        <p style="text-align: center;">Contanos qué te interesa y desde dónde nos seguís, así te mandamos solo lo que te sirve.</p>
+
+        <label style="font-size: 0.82rem; font-weight: 800; color: var(--text-dark); display: block; margin-bottom: 6px;">¿Qué querés recibir?</label>
+        <select id="push-pref-interes" class="form-control">
+            <option value="todo" selected>Todo (promos, productos y eventos)</option>
+            <option value="promociones">Solo Promociones y descuentos</option>
+            <option value="productos">Solo Nuevos productos</option>
+            <option value="eventos">Solo Eventos y novedades</option>
+        </select>
+
+        <label style="font-size: 0.82rem; font-weight: 800; color: var(--text-dark); display: block; margin-bottom: 6px;">¿De qué provincia sos?</label>
+        <select id="push-pref-provincia" class="form-control">
+            <option value="neuquen" selected>Neuquén</option>
+            <option value="rionegro">Río Negro</option>
+            <option value="otra">Otra provincia</option>
+        </select>
+
+        <button class="push-invite-accept" onclick="lumiSavePushPrefs()">Guardar mis preferencias</button>
+        <button class="push-invite-later" onclick="lumiSkipPushPrefs()" style="display: block; margin: 0 auto;">Omitir</button>
     </div>
 </div>
 
