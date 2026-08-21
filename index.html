@@ -123,6 +123,9 @@
     <meta name="apple-mobile-web-app-title" content="🌸Lumi">
     <meta name="application-name" content="🌸Lumi">
 
+    <!-- Íconos Flaticon (UIcons) para la pantalla de carga -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css">
+
     <!-- Widget de Reseñas Elfsight -->
     <script src="https://elfsightcdn.com/platform.js" async></script>
 
@@ -333,16 +336,33 @@
         .icn-sm { width: 14px; height: 14px; }
         .icn-nav { width: 22px; height: 22px; margin-bottom: 3px; }
 
-        /* LOADER */
+        /* LOADER (estética premium: fondo verde difuminado + destacados animados) */
         .loader-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #ffffff; z-index: 99999;
+            background: linear-gradient(165deg, #ffffff 0%, #ecfdf5 55%, #d1fae5 100%);
+            z-index: 99999; overflow: hidden;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
         }
         .loader-overlay.hidden { opacity: 0; visibility: hidden; }
-        .loader-brand { max-width: 210px; max-height: 90px; object-fit: contain; margin-bottom: 14px; }
-        .loader-title { color: var(--text-dark); font-size: 1rem; font-weight: 700; margin-bottom: 34px; }
+        .loader-overlay > :not(.loader-blob) { position: relative; z-index: 2; }
+        /* Manchas de color difuminadas que respiran de fondo */
+        .loader-blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.55; pointer-events: none; z-index: 1; }
+        .loader-blob.b1 { width: 340px; height: 340px; background: #a7f3d0; top: -90px; right: -90px; animation: blobFlotar 9s ease-in-out infinite; }
+        .loader-blob.b2 { width: 300px; height: 300px; background: #fbcfe8; bottom: -80px; left: -80px; animation: blobFlotar 11s ease-in-out infinite reverse; }
+        .loader-blob.b3 { width: 220px; height: 220px; background: #bae6fd; top: 40%; left: -110px; animation: blobFlotar 13s ease-in-out infinite; }
+        @keyframes blobFlotar {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(26px, -20px) scale(1.1); }
+        }
+        .loader-brand { max-width: 210px; max-height: 90px; object-fit: contain; margin-bottom: 12px; animation: logoFlotar 3s ease-in-out infinite; filter: drop-shadow(0 8px 18px rgba(16, 185, 129, 0.2)); }
+        @keyframes logoFlotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .loader-title { color: var(--text-dark); font-size: 1rem; font-weight: 800; margin-bottom: 6px; }
+        .loader-lema { font-size: 0.7rem; font-weight: 700; color: var(--lumi-green-dark); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 20px; }
+        /* Destacado rotativo: Celíacos / Familias / Deporte */
+        .loader-destacado { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; font-size: 0.94rem; font-weight: 800; color: var(--lumi-green-dark); background: rgba(255, 255, 255, 0.75); border: 1px solid #a7f3d0; border-radius: 30px; padding: 9px 18px; margin-bottom: 26px; transition: opacity 0.3s; box-shadow: 0 6px 18px rgba(16, 185, 129, 0.15); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+        .loader-destacado i { font-size: 1.15rem; display: inline-flex; color: #059669; animation: latidoIcono 1.4s ease-in-out infinite; }
+        @keyframes latidoIcono { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.28) rotate(-6deg); } }
         .loader-progress-zone { position: relative; width: 240px; }
         .loader-runner { position: absolute; left: 0%; top: 50%; width: 34px; height: 34px; transform: translate(-50%, -50%); transition: left 0.05s linear; z-index: 2; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
         .timeline-bar-container { width: 240px; height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
@@ -637,9 +657,14 @@
 
 <!-- LOADER -->
 <div class="loader-overlay" id="loader">
+    <div class="loader-blob b1"></div>
+    <div class="loader-blob b2"></div>
+    <div class="loader-blob b3"></div>
     <img src="https://firebasestorage.googleapis.com/v0/b/digestos-536e1.firebasestorage.app/o/Lumi%20Sin%20Gluten%2FLumi%20SIn%20Tacc%20Fondo%20Blanco%20Letras%20en%20Negro%20(1).png?alt=media&token=d07a318c-356b-4b37-8bee-001aa6207f0a" class="loader-brand" alt="🌸Lumi" onerror="this.style.display='none';document.getElementById('loader-brand-text').style.display='block';">
     <div id="loader-brand-text" style="display:none; font-size: 1.6rem; font-weight: 900; color: var(--text-dark); margin-bottom: 8px;">🌸Lumi</div>
     <div class="loader-title">Cargando tu tienda Libre de Gluten...</div>
+    <div class="loader-lema">Alimentos Artesanales · Neuquén</div>
+    <div class="loader-destacado" id="loader-destacado"><i class="fi fi-rr-heart"></i><span>💚 Vida Saludable, 100% Libre de Gluten</span></div>
     <div class="loader-progress-zone">
         <img src="https://www.argentina.gob.ar/sites/default/files/sin_gluten_legal-01.png" class="loader-runner" id="loader-runner" alt="Sin Gluten">
         <div class="timeline-bar-container">
@@ -1714,12 +1739,36 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
     }
 
     /* Barra de carga 0% a 100%: la barra se llena y el logo Sin Gluten
-       avanza sobre ella acompañando el porcentaje. */
+       avanza sobre ella acompañando el porcentaje. Mientras tanto, el
+       cartelito destacado va rotando los mensajes de la marca con sus
+       íconos animados: Vida Saludable, Personas Celíacas, Familias y
+       Personas del Deporte. */
+    const LOADER_DESTACADOS = [
+        { icono: 'fi-rr-heart', texto: '💚 Vida Saludable, 100% Libre de Gluten' },
+        { icono: 'fi-rr-badge-check', texto: '🌾 Pensado para Personas Celíacas' },
+        { icono: 'fi-rr-users-alt', texto: '👨‍👩‍👧‍👦 Ideal para toda la Familia' },
+        { icono: 'fi-rr-gym', texto: '🏃‍♀️ Energía para Personas del Deporte' },
+        { icono: 'fi-rr-star', texto: '🌸 Elaboración Artesanal en Neuquén' }
+    ];
+
     function runLoader() {
         const fill = document.getElementById('loader-fill');
         const runner = document.getElementById('loader-runner');
         const pctEl = document.getElementById('loader-pct');
         const loader = document.getElementById('loader');
+        const destEl = document.getElementById('loader-destacado');
+
+        /* Rotación de destacados con fundido suave */
+        let di = 0;
+        const rotador = setInterval(() => {
+            di = (di + 1) % LOADER_DESTACADOS.length;
+            destEl.style.opacity = '0';
+            setTimeout(() => {
+                destEl.innerHTML = `<i class="fi ${LOADER_DESTACADOS[di].icono}"></i><span>${LOADER_DESTACADOS[di].texto}</span>`;
+                destEl.style.opacity = '1';
+            }, 250);
+        }, 820);
+
         let p = 0;
         const timer = setInterval(() => {
             p += 2;
@@ -1729,9 +1778,10 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
             pctEl.innerText = p + '%';
             if (p >= 100) {
                 clearInterval(timer);
-                setTimeout(() => loader.classList.add('hidden'), 350);
+                clearInterval(rotador);
+                setTimeout(() => loader.classList.add('hidden'), 400);
             }
-        }, 42); /* ~2,1 segundos en total */
+        }, 62); /* ~3,2 segundos: lo justo para lucir los destacados */
     }
 
     /* ============================================================
@@ -1794,7 +1844,7 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
         setTimeout(() => {
             modal.classList.add('active');
             document.body.classList.add('promo-open');
-        }, 2800);
+        }, 4000);
     }
 
     function closePromoImageModal() {
