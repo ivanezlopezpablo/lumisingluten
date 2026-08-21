@@ -175,22 +175,32 @@
           }
         });
 
-        /* Invitación llamativa en el centro de la pantalla: a los 15
-           segundos de la visita (para no pisar el pop-up publicitario)
-           se abre un cartel propio invitando a suscribirse. Al tocar
-           "¡Aceptar!" se dispara el permiso real de notificaciones.
-           Si lo ignora, se vuelve a ofrecer recién a los 3 días. */
+        /* Invitación llamativa en el centro de la pantalla: espera a
+           que termine la pantalla de carga inicial (~2,5 seg) y, una
+           vez visible la app, cuenta 2 segundos más y muestra el
+           popup. Al tocar "¡Aceptar!" se dispara el permiso real de
+           notificaciones. Si lo ignora, se vuelve a ofrecer a los 3 días. */
         try {
           const yaSuscripto = OneSignal.User.PushSubscription.optedIn;
           const permisoDado = OneSignal.Notifications.permission; // true si ya aceptó en el navegador
           const ultimoAviso = parseInt(localStorage.getItem('lumi_push_last_prompt') || '0');
           const tresDias = 3 * 24 * 60 * 60 * 1000;
           if (!yaSuscripto && !permisoDado && (Date.now() - ultimoAviso) > tresDias) {
-            setTimeout(() => {
+            const mostrarPopupPush = () => {
               localStorage.setItem('lumi_push_last_prompt', String(Date.now()));
               const m = document.getElementById('push-invite-modal');
               if (m) m.classList.add('active');
-            }, 15000);
+            };
+            /* Vigila el loader: apenas se oculta (pantalla de inicio ya
+               cargada), arranca el conteo de 2 segundos exactos. Si por
+               algún motivo el loader no está, cuenta desde el arranque. */
+            const esperarLoader = setInterval(() => {
+              const loader = document.getElementById('loader');
+              if (!loader || loader.classList.contains('hidden')) {
+                clearInterval(esperarLoader);
+                setTimeout(mostrarPopupPush, 2000);
+              }
+            }, 100);
           }
         } catch (e) { /* si el navegador no soporta push, no molesta */ }
       });
