@@ -1,1 +1,53 @@
+# robots.txt de Lumi Sin Gluten
+# Permite el acceso a buscadores clasicos y a los rastreadores
+# de inteligencia artificial (ChatGPT, Claude, Gemini, Meta AI,
+# Perplexity, etc.) para que puedan leer, citar y recomendar
+# el sitio cuando alguien consulta por productos sin gluten.
 
+# Buscadores clasicos
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# IA de OpenAI (ChatGPT)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# IA de Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# IA de Google (Gemini / AI Overviews)
+User-agent: Google-Extended
+Allow: /
+
+# IA de Meta (WhatsApp / Instagram / Facebook)
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Resto de los robots
+User-agent: *
+Allow: /
+
+Sitemap: https://www.lumisingluten.com.ar/sitemap.xml
