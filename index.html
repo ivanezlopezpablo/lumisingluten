@@ -116,6 +116,74 @@
     <!-- Widget de Reseñas Elfsight -->
     <script src="https://elfsightcdn.com/platform.js" async></script>
 
+    <!-- ============================================================
+         NOTIFICACIONES PUSH (OneSignal)
+         ------------------------------------------------------------
+         Permite enviar avisos masivos (promos, productos nuevos)
+         a los celulares de los clientes suscriptos, Android o iPhone.
+         Los envíos se hacen desde el panel de onesignal.com.
+         IMPORTANTE: requiere el archivo OneSignalSDKWorker.js en la
+         raíz del repositorio (junto al index.html).
+         En iPhone solo funciona si el cliente instaló la app en su
+         pantalla de inicio (iOS 16.4 o más nuevo): regla de Apple.
+         ============================================================ -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "9c046e6f-02d8-4fc3-bba5-aed870df71bb",
+          safari_web_id: "web.onesignal.auto.194684e9-1eab-45d0-91dc-36dcc25bd22e",
+          language: "es",
+          /* Campanita flotante para suscribirse/desuscribirse cuando quieran */
+          notifyButton: {
+            enable: true,
+            size: 'medium',
+            position: 'bottom-right',
+            offset: { bottom: '140px', right: '12px' }, /* arriba de la barra del carrito */
+            text: {
+              'tip.state.unsubscribed': 'Recibí promos y novedades 🌸',
+              'tip.state.subscribed': '¡Estás suscripto a las novedades!',
+              'tip.state.blocked': 'Las notificaciones están bloqueadas',
+              'message.prenotify': 'Tocá para suscribirte a las novedades de 🌸Lumi',
+              'message.action.subscribed': '¡Gracias! Vas a recibir nuestras novedades 🌸',
+              'message.action.resubscribed': '¡Estás suscripto de nuevo!',
+              'message.action.unsubscribed': 'No vas a recibir más notificaciones',
+              'message.action.subscribing': 'Suscribiendo...',
+              'dialog.main.title': 'Notificaciones de 🌸Lumi',
+              'dialog.main.button.subscribe': 'SUSCRIBIRME',
+              'dialog.main.button.unsubscribe': 'DEJAR DE RECIBIR',
+              'dialog.blocked.title': 'Desbloqueá las notificaciones',
+              'dialog.blocked.message': 'Seguí estas instrucciones para permitir las notificaciones:'
+            }
+          }
+        });
+
+        /* Invitación amigable: a los 15 segundos de la primera visita
+           (para no pisar el pop-up publicitario), se muestra el cartel
+           deslizante invitando a suscribirse. Si el cliente lo ignora,
+           se vuelve a ofrecer recién a los 3 días, sin ser insistente. */
+        try {
+          const yaSuscripto = OneSignal.User.PushSubscription.optedIn;
+          const ultimoAviso = parseInt(localStorage.getItem('lumi_push_last_prompt') || '0');
+          const tresDias = 3 * 24 * 60 * 60 * 1000;
+          if (!yaSuscripto && (Date.now() - ultimoAviso) > tresDias) {
+            setTimeout(() => {
+              localStorage.setItem('lumi_push_last_prompt', String(Date.now()));
+              OneSignal.Slidedown.promptPush({
+                force: false,
+                text: {
+                  actionMessage: "🌸 ¿Querés enterarte de promos, descuentos y productos nuevos sin gluten? Activá las notificaciones.",
+                  acceptButton: "¡Sí, quiero!",
+                  cancelButton: "Ahora no"
+                }
+              });
+            }, 15000);
+          }
+        } catch (e) { /* si el navegador no soporta push, no molesta */ }
+      });
+    </script>
+
     <style>
         :root {
             --lumi-green: #10b981;
