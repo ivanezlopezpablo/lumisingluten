@@ -1919,6 +1919,15 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
         return `${p[2]}/${p[1]}/${p[0]}`;
     }
 
+    /* Igual que la anterior pero con el nombre del día adelante:
+       "lunes 24/08/2026" (para que el popup sea bien claro) */
+    function formatFechaConDia(key) {
+        const p = key.split('-');
+        const d = new Date(p[0], p[1] - 1, p[2]);
+        const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+        return `${dias[d.getDay()]} ${p[2]}/${p[1]}/${p[0]}`;
+    }
+
     /* Cartel rojo arriba del selector de fecha: lista los próximos
        días cerrados con su motivo. Si no hay fechas cargadas en el
        Sheet, el cartel no aparece y todo sigue normal. */
@@ -2043,24 +2052,55 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
         return getNextWorkingDay(t);
     }
 
+    /* Acomoda el calendario cuando hay panes: pone como mínimo el
+       siguiente día hábil, y si ese día tiene un turno cerrado
+       (De Mañana o De Tarde), también acomoda la HORA al turno que
+       sí está abierto. Devuelve la fecha final y su cierre (si hay)
+       para que el popup pueda explicarlo. */
+    function ajustarFechaHoraPanes() {
+        const dateInput = document.getElementById('pickup-date');
+        const timeInput = document.getElementById('pickup-time-exact');
+        const minKey = formatDateToInput(getMinPanesDate());
+        if (dateInput && (!dateInput.value || dateInput.value < minKey)) {
+            dateInput.value = minKey;
+        }
+        const key = (dateInput && dateInput.value) ? dateInput.value : minKey;
+        const cierre = CLOSED_DATES[key];
+        if (cierre && cierre.turno !== 'dia' && timeInput && timeInput.value) {
+            const [h, mi] = timeInput.value.split(':').map(Number);
+            const turnoElegido = turnoDeHora(h * 60 + mi);
+            if (!turnoElegido || turnoElegido === cierre.turno) {
+                timeInput.value = cierre.turno === 'manana' ? '19:00' : '11:00';
+            }
+        }
+        return { key: key, cierre: cierre };
+    }
+
     /* Se ejecuta cada vez que un pan pasa de 0 a 1 o más en el
-       carrito: muestra el popup informativo y ajusta la fecha */
+       carrito: acomoda fecha y hora, y muestra el popup informativo */
     function aplicarReglaPanes() {
         showPanesNotice('agregado');
-        const dateInput = document.getElementById('pickup-date');
-        const min = formatDateToInput(getMinPanesDate());
-        if (dateInput && (!dateInput.value || dateInput.value < min)) {
-            dateInput.value = min;
-        }
     }
 
     function showPanesNotice(tipo) {
         const el = document.getElementById('panes-notice-text');
-        const fechaLinda = formatFechaLinda(formatDateToInput(getMinPanesDate()));
+        const info = ajustarFechaHoraPanes();
+        const fechaTxt = formatFechaConDia(info.key);
+        const timeInput = document.getElementById('pickup-time-exact');
+        const horaTxt = (timeInput && timeInput.value) ? timeInput.value : '';
+
+        /* Si el día asignado tiene atención excepcional de medio turno,
+           avisarlo y contar que la hora también quedó acomodada */
+        let notaTurno = '';
+        if (info.cierre && info.cierre.turno !== 'dia') {
+            const soloTxt = info.cierre.turno === 'manana' ? 'por la tarde, de 19:00 a 21:00 hs' : 'por la mañana, de 11:00 a 14:00 hs';
+            notaTurno = `<br><br>⚠️ Importante: el <strong>${fechaTxt}</strong> la atención es excepcional, <strong>únicamente ${soloTxt}</strong> (${info.cierre.motivo}). Por eso también te dejamos seleccionada la hora <strong>${horaTxt} hs</strong>, dentro de ese turno.`;
+        }
+
         if (tipo === 'fecha') {
-            el.innerHTML = `Tenés <strong>panes</strong> en tu carrito, y como se preparan y cocinan a pedido, <strong>se piden con 1 día hábil de anticipación</strong>.<br><br>Por eso la fecha más próxima disponible para tu retiro o envío es el <strong>${fechaLinda}</strong>. Ya te la dejamos seleccionada. 💚`;
+            el.innerHTML = `Tenés <strong>panes</strong> en tu carrito, y como se preparan y cocinan a pedido, <strong>se piden con 1 día hábil de anticipación</strong>.<br><br>Por eso la fecha más próxima disponible para tu retiro o envío es el <strong>${fechaTxt}</strong>. Ya te la dejamos seleccionada en el calendario, y si querés podés elegir cualquier otro día y horario posterior que te quede cómodo. 💚${notaTurno}`;
         } else {
-            el.innerHTML = `✅ El pan se agregó a tu carrito.<br><br>Como nuestros panes se <strong>preparan y cocinan a pedido</strong>, se piden con <strong>1 día hábil de anticipación</strong>.<br><br>Podés seguir armando tu pedido sumando otros productos, pero el sistema pondrá automáticamente como fecha de retiro o envío el <strong>${fechaLinda}</strong> (siguiente día hábil de trabajo de 🌸Lumi).`;
+            el.innerHTML = `✅ El pan se agregó a tu carrito.<br><br>Como nuestros panes se <strong>preparan y cocinan a pedido</strong>, se piden con <strong>1 día hábil de anticipación</strong>.<br><br>Podés seguir armando tu pedido sumando otros productos: el sistema puso automáticamente como fecha de retiro o envío el <strong>${fechaTxt}</strong> (siguiente día hábil de trabajo de 🌸Lumi), y si querés podés elegir otro día y horario posterior que te quede cómodo.${notaTurno}`;
         }
         document.getElementById('panes-notice-modal').classList.add('active');
     }
@@ -2102,11 +2142,11 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
         }
 
         /* 3) Hay panes en el carrito => la fecha no puede ser antes del
-              siguiente día hábil posterior a hoy */
+              siguiente día hábil posterior a hoy (el popup acomoda
+              solo la fecha y la hora si hace falta) */
         if (cartHasPanes()) {
             const min = formatDateToInput(getMinPanesDate());
             if (key < min) {
-                dateInput.value = min;
                 showPanesNotice('fecha');
                 return false;
             }
