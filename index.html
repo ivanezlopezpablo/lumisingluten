@@ -953,9 +953,11 @@ En almuerzos o cenas, reemplazando el pan común por una alternativa más saluda
 8,Curso Profesional de Panadería Gluten Free,"Dirigido a: Chefs, panaderos, emprendedores y amantes de la panadería 👨‍🍳 Descubre el arte de la panadería sin gluten con un enfoque profesional y práctico.",https://go.hotmart.com/O106083511H?dp=1,https://static-media.hotmart.com/8C0pWNeu-RHb9VCq8RkAoSYr7bI=/filters:background_color(white)/hotmart/product_pictures/f340d36c-da45-438b-af23-1a60cf7e18d5/GlutenFree.png,Hotmart
 9,Manual para Emprendedores del Sector Sin Gluten,"Descubre la guía esencial para emprendedores apasionados por la innovación en el sector sin gluten. Desde la concepción de la idea hasta la conquista del éxito en el mercado,",https://go.hotmart.com/C106083569S?dp=1,https://static-media.hotmart.com/-1OAYmJ5GAL2tL1pA_96Gn9hnGM=/filters:background_color(white)/hotmart/product_pictures/89413183-d803-4e25-b0ff-cac38a36bc5e/DeepinScreenshot_Seleccionararea_20231123155001.png,Hotmart`;
 
-    /* Copia de respaldo de la pestaña Popup (por si la planilla no responde) */
-    const FALLBACK_POPUP_CSV = `Nombre de Texto ,Subtexto,Imagen (URL),Texto del Botón,URL Botón,Situación (Activado / Desactivado),Icono del Botón
-HALFPAGE BANNER,Supermarket,https://img.magnific.com/psd-gratis/agencia-marketing-digital-plantilla-historia-corporativa-facebook-e-instagram_120329-4320.jpg,Descargar Programa,https://hotmart.com/es,Activado,Descargar`;
+    /* Copia de respaldo de la pestaña Popup (espejo de tu planilla actual:
+       columna F = Íconos, columna G = Situación) */
+    const FALLBACK_POPUP_CSV = `Nombre de Texto ,Subtexto,Imagen (URL),Texto del Botón,URL Botón,Íconos,Situación (Activado / Desactivado)
+HALFPAGE BANNER,Supermarket,https://img.magnific.com/psd-gratis/agencia-marketing-digital-plantilla-historia-corporativa-facebook-e-instagram_120329-4320.jpg,Descargar Programa,https://hotmart.com/es,Descargar,Desactivado
+SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gratis/agencia-marketing-digital-plantilla-historia-corporativa-facebook-e-instagram_120329-4320.jpg,Descargar Programa,https://hotmart.com/es,Video,Activado`;
 
     const PECHUGA_DISCOUNTS = { 1:0, 2:0, 3:0.0122, 4:0.0183, 5:0.0245, 6:0.0306, 7:0.0367, 8:0.0429, 9:0.0490, 10:0.0551, 11:0.0612, 12:0.0674, 13:0.0735, 14:0.0796, 15:0.0857 };
     const NALGA_DISCOUNTS = { 1:0, 2:0.0061, 3:0.0122, 4:0.0183, 5:0.0245, 6:0.0306, 7:0.0367, 8:0.0429, 9:0.0490, 10:0.0551, 11:0.0612, 12:0.0674, 13:0.0735, 14:0.0796, 15:0.0857 };
@@ -1175,12 +1177,14 @@ HALFPAGE BANNER,Supermarket,https://img.magnific.com/psd-gratis/agencia-marketin
     /* ============================================================
        POP-UP PROMOCIONAL: LECTURA DESDE EL SHEET
        ------------------------------------------------------------
-       Lee la pestaña Popup y devuelve la PRIMERA fila cuya columna
-       "Situación" diga exactamente "Activado" (sin importar
-       mayúsculas o tildes). Si ninguna fila está activada, no se
-       muestra ningún pop-up. Así activás/desactivás y cambiás
-       título, subtexto, imagen, texto y URL del botón directamente
-       desde Google Sheets, sin tocar el código.
+       Lee la pestaña Popup y arma la lista de TODAS las filas cuya
+       columna "Situación" diga "Activado" (sin importar mayúsculas
+       o tildes). Luego, el sistema ROTATIVO muestra UNA publicidad
+       por visita: la primera vez que alguien abre la app ve la
+       publicidad activada 1, la próxima visita ve la 2, después la
+       3, y al terminar vuelve a empezar. Si ninguna fila está en
+       "Activado", no se muestra nada. Todo se controla desde
+       Google Sheets, sin tocar el código.
        ============================================================ */
     /* ============================================================
        ÍCONOS DISPONIBLES PARA EL BOTÓN DEL POP-UP
@@ -1225,19 +1229,20 @@ HALFPAGE BANNER,Supermarket,https://img.magnific.com/psd-gratis/agencia-marketin
 
     function buildPopupFromCSV(csvText) {
         const objs = rowsToObjects(parseCSV(csvText));
+        const activos = [];
         for (const o of objs) {
             const estado = normKey(getField(o, ['Situación (Activado / Desactivado)', 'Situación', 'Situacion', 'Estado']));
-            if (estado !== 'activado') continue; // "desactivado", vacío u otro texto => no se muestra
-            return {
+            if (estado !== 'activado') continue; // "desactivado", vacío u otro texto => no participa
+            activos.push({
                 title: getField(o, ['Nombre de Texto', 'Nombre', 'Título', 'Titulo']),
                 sub: getField(o, ['Subtexto', 'Subtitulo', 'Subtítulo']),
                 img: driveToImg(getField(o, ['Imagen (URL)', 'Imagen'])),
                 btnText: getField(o, ['Texto del Botón', 'Texto del Boton', 'Texto Botón']),
                 btnUrl: getField(o, ['URL Botón', 'URL Boton', 'Link Botón', 'Link']),
-                btnIcon: getField(o, ['Icono del Botón', 'Icono del Boton', 'Ícono del Botón', 'Icono'])
-            };
+                btnIcon: getField(o, ['Íconos', 'Iconos', 'Icono del Botón', 'Icono del Boton', 'Ícono del Botón', 'Icono'])
+            });
         }
-        return null;
+        return activos; // lista con todas las publicidades en "Activado"
     }
 
     /* =============== ESTADO GLOBAL =============== */
@@ -1391,21 +1396,31 @@ HALFPAGE BANNER,Supermarket,https://img.magnific.com/psd-gratis/agencia-marketin
        POP-UP PROMOCIONAL: MOSTRAR / OCULTAR
        ============================================================ */
     async function initPromoPopup() {
-        let promoData = null;
+        let promoList = [];
         try {
             const csv = await fetchCSV(GID_POPUP);
             if (csvLooksLikePopup(csv)) {
-                promoData = buildPopupFromCSV(csv); // puede ser null si está Desactivado
+                promoList = buildPopupFromCSV(csv); // puede quedar vacía si todo está Desactivado
             } else {
                 console.warn('Popup: la pestaña indicada no tiene las columnas esperadas; usando respaldo.');
-                promoData = buildPopupFromCSV(FALLBACK_POPUP_CSV);
+                promoList = buildPopupFromCSV(FALLBACK_POPUP_CSV);
             }
         } catch (e) {
             console.warn('Popup: sin conexión con el Sheet; usando respaldo.', e);
-            promoData = buildPopupFromCSV(FALLBACK_POPUP_CSV);
+            promoList = buildPopupFromCSV(FALLBACK_POPUP_CSV);
         }
-        if (!promoData) return; // Desactivado en el Sheet => no se muestra nada
-        showPromoPopup(promoData);
+        if (!promoList.length) return; // Todo Desactivado en el Sheet => no se muestra nada
+
+        /* ROTACIÓN POR VISITA: se guarda en el dispositivo del cliente
+           cuál publicidad le toca ver. Cada vez que abre la app avanza
+           a la siguiente activada, y al llegar al final vuelve a la
+           primera. Si activás o desactivás filas en el Sheet, la
+           rotación se acomoda sola a la cantidad de publicidades. */
+        let turno = parseInt(localStorage.getItem('lumi_promo_turno')) || 0;
+        const indice = turno % promoList.length;
+        localStorage.setItem('lumi_promo_turno', String((indice + 1) % promoList.length));
+
+        showPromoPopup(promoList[indice]);
     }
 
     function showPromoPopup(data) {
