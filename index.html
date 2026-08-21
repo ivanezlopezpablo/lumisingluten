@@ -210,6 +210,14 @@
             }, 100);
           }
         } catch (e) { /* si el navegador no soporta push, no molesta */ }
+
+        /* Mantener actualizado el panel "🔔 Notificaciones" de Ubicación */
+        try {
+          lumiRefreshNotifBtn(OneSignal);
+          OneSignal.User.PushSubscription.addEventListener('change', function () {
+            lumiRefreshNotifBtn(OneSignal);
+          });
+        } catch (e) {}
       });
 
       /* Botones del popup de notificaciones */
@@ -252,6 +260,47 @@
         localStorage.setItem('lumi_push_prefs_done', '1');
         const p = document.getElementById('push-prefs-modal');
         if (p) p.classList.remove('active');
+      }
+
+      /* Panel "🔔 Notificaciones" de la sección Ubicación: muestra el
+         estado real y permite suscribirse o DESUSCRIBIRSE con un toque,
+         independientemente de la campanita de OneSignal. */
+      function lumiRefreshNotifBtn(OneSignal) {
+        const estado = document.getElementById('notif-state');
+        const btn = document.getElementById('notif-toggle-btn');
+        if (!estado || !btn) return;
+        try {
+          const activo = OneSignal.User.PushSubscription.optedIn;
+          if (activo) {
+            estado.innerText = 'Estás suscripto a promos y novedades 💚';
+            btn.innerText = 'Desactivar';
+            btn.style.background = '#ef4444';
+          } else {
+            estado.innerText = 'No estás recibiendo nuestras novedades';
+            btn.innerText = 'Activar';
+            btn.style.background = 'var(--lumi-green)';
+          }
+        } catch (e) {
+          estado.innerText = 'No disponible en este navegador';
+          btn.style.display = 'none';
+        }
+      }
+
+      function lumiToggleNotifs() {
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        OneSignalDeferred.push(async function(OneSignal) {
+          try {
+            if (OneSignal.User.PushSubscription.optedIn) {
+              await OneSignal.User.PushSubscription.optOut(); // desuscribir
+            } else {
+              if (!OneSignal.Notifications.permission) {
+                await OneSignal.Notifications.requestPermission();
+              }
+              await OneSignal.User.PushSubscription.optIn(); // volver a suscribir
+            }
+          } catch (e) {}
+          lumiRefreshNotifBtn(OneSignal);
+        });
       }
     </script>
 
@@ -718,6 +767,15 @@
                             <svg class="icn" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                             <span>Facebook</span>
                         </a>
+                    </div>
+
+                    <!-- Gestión de notificaciones: suscribirse o desuscribirse cuando quieran -->
+                    <div style="margin-top: 10px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+                        <div style="font-size: 0.88rem; color: var(--text-dark);">
+                            <strong>🔔 Notificaciones</strong>
+                            <div id="notif-state" style="color: var(--text-muted); font-size: 0.76rem; margin-top: 2px;">Verificando estado...</div>
+                        </div>
+                        <button id="notif-toggle-btn" onclick="lumiToggleNotifs()" style="background: var(--lumi-green); color: white; border: none; padding: 9px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 800; cursor: pointer; white-space: nowrap; flex-shrink: 0;">Activar</button>
                     </div>
                 </div>
             </div>
