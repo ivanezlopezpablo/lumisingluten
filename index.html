@@ -198,12 +198,16 @@
               const m = document.getElementById('push-invite-modal');
               if (m) m.classList.add('active');
             };
-            /* Vigila el loader: apenas se oculta (pantalla de inicio ya
-               cargada), arranca el conteo de 2 segundos exactos. Si por
-               algún motivo el loader no está, cuenta desde el arranque. */
+            /* ORDEN GARANTIZADO: 1° la publicidad del Sheet (si hay una
+               activada), 2° este popup de suscripción. Espera a que
+               termine la pantalla de carga Y a que la publicidad se
+               haya cerrado (o no exista), y recién ahí cuenta 2
+               segundos y aparece. */
             const esperarLoader = setInterval(() => {
               const loader = document.getElementById('loader');
-              if (!loader || loader.classList.contains('hidden')) {
+              const cargaLista = !loader || loader.classList.contains('hidden');
+              const promoResuelta = (window.lumiPromoResuelto === true);
+              if (cargaLista && promoResuelta) {
                 clearInterval(esperarLoader);
                 setTimeout(mostrarPopupPush, 2000);
               }
@@ -1682,7 +1686,7 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
             console.warn('Popup: sin conexión con el Sheet; usando respaldo.', e);
             promoList = buildPopupFromCSV(FALLBACK_POPUP_CSV);
         }
-        if (!promoList.length) return; // Todo Desactivado en el Sheet => no se muestra nada
+        if (!promoList.length) { window.lumiPromoResuelto = true; return; } // Todo Desactivado => no se muestra nada y libera el popup de suscripción
 
         /* ROTACIÓN POR VISITA: se guarda en el dispositivo del cliente
            cuál publicidad le toca ver. Cada vez que abre la app avanza
@@ -1731,6 +1735,7 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
     function closePromoImageModal() {
         document.getElementById('promo-image-modal').classList.remove('active');
         document.body.classList.remove('promo-open');
+        window.lumiPromoResuelto = true; // publicidad cerrada => puede aparecer el popup de suscripción
     }
 
     /* =============== CARGA EN VIVO DESDE EL SHEET =============== */
