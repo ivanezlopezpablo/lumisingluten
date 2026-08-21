@@ -16,12 +16,6 @@
     </script>
 
     <!-- ============ SEO ============ -->
-    <link rel="canonical" href="https://www.lumisingluten.com.ar/">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🌸Lumi Sin Gluten | Milanesas, Nuggets y Panes Sin TACC, Libres de Gluten en Neuquén, Cipolletti y Alto Valle</title>
-
-    <!-- ============ SEO ============ -->
     <!-- Dominio oficial del sitio: www.lumisingluten.com.ar
          (el dominio lumisingluten.ar redirige acá, y esta etiqueta
          canonical le avisa a Google cuál es la versión oficial
@@ -954,6 +948,43 @@
     </div>
 </div>
 
+<!-- ============================================================
+     NUEVO: POPUP ROJO DE DÍA CERRADO (feriados / cierres del Sheet)
+     ------------------------------------------------------------
+     Aparece cuando el cliente elige una fecha que figura en la
+     pestaña de cierres de la planilla (Columna A: Fecha,
+     Columna B: Motivo). El texto del motivo sale del Sheet.
+     ============================================================ -->
+<div class="modal-overlay pop-over-modal" id="closed-day-warning-modal">
+    <div class="modal-card" style="text-align: center; max-width: 420px; border: 2px solid #ef4444;">
+        <div style="width: 60px; height: 60px; margin: 0 auto 10px auto; background: #fee2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">🔴</div>
+        <h3 style="color: #ef4444;" id="closed-day-warning-title">Ese día el local está cerrado</h3>
+        <p id="closed-day-warning-text" style="font-size: 0.88rem; color: var(--text-muted); margin: 12px 0; line-height: 1.45;"></p>
+        <button onclick="closeClosedDayWarningModal()" style="background: #ef4444; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer;">
+            Entendido, elegir otro día
+        </button>
+    </div>
+</div>
+
+<!-- ============================================================
+     NUEVO: POPUP DE PANES CON ANTICIPACIÓN
+     ------------------------------------------------------------
+     Aparece cada vez que se agrega un pan al carrito (de 0 a 1
+     o más). Informa que los panes se preparan y cocinan a pedido,
+     por eso requieren 1 día hábil de anticipación, y que el
+     sistema ajusta solo la fecha de retiro/envío.
+     ============================================================ -->
+<div class="modal-overlay pop-over-modal" id="panes-notice-modal">
+    <div class="modal-card" style="text-align: center; max-width: 440px;">
+        <div style="width: 60px; height: 60px; margin: 0 auto 10px auto; background: #ffedd5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">🍞</div>
+        <h3 style="color: #c2410c;">¡Producto agregado al carrito!</h3>
+        <p id="panes-notice-text" style="font-size: 0.88rem; color: var(--text-muted); margin: 12px 0; line-height: 1.45;"></p>
+        <button onclick="closePanesNoticeModal()" style="background: #f97316; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer;">
+            Entendido, ¡gracias!
+        </button>
+    </div>
+</div>
+
 <!-- MODAL DETALLE DE PRODUCTO -->
 <div class="modal-overlay" id="detail-modal">
     <div class="modal-card" style="padding-bottom: 12px;">
@@ -1022,6 +1053,12 @@
                 <label style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 6px; color: var(--text-dark);">
                     Día y Hora exacta aproximada:
                 </label>
+
+                <!-- NUEVO: aviso rojo con los próximos días cerrados (se llena
+                     solo desde la pestaña de cierres de la planilla; si no hay
+                     fechas cargadas, este cartel no aparece) -->
+                <div id="closed-dates-info" style="display: none; background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; border-radius: 8px; padding: 8px 10px; font-size: 0.75rem; line-height: 1.5; margin-bottom: 8px;"></div>
+
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <input type="date" id="pickup-date" class="form-control" style="flex: 1.2; min-width: 130px; margin-bottom: 0;" onchange="validatePickupDate()">
                     <input type="time" id="pickup-time-exact" class="form-control" style="flex: 1; min-width: 120px; margin-bottom: 0;" value="11:00" onchange="validatePickupTime()">
@@ -1081,6 +1118,16 @@
          Desactivado). Escribí "Activado" en la columna F para que
          el pop-up aparezca a pantalla completa al abrir la app, o
          "Desactivado" para ocultarlo. Todo se controla desde ahí.
+       - GID_CIERRES: pestaña "Dias No Laborables" con:
+         Columna A = Fecha (sirve 24/08/2026 o el formato largo de
+         Google como "lunes, 24 de agosto de 2026").
+         Columna B = Horario: "De Mañana" (ese día no se atiende de
+         11 a 14 hs), "De Tarde" (no se atiende de 19 a 21 hs) o
+         "Todo El Día" (el día queda inhabilitado por completo y el
+         pedido pasa solo al siguiente día hábil). Si queda vacía,
+         se toma como cerrado todo el día.
+         Columna C = Motivo (lo que se muestra en el cartel rojo).
+         Si la pestaña está vacía, todo funciona normal como siempre.
 
        Si algo falla o falta configurar, la app usa los datos de
        respaldo embebidos (copia de tu planilla actual).
@@ -1089,6 +1136,7 @@
     const GID_PRODUCTOS = "957503224";           // Pestaña Productos (conectada en vivo)
     const GID_CURSOS = "BASE";                   // "BASE" = usa el enlace publicado tal cual (Cursos)
     const GID_POPUP = "1473685333";              // Pestaña Popup (conectada en vivo)
+    const GID_CIERRES = "1606135466";            // Pestaña Dias No Laborables (Fecha | Horario | Motivo)
 
     /* DATOS DE RESPALDO (copia de la planilla actual) */
     const FALLBACK_PRODUCTOS_CSV = `Orden de Mostrarse en App,Producto,Etiqueta que se muestra en App,Subtitulo del Producto,Precio Individual,Formas de Cocción,Ingredientes,¿Cómo viene?,Presentación,,Imagen de Portada al Cargar,Img1,Img2,Img3,Img4,Peso por Unidad,Cantidad por Kilo,Ver Video
@@ -1556,6 +1604,7 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
         initHeroSlider();
         setDefaultPickupDate();
         loadDataFromSheet();
+        loadFeriados();
         initPromoPopup();
 
         runLoader();
@@ -1785,11 +1834,166 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
     }
 
     /* =============== FECHAS Y HORARIOS =============== */
+
+    /* ============================================================
+       NUEVO: DÍAS NO LABORABLES DESDE EL SHEET
+       ------------------------------------------------------------
+       CLOSED_DATES guarda cada fecha con su turno cerrado y motivo:
+       'AAAA-MM-DD' => { turno: 'dia' | 'manana' | 'tarde', motivo }
+       - 'dia'    => cerrado todo el día (no se puede elegir la fecha)
+       - 'manana' => ese día no se atiende de 11 a 14 hs
+       - 'tarde'  => ese día no se atiende de 19 a 21 hs
+       Se llena leyendo la pestaña "Dias No Laborables" (Columna A:
+       Fecha, Columna B: Horario, Columna C: Motivo). Acepta fechas
+       como 25/12/2026, 25-12-2026, 2026-12-25 o el formato largo de
+       Google ("lunes, 24 de agosto de 2026"), con o sin encabezado.
+       Si la pestaña está vacía, la app funciona igual que siempre.
+       ============================================================ */
+    let CLOSED_DATES = {};
+
+    const MESES_ES = { enero: 1, febrero: 2, marzo: 3, abril: 4, mayo: 5, junio: 6, julio: 7, agosto: 8, septiembre: 9, setiembre: 9, octubre: 10, noviembre: 11, diciembre: 12 };
+
+    function parseFechaAR(str) {
+        if (!str) return null;
+        const s = String(str).trim();
+        let m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+        if (m) {
+            const y = m[3].length === 2 ? ('20' + m[3]) : m[3];
+            return `${y}-${String(m[2]).padStart(2, '0')}-${String(m[1]).padStart(2, '0')}`;
+        }
+        m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
+        if (m) return `${m[1]}-${String(m[2]).padStart(2, '0')}-${String(m[3]).padStart(2, '0')}`;
+        /* Formato largo de Google Sheets: "lunes, 24 de agosto de 2026" */
+        const sinTildes = s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        m = sinTildes.match(/(\d{1,2})\s+de\s+([a-z]+)\s+de\s+(\d{4})/);
+        if (m && MESES_ES[m[2]]) return `${m[3]}-${String(MESES_ES[m[2]]).padStart(2, '0')}-${String(m[1]).padStart(2, '0')}`;
+        return null;
+    }
+
+    /* Columna B (Horario): De Mañana / De Tarde / Todo El Día.
+       Vacía u otra cosa => se toma como cerrado todo el día. */
+    function normTurnoCierre(v) {
+        const n = normKey(v);
+        if (n.includes('manana')) return 'manana';
+        if (n.includes('tarde')) return 'tarde';
+        return 'dia';
+    }
+
+    async function loadFeriados() {
+        if (!GID_CIERRES || GID_CIERRES.startsWith('PEGAR')) { renderClosedDatesInfo(); return; }
+        try {
+            const csv = await fetchCSV(GID_CIERRES);
+            const rows = parseCSV(csv);
+            const map = {};
+            rows.forEach(r => {
+                const fecha = parseFechaAR(r[0]);
+                if (fecha) map[fecha] = {
+                    turno: normTurnoCierre(r[1]),
+                    motivo: (r[2] || '').trim() || 'Cerrado por el día'
+                };
+            });
+            CLOSED_DATES = map;
+        } catch (e) { console.warn('Días no laborables: sin conexión con el Sheet.', e); }
+        renderClosedDatesInfo();
+        /* Reacomoda la fecha sugerida por si la actual cae en un día
+           cerrado todo el día */
+        const dateInput = document.getElementById('pickup-date');
+        if (dateInput && dateInput.value) {
+            const c = CLOSED_DATES[dateInput.value];
+            if (c && c.turno === 'dia') {
+                const parts = dateInput.value.split('-');
+                const d = new Date(parts[0], parts[1] - 1, parts[2]);
+                d.setDate(d.getDate() + 1);
+                dateInput.value = formatDateToInput(getNextWorkingDay(d));
+            } else if (c && c.turno === 'manana') {
+                /* Si la fecha sugerida tiene la mañana cerrada y la hora
+                   por defecto es 11:00, pasarla al turno tarde sin molestar */
+                const t = document.getElementById('pickup-time-exact');
+                if (t && t.value === '11:00') t.value = '19:00';
+            }
+        }
+    }
+
+    function formatFechaLinda(key) {
+        const p = key.split('-');
+        return `${p[2]}/${p[1]}/${p[0]}`;
+    }
+
+    /* Cartel rojo arriba del selector de fecha: lista los próximos
+       días cerrados con su motivo. Si no hay fechas cargadas en el
+       Sheet, el cartel no aparece y todo sigue normal. */
+    function etiquetaTurnoCierre(turno) {
+        if (turno === 'manana') return 'Cerrado de mañana (11 a 14 hs)';
+        if (turno === 'tarde') return 'Cerrado de tarde (19 a 21 hs)';
+        return 'Cerrado todo el día';
+    }
+
+    function renderClosedDatesInfo() {
+        const box = document.getElementById('closed-dates-info');
+        if (!box) return;
+        const hoy = formatDateToInput(new Date());
+        const proximos = Object.keys(CLOSED_DATES).filter(f => f >= hoy).sort().slice(0, 6);
+        if (!proximos.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
+        box.style.display = 'block';
+        box.innerHTML = '<strong>🔴 Días con atención especial o local cerrado:</strong><br>' +
+            proximos.map(f => {
+                const c = CLOSED_DATES[f];
+                return `• <strong>${formatFechaLinda(f)}</strong> — ${etiquetaTurnoCierre(c.turno)}: ${c.motivo}`;
+            }).join('<br>');
+    }
+
+    /* Un día es hábil si NO es sábado ni domingo y NO figura como
+       cerrado TODO el día en la planilla (los cierres de medio día
+       dejan el día habilitado, solo bloquean ese turno) */
+    function esDiaHabil(d) {
+        const day = d.getDay();
+        if (day === 0 || day === 6) return false;
+        const c = CLOSED_DATES[formatDateToInput(d)];
+        if (c && c.turno === 'dia') return false;
+        return true;
+    }
+
+    /* Devuelve a qué turno pertenece una hora elegida, o null si
+       está fuera de los horarios de atención */
+    function turnoDeHora(totalMinutes) {
+        if (totalMinutes >= 660 && totalMinutes <= 840) return 'manana';
+        if (totalMinutes >= 1140 && totalMinutes <= 1260) return 'tarde';
+        return null;
+    }
+
+    /* Muestra el popup rojo con título y texto a medida */
+    function showClosedDayWarning(titulo, html) {
+        document.getElementById('closed-day-warning-title').innerText = titulo;
+        document.getElementById('closed-day-warning-text').innerHTML = html;
+        document.getElementById('closed-day-warning-modal').classList.add('active');
+    }
+
+    /* Si la fecha elegida tiene un turno cerrado (De Mañana o De
+       Tarde) y la hora elegida cae justo en ese turno, avisa con el
+       popup rojo y mueve la hora al turno que sí está abierto */
+    function ajustarHoraPorCierreParcial(key, cierre) {
+        const timeInput = document.getElementById('pickup-time-exact');
+        if (!timeInput || !timeInput.value) return true;
+        const [h, mi] = timeInput.value.split(':').map(Number);
+        const turnoElegido = turnoDeHora(h * 60 + mi);
+        if (turnoElegido && turnoElegido === cierre.turno) {
+            const cerradoTxt = cierre.turno === 'manana' ? 'de mañana (11 a 14 hs)' : 'de tarde (19 a 21 hs)';
+            const abiertoTxt = cierre.turno === 'manana' ? 'de tarde, de 19:00 a 21:00 hs' : 'de mañana, de 11:00 a 14:00 hs';
+            timeInput.value = cierre.turno === 'manana' ? '19:00' : '11:00';
+            showClosedDayWarning('Ese día atendemos medio día',
+                `El día <strong>${formatFechaLinda(key)}</strong> el local de 🌸Lumi permanece <strong>cerrado ${cerradoTxt}</strong>.<br><br><strong>Motivo:</strong> ${cierre.motivo}<br><br>Ese día atendemos únicamente <strong>${abiertoTxt}</strong>. Ya te dejamos seleccionado un horario disponible.`);
+            return false;
+        }
+        return true;
+    }
+
     function getNextWorkingDay(dateObj) {
         let nextDate = new Date(dateObj);
-        let day = nextDate.getDay();
-        if (day === 6) { nextDate.setDate(nextDate.getDate() + 2); }
-        else if (day === 0) { nextDate.setDate(nextDate.getDate() + 1); }
+        let guard = 0;
+        while (!esDiaHabil(nextDate) && guard < 60) {
+            nextDate.setDate(nextDate.getDate() + 1);
+            guard++;
+        }
         return nextDate;
     }
 
@@ -1810,16 +2014,104 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
         }
     }
 
+    /* ============================================================
+       NUEVO: REGLA DE PANES CON 1 DÍA HÁBIL DE ANTICIPACIÓN
+       ------------------------------------------------------------
+       Los panes y tartas se preparan y cocinan a pedido, por eso
+       requieren 1 día hábil de anticipación. Detecta cualquier
+       producto cuyo nombre contenga "Pan", "Panes" o "Tarta"
+       (los que se sumen a futuro en el Sheet entran solos).
+       OJO: usa palabra completa, así "Panceta" (del arrollado)
+       NO cuenta como pan.
+       ============================================================ */
+    function esPan(p) {
+        return /\bpan\b|\bpanes\b|\btartas?\b/i.test(p.title || '');
+    }
+
+    function cartHasPanes() {
+        return Object.keys(cart).some(id => {
+            const p = PRODUCTS.find(x => x.id == id);
+            return p && cart[id] > 0 && esPan(p);
+        });
+    }
+
+    /* Fecha mínima cuando hay panes: el siguiente día hábil DESPUÉS
+       de hoy (nunca el mismo día), salteando findes y días cerrados */
+    function getMinPanesDate() {
+        const t = new Date();
+        t.setDate(t.getDate() + 1);
+        return getNextWorkingDay(t);
+    }
+
+    /* Se ejecuta cada vez que un pan pasa de 0 a 1 o más en el
+       carrito: muestra el popup informativo y ajusta la fecha */
+    function aplicarReglaPanes() {
+        showPanesNotice('agregado');
+        const dateInput = document.getElementById('pickup-date');
+        const min = formatDateToInput(getMinPanesDate());
+        if (dateInput && (!dateInput.value || dateInput.value < min)) {
+            dateInput.value = min;
+        }
+    }
+
+    function showPanesNotice(tipo) {
+        const el = document.getElementById('panes-notice-text');
+        const fechaLinda = formatFechaLinda(formatDateToInput(getMinPanesDate()));
+        if (tipo === 'fecha') {
+            el.innerHTML = `Tenés <strong>panes</strong> en tu carrito, y como se preparan y cocinan a pedido, <strong>se piden con 1 día hábil de anticipación</strong>.<br><br>Por eso la fecha más próxima disponible para tu retiro o envío es el <strong>${fechaLinda}</strong>. Ya te la dejamos seleccionada. 💚`;
+        } else {
+            el.innerHTML = `✅ El pan se agregó a tu carrito.<br><br>Como nuestros panes se <strong>preparan y cocinan a pedido</strong>, se piden con <strong>1 día hábil de anticipación</strong>.<br><br>Podés seguir armando tu pedido sumando otros productos, pero el sistema pondrá automáticamente como fecha de retiro o envío el <strong>${fechaLinda}</strong> (siguiente día hábil de trabajo de 🌸Lumi).`;
+        }
+        document.getElementById('panes-notice-modal').classList.add('active');
+    }
+
+    function closePanesNoticeModal() { document.getElementById('panes-notice-modal').classList.remove('active'); }
+    function closeClosedDayWarningModal() { document.getElementById('closed-day-warning-modal').classList.remove('active'); }
+
     function validatePickupDate() {
         const dateInput = document.getElementById('pickup-date');
         if (!dateInput || !dateInput.value) return true;
         const parts = dateInput.value.split('-');
         const selectedDate = new Date(parts[0], parts[1] - 1, parts[2]);
+        const key = dateInput.value;
+
+        /* 1) Fin de semana => modal clásico */
         if (selectedDate.getDay() === 0 || selectedDate.getDay() === 6) {
             document.getElementById('schedule-warning-modal').classList.add('active');
             dateInput.value = formatDateToInput(getNextWorkingDay(selectedDate));
             return false;
         }
+
+        /* 2) Día cargado en la pestaña Dias No Laborables */
+        const cierre = CLOSED_DATES[key];
+        if (cierre && cierre.turno === 'dia') {
+            /* Cerrado TODO el día => no se puede elegir: popup rojo con
+               el motivo y el pedido pasa solo al siguiente día hábil */
+            showClosedDayWarning('Ese día el local está cerrado',
+                `El día <strong>${formatFechaLinda(key)}</strong> el local de 🌸Lumi permanece <strong>cerrado todo el día</strong>.<br><br><strong>Motivo:</strong> ${cierre.motivo}<br><br>Tu pedido pasa para el <strong>siguiente día hábil</strong>: ya te lo dejamos seleccionado en el calendario, o podés elegir otro que te quede cómodo.`);
+            const siguiente = new Date(selectedDate);
+            siguiente.setDate(siguiente.getDate() + 1);
+            dateInput.value = formatDateToInput(getNextWorkingDay(siguiente));
+            return false;
+        }
+        if (cierre) {
+            /* Cerrado medio día (De Mañana o De Tarde) => el día se puede
+               elegir, pero si la hora cae en el turno cerrado se avisa y
+               se corrige al turno abierto */
+            if (!ajustarHoraPorCierreParcial(key, cierre)) return false;
+        }
+
+        /* 3) Hay panes en el carrito => la fecha no puede ser antes del
+              siguiente día hábil posterior a hoy */
+        if (cartHasPanes()) {
+            const min = formatDateToInput(getMinPanesDate());
+            if (key < min) {
+                dateInput.value = min;
+                showPanesNotice('fecha');
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -1832,6 +2124,15 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
             document.getElementById('time-range-warning-modal').classList.add('active');
             timeInput.value = "11:00";
             return false;
+        }
+        /* NUEVO: si la fecha elegida tiene un turno cerrado (De Mañana
+           o De Tarde) y la hora cae en ese turno, avisar y corregir */
+        const dateInput = document.getElementById('pickup-date');
+        if (dateInput && dateInput.value) {
+            const cierre = CLOSED_DATES[dateInput.value];
+            if (cierre && cierre.turno !== 'dia') {
+                if (!ajustarHoraPorCierreParcial(dateInput.value, cierre)) return false;
+            }
         }
         return true;
     }
@@ -1978,6 +2279,12 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
             const qtyModalEl = document.getElementById(`modal-qty-val`);
             if (qtyModalEl) qtyModalEl.innerText = newQty;
             updateModalPriceCalculation(productId);
+        }
+        /* NUEVO: si un pan pasa de 0 a 1 o más, avisar la regla de
+           anticipación (se repite cada vez que vuelva de 0 a 1) */
+        if (delta > 0 && currentQty === 0 && newQty > 0) {
+            const p = PRODUCTS.find(item => item.id == productId);
+            if (p && esPan(p)) aplicarReglaPanes();
         }
     }
 
@@ -2290,7 +2597,7 @@ SUPER GUÍA DE CELIAQUÍA ,Cuidá de tu familia!,https://img.magnific.com/psd-gr
     /* =============== MODAL CARRITO =============== */
     function toggleCartModal(show) {
         const modal = document.getElementById('cart-modal');
-        if (show) { renderCartSummary(); fillCheckoutFromLastOrder(); modal.classList.add('active'); }
+        if (show) { renderCartSummary(); fillCheckoutFromLastOrder(); renderClosedDatesInfo(); modal.classList.add('active'); }
         else { modal.classList.remove('active'); }
     }
 
